@@ -6,7 +6,8 @@
     "build": "next build",
     "start": "next start",
     "test": "jest",
-    "cy:open": "cypress open"
+    "cy:open": "cypress open",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\""
   },
   "repository": {
     "type": "git",
