@@ -7,26 +7,9 @@
 ## How to Run Locally
 
 1. Install dependencies
+
 ```
 npm install
 ```
 
-2. (Optional, but Recommended) Install Nodemon globally to allow the server to auto-reload as you make changes. Learn more @ https://nodemon.io/
-
-```
-npm i -g nodemon
-```
-
-2. Run app.js using any of the following commands.
-```
--- Recommended --
-nodemon app.js
-```
-
-```
-npm start 
-```
-
-```
-node app.js
-```
+2. Run using "npm start" or if you want to use nodemon, "npm run devStart"
