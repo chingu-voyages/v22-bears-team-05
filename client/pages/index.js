@@ -1,7 +1,8 @@
-import App from "../components/App"
-//import { initializeApollo } from "../lib/apolloClient"
+import React from 'react';
+import App from '../components/App';
+// import { initializeApollo } from "../lib/apolloClient"
 
-const IndexPage = () => <App>Boilerplate Code</App>
+const IndexPage = () => <App>Boilerplate Code</App>;
 
 /*
 fill out getStaticProps properly once the graphQL stuff is figured out
@@ -22,4 +23,4 @@ export async function getStaticProps() {
   }
 }
 */
-export default IndexPage
+export default IndexPage;
