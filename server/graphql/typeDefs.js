@@ -7,8 +7,13 @@ module.exports = gql`
     token: String!
     createdDate: String!
   }
+  type UserView {
+    email: String
+  }
+  type Query {
+    userList: [UserView]
+  }
   type Mutation {
     register(email: String!, password: String!, confirmPassword: String!): User!
-    login(username: String!, password: String!): User!
   }
 `
