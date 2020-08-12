@@ -1,48 +1,43 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
-const { makeExecutableSchema } = require('graphql-tools');
+if (!process.env.NODE_ENV || process.env.NODE_ENV === "development")
+  require("dotenv").config()
 
-// Some fake data
-const books = [
-  {
-    title: "Harry Potter and the Sorcerer's stone",
-    author: 'J.K. Rowling',
-  },
-  {
-    title: 'Jurassic Park',
-    author: 'Michael Crichton',
-  },
-];
+const express = require("express")
+const bodyParser = require("body-parser")
+const mongoose = require("mongoose")
+const { ApolloServer } = require("apollo-server-express")
+const MONGODB = process.env.MONGO_CONNECTION_STRING
 
-// The GraphQL schema in string form
-const typeDefs = `
-  type Query { books: [Book] }
-  type Book { title: String, author: String }
-`;
+const typeDefs = require("./graphql/typeDefs")
+const resolvers = require("./graphql/resolvers")
 
-// The resolvers
-const resolvers = {
-  Query: { books: () => books },
-};
+const PORT = 5000
 
-// Put together a schema
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-});
+const app = express()
 
-// Initialize the app
-const app = express();
+//middleware goes here
 
-// The GraphQL endpoint
-app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
+async function startApp() {
+  try {
+    const apolloServer = new ApolloServer({
+      typeDefs,
+      resolvers,
+      context: ({ req, res }) => ({ req, res }),
+    })
+    await mongoose.connect(MONGODB, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
 
-// GraphiQL, a visual editor for queries
-app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
-
-// Start the server
-app.listen(3000, () => {
-  console.log('Go to http://localhost:3000/graphiql to run queries!');
-});
-
+    apolloServer.applyMiddleware({
+      app,
+    })
+    app.listen({ port: PORT }, () => {
+      const serverUrl = `http://localhost:${PORT}`
+      console.log(`Server started on ${serverUrl}`)
+      console.log(`Graphql playground can be found at ${serverUrl}/graphql`)
+    })
+  } catch (err) {
+    console.log(err)
+  }
+}
+startApp()
