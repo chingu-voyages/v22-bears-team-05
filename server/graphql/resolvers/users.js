@@ -3,11 +3,8 @@ const jwt = require("jsonwebtoken")
 const { UserInputError } = require("apollo-server")
 
 const User = require("../../models/User")
+const { validateRegisterInput } = require("./../../utils/validateRegisterInput")
 
-function validateRegisterInput() {
-  //TODO: validate register input
-  return
-}
 function generateToken(user) {
   return jwt.sign(
     {
@@ -23,7 +20,7 @@ module.exports = {
   Query: {
     async userList() {
       try {
-        const userData = await userData.find()
+        const userData = await User.find()
         const userList = userData.map((element) => element.email)
         return userList
       } catch (err) {
