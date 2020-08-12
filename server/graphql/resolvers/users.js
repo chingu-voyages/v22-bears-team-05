@@ -4,7 +4,7 @@ const { UserInputError } = require("apollo-server")
 
 const User = require("../../models/User")
 const { validateRegisterInput } = require("./../../utils/validateRegisterInput")
-
+const SECRET_KEY = process.env.SECRET_KEY
 function generateToken(user) {
   return jwt.sign(
     {
@@ -21,7 +21,9 @@ module.exports = {
     async userList() {
       try {
         const userData = await User.find()
-        const userList = userData.map((element) => element.email)
+        const userList = userData.map((element) => {
+          return { email: element.email }
+        })
         return userList
       } catch (err) {
         throw new Error(err)
@@ -33,7 +35,6 @@ module.exports = {
     async register(_, { email, password, confirmPassword }) {
       // Validate user data
       const { valid, errors } = validateRegisterInput(
-        username,
         email,
         password,
         confirmPassword
@@ -41,7 +42,6 @@ module.exports = {
       if (!valid) {
         throw new UserInputError("Errors", { errors })
       }
-      // TODO: Make sure email has not already been registered
       const user = await User.findOne({ email })
       if (user) {
         throw new UserInputError("Could not register user", {
