@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {ApolloProvider} from '@apollo/client';
 import {useApollo} from '../lib/apolloClient';
+import 'typeface-montserrat';
 
 /**
  * Root App Component with ApolloProvider Wrapper
@@ -20,7 +21,7 @@ const App = ({Component, pageProps}) => {
 };
 
 App.propTypes = {
-  Component: PropTypes.object.isRequired,
+  Component: PropTypes.func.isRequired,
   pageProps: PropTypes.object,
 };
 
