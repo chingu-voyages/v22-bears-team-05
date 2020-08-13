@@ -1,22 +1,17 @@
 const { model, Schema } = require("mongoose");
 
-const goalSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
+const taskSchema = new Schema({
   name: {
     type: String,
-    required: [true, "A goal must have a name."],
+    required: [true, "A task must have a name."],
     trim: true,
     minlength: 1,
     maxlength: 20,
   },
-  tasks: [
+  subTasks: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Task",
+      ref: "Subtask",
     },
   ],
   totalTime: {
@@ -29,4 +24,4 @@ const goalSchema = new Schema({
   },
 });
 
-module.exports = model("Goal", goalSchema);
+module.exports = model("Task", taskSchema);
