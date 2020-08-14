@@ -13,5 +13,8 @@
     "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint"],
-  "rules": {}
+  "rules": {
+    "import/no-cycle": false,
+    "react/forbid-prop-types": false
+  }
 }
