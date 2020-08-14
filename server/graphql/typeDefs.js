@@ -36,11 +36,11 @@ module.exports = gql`
   }
   type Query {
     userList: [UserView]
-    getAllGoals(userId: ID!): [Goal]!
+    getAllGoals: [Goal]!
   }
   type Mutation {
     register(email: String!, password: String!, confirmPassword: String!): User!
     login(email: String!, password: String!): User!
-    createGoal(userId: ID!, goalName: String!): Goal!
+    createGoal(goalName: String!): Goal!
   }
 `;
