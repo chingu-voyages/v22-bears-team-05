@@ -19,7 +19,7 @@ const goalSchema = new Schema({
       ref: "Task",
     },
   ],
-  totalTime: {
+  totalTimeInSeconds: {
     type: Number,
     default: 0,
   },
