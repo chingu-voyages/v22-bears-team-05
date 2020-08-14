@@ -14,22 +14,22 @@ module.exports = gql`
     _id: ID
     user: String!
     name: String!
-    tasks: [String]
-    totalTime: Int
+    tasks: [Task]
+    totalTimeInSeconds: Int
     isCompleted: Boolean
   }
   type Task {
     _id: ID
     name: String!
-    subtasks: [String]
-    totalTime: Int
+    subtasks: [Subtask]
+    totalTimeInSeconds: Int
     isCompleted: Boolean
   }
   type Subtask {
     _id: ID
     name: String!
     description: String
-    totalTime: Int
+    totalTimeInSeconds: Int
     isCompleted: Boolean
     timeStarted: String
     timeCompleted: String

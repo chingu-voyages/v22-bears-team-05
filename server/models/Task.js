@@ -14,7 +14,7 @@ const taskSchema = new Schema({
       ref: "Subtask",
     },
   ],
-  totalTime: {
+  totalTimeInSeconds: {
     type: Number,
     default: 0,
   },

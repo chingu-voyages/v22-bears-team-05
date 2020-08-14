@@ -19,7 +19,7 @@ const subtaskSchema = new Schema({
   },
   timeStarted: Date,
   timeCompleted: Date,
-  totalTime: {
+  totalTimeInSeconds: {
     type: Number,
     default: 0,
   },
