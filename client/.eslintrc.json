@@ -14,7 +14,7 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
-    "import/no-cycle": false,
-    "react/forbid-prop-types": false
+    "import/no-cycle": "off",
+    "react/forbid-prop-types": "off"
   }
 }

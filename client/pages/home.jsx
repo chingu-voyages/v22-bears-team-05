@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import App from '../components/App';
-import {GoalList} from '../components/Goals';
+import { GoalList } from '../components/Goals';
 
 const Container = styled.div`
   font-family: Montserrat;
@@ -23,15 +23,13 @@ const GOALS = [
   },
 ];
 
-const HomePage = () => {
-  return (
-    <App>
-      <Container>
-        <h1>{`Your Goals`}</h1>
-        <GoalList goals={GOALS} />
-      </Container>
-    </App>
-  );
-};
+const HomePage = () => (
+  <App>
+    <Container>
+      <h1>Your Goals</h1>
+      <GoalList goals={GOALS} />
+    </Container>
+  </App>
+);
 
 export default HomePage;

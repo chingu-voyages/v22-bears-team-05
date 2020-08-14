@@ -11,7 +11,7 @@ const ListItem = styled.div`
   border-radius: 18px;
 `;
 
-const GoalListItem = ({title}) => <ListItem>{title}</ListItem>;
+const GoalListItem = ({ title }) => <ListItem>{title}</ListItem>;
 
 GoalListItem.propTypes = {
   title: PropTypes.string.isRequired,
