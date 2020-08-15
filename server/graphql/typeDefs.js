@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server");
+const { gql } = require("apollo-server")
 
 module.exports = gql`
   type User {
@@ -11,7 +11,7 @@ module.exports = gql`
     email: String
   }
   type Goal {
-    _id: ID
+    _id: ID!
     user: String!
     name: String!
     tasks: [Task]
@@ -21,12 +21,14 @@ module.exports = gql`
   type Task {
     _id: ID
     name: String!
+    parent: Goal
     subtasks: [Subtask]
     totalTimeInSeconds: Int
     isCompleted: Boolean
   }
   type Subtask {
-    _id: ID
+    _id: ID!
+    parent: Task
     name: String!
     description: String
     totalTimeInSeconds: Int
@@ -43,4 +45,4 @@ module.exports = gql`
     login(email: String!, password: String!): User!
     createGoal(goalName: String!): Goal!
   }
-`;
+`
