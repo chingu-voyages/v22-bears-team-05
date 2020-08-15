@@ -6,7 +6,7 @@ module.exports = {
       if (context.req.isAuth === false) throw new Error("not authenticated")
       try {
         const goals = await Goal.find({ user: context.req.userId }).populate(
-          "Task"
+          "tasks"
         )
         return goals
       } catch (err) {
