@@ -15,6 +15,9 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "import/no-cycle": "off",
-    "react/forbid-prop-types": "off"
+    "react/forbid-prop-types": "off",
+    "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx"] }],
+    "react/prop-types": [0, { "extensions": [".ts", ".tsx"] }],
+    "no-unused-vars": "off"
   }
 }
