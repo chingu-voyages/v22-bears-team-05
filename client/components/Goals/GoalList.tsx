@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 import { GoalListItem } from '.';
@@ -9,16 +8,21 @@ const ListContainer = styled.div`
   max-width: 100%;
 `;
 
-const GoalList = ({ goals }) => (
+type Goal = {
+  title: string;
+  goalId: string;
+};
+
+type GoalProps = {
+  goals: Goal[];
+};
+
+const GoalList: FunctionComponent<GoalProps> = ({ goals }) => (
   <ListContainer>
     {goals.map((goal) => (
       <GoalListItem key={goal.goalId} title={goal.title} />
     ))}
   </ListContainer>
 );
-
-GoalList.propTypes = {
-  goals: PropTypes.array.isRequired,
-};
 
 export default GoalList;
