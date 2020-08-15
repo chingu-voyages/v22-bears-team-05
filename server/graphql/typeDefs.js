@@ -44,5 +44,6 @@ module.exports = gql`
     register(email: String!, password: String!, confirmPassword: String!): User!
     login(email: String!, password: String!): User!
     createGoal(goalName: String!): Goal!
+    createTask(taskName: String!, goalId: String!): Task!
   }
 `
