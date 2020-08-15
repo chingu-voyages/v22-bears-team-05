@@ -19,5 +19,12 @@
     "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx"] }],
     "react/prop-types": [0, { "extensions": [".ts", ".tsx"] }],
     "no-unused-vars": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   }
 }
