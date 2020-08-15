@@ -8,9 +8,12 @@ const ListContainer = styled.div`
   max-width: 100%;
 `;
 
+type Task = {};
+
 type Goal = {
-  title: string;
+  name: string;
   goalId: string;
+  tasks: Task[];
 };
 
 type GoalProps = {
@@ -19,9 +22,12 @@ type GoalProps = {
 
 const GoalList: FunctionComponent<GoalProps> = ({ goals }) => (
   <ListContainer>
-    {goals.map((goal) => (
-      <GoalListItem key={goal.goalId} title={goal.title} />
-    ))}
+    {goals.map((goal) => {
+      const { name, tasks, goalId } = goal;
+      return (
+        <GoalListItem key={goalId} name={name} tasks={tasks} goalId={goalId} />
+      );
+    })}
   </ListContainer>
 );
 

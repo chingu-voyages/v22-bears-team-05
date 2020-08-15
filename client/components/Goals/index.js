@@ -1,4 +1,4 @@
-import GoalList from './GoalList';
-import GoalListItem from './GoalListItem';
+import GoalList from './GoalList.tsx';
+import GoalListItem from './GoalListItem.tsx';
 
 export { GoalList, GoalListItem };

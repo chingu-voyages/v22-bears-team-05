@@ -10,21 +10,21 @@ const Container = styled.div`
 
 type Goal = {
   goalId: string;
-  title: string;
+  name: string;
 };
 
 const GOALS: Goal[] = [
   {
     goalId: '0',
-    title: 'Complete Chingu Voyage 22',
+    name: 'Complete Chingu Voyage 22',
   },
   {
     goalId: '1',
-    title: 'Learn GraphQL',
+    name: 'Learn GraphQL',
   },
   {
     goalId: '2',
-    title: 'Become a React Testing Master',
+    name: 'Become a React Testing Master',
   },
 ];
 

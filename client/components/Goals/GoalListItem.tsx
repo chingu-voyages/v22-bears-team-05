@@ -1,5 +1,12 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
+
+import { TaskList } from '../Tasks';
+
+const Container = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+`;
 
 const ListItem = styled.div`
   background-color: #fff;
@@ -10,12 +17,27 @@ const ListItem = styled.div`
   border-radius: 18px;
 `;
 
+type Task = {};
+
 type GoalProp = {
-  title: string;
+  name: string;
+  goalId: string;
+  tasks: Task[];
 };
 
-const GoalListItem: FunctionComponent<GoalProp> = ({ title }) => (
-  <ListItem>{title}</ListItem>
-);
+const GoalListItem: FunctionComponent<GoalProp> = ({ name, goalId, tasks }) => {
+  const [showTasks, setShowTasks] = useState(false);
+
+  const toggleShowTasks = () => {
+    setShowTasks(showTasks!);
+  };
+
+  return (
+    <Container>
+      <ListItem onClick={toggleShowTasks}>{name}</ListItem>
+      {showTasks && <TaskList tasks={tasks} />}
+    </Container>
+  );
+};
 
 export default GoalListItem;
