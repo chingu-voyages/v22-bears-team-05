@@ -8,7 +8,12 @@ const Container = styled.div`
   font-family: Montserrat;
 `;
 
-const GOALS = [
+type Goal = {
+  goalId: string;
+  title: string;
+};
+
+const GOALS: Goal[] = [
   {
     goalId: '0',
     title: 'Complete Chingu Voyage 22',
