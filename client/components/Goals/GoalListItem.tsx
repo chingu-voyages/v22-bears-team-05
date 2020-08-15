@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 const ListItem = styled.div`
@@ -11,10 +10,12 @@ const ListItem = styled.div`
   border-radius: 18px;
 `;
 
-const GoalListItem = ({ title }) => <ListItem>{title}</ListItem>;
-
-GoalListItem.propTypes = {
-  title: PropTypes.string.isRequired,
+type GoalProp = {
+  title: string;
 };
+
+const GoalListItem: FunctionComponent<GoalProp> = ({ title }) => (
+  <ListItem>{title}</ListItem>
+);
 
 export default GoalListItem;
