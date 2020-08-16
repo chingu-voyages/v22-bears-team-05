@@ -15,6 +15,7 @@ const ListItem = styled.div`
   padding: 1em;
   box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.29);
   border-radius: 18px;
+  font-size: 1.2em;
 `;
 
 type GoalProp = {
