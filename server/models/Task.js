@@ -1,4 +1,4 @@
-const { model, Schema } = require("mongoose");
+const { model, Schema } = require("mongoose")
 
 const taskSchema = new Schema({
   name: {
@@ -22,6 +22,11 @@ const taskSchema = new Schema({
     type: Boolean,
     default: false,
   },
-});
+  parent: {
+    type: Schema.Types.ObjectId,
+    ref: "Goal",
+    default: null,
+  },
+})
 
-module.exports = model("Task", taskSchema);
+module.exports = model("Task", taskSchema)
