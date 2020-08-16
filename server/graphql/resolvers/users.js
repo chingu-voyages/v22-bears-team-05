@@ -18,6 +18,27 @@ function generateToken(user) {
 
 module.exports = {
   Query: {
+    async login(_, { email, password }) {
+      const errorMessage = "The username or password is invalid" //security best practice to not give too much information
+      const errors = {}
+      const user = await User.findOne({ email })
+      if (!user) {
+        //user does not exist
+        errors.general = errorMessage
+        throw new UserInputError(errorMessage, { errors })
+      }
+      const match = await bcrypt.compare(password, user.password)
+      if (!match) {
+        errors.general = errorMessage
+        throw new UserInputError(errorMessage, { errors })
+      }
+      const token = generateToken(user)
+      return {
+        id: user._id,
+        token,
+        email,
+      }
+    },
     async userList() {
       try {
         const userData = await User.find()
@@ -64,30 +85,9 @@ module.exports = {
       const token = generateToken(res)
 
       return {
-        ...res._doc,
         id: res._id,
         token,
-      }
-    },
-    async login(_, { email, password }) {
-      const errorMessage = "The username or password is invalid" //security best practice to not give too much information
-      const errors = {}
-      const user = await User.findOne({ email })
-      if (!user) {
-        //user does not exist
-        errors.general = errorMessage
-        throw new UserInputError(errorMessage, { errors })
-      }
-      const match = await bcrypt.compare(password, user.password)
-      if (!match) {
-        errors.general = errorMessage
-        throw new UserInputError(errorMessage, { errors })
-      }
-      const token = generateToken(user)
-      return {
-        ...user._doc,
-        id: user._id,
-        token,
+        email,
       }
     },
   },

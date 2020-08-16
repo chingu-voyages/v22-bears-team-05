@@ -4,7 +4,6 @@ module.exports = gql`
   type User {
     id: ID!
     email: String!
-    token: String!
     createdDate: String!
   }
   type UserView {
@@ -14,7 +13,7 @@ module.exports = gql`
     _id: ID!
     user: String!
     name: String!
-    tasks: [Task]
+    tasks: [Task!]
     totalTimeInSeconds: Int
     isCompleted: Boolean
     totalCompletedSubtasks: Int
@@ -23,7 +22,7 @@ module.exports = gql`
     _id: ID
     name: String!
     parent: Goal
-    subtasks: [Subtask]
+    subtasks: [Subtask!]
     totalTimeInSeconds: Int
     isCompleted: Boolean
     totalCompletedSubtasks: Int
@@ -38,13 +37,18 @@ module.exports = gql`
     timeStarted: String
     timeCompleted: String
   }
+  type AuthData {
+    id: ID!
+    email: String!
+    token: String!
+  }
   type Query {
+    login(email: String!, password: String!): AuthData!
     userList: [UserView]
     getAllGoals: [Goal]!
   }
   type Mutation {
-    register(email: String!, password: String!, confirmPassword: String!): User!
-    login(email: String!, password: String!): User!
+    register(email: String!, password: String!, confirmPassword: String!): AuthData!
     createGoal(goalName: String!): Goal!
     createTask(taskName: String!, goalId: String!): Task!
     deleteTask(taskId: String!): Goal #can be null, for future considerations
