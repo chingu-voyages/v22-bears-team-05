@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import { GoalListItem } from '.';
+import { GoalListItem, NewGoalButton } from '.';
 
 const ListContainer = styled.div`
   background-color: white;
@@ -32,6 +32,7 @@ type Subtask = {
 
 const GoalList: FunctionComponent<GoalProps> = ({ goals }) => (
   <ListContainer>
+    <NewGoalButton />
     {goals.map((goal) => {
       const { name, tasks, goalId } = goal;
       return (
