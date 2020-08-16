@@ -48,9 +48,9 @@ module.exports = gql`
     createGoal(goalName: String!): Goal!
     createTask(taskName: String!, goalId: String!): Task!
     deleteTask(taskId: String!): Goal #can be null, for future considerations
-    # completeTask(taskId: String!): Goal #can be null, for future considerations
+    completeTask(taskId: String!): Goal #can be null, for future considerations
     createSubtask(subtaskName: String!, taskId: String!): Subtask!
     deleteSubtask(subtaskId: String!): Task #can be null, for future considerations
-    # completeSubtask(substaskId: String!): Task #can be null, for future considerations
+    completeSubtask(subtaskId: String!): Task #can be null, for future considerations
   }
 `

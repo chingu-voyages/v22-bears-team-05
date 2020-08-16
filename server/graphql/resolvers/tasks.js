@@ -39,5 +39,30 @@ module.exports = {
         throw new Error(err)
       }
     },
+    async completeTask(_, { taskId }, context) {
+      if (context.req.isAuth === false) throw new Error("not authenticated")
+      try {
+        const currentTask = await Task.findById(taskId).populate("parent")
+        if (!currentTask)
+          throw new Error("The specified Task Id does not exist")
+        /* deleted tasks persist for some reason
+
+        if (currentTask.subtasks.length > 0)
+          throw new Error(
+            "Task cannot be completed while it still contains subtasks"
+          ) */
+        const parentGoal = currentTask.parent
+        if (parentGoal) {
+          parentGoal.totalCompletedSubtasks +=
+            currentTask.totalCompletedSubtasks
+          parentGoal.tasks = parentGoal.tasks.filter((id) => id !== taskId)
+          await parentGoal.save()
+        }
+        await currentTask.delete()
+        return parentGoal
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
   },
 }
