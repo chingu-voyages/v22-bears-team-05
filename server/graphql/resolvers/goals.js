@@ -5,9 +5,12 @@ module.exports = {
     async getAllGoals(_, __, context) {
       if (context.req.isAuth === false) throw new Error("not authenticated")
       try {
-        const goals = await Goal.find({ user: context.req.userId }).populate(
-          "tasks"
-        )
+        const goals = await Goal.find({ user: context.req.userId }).populate({
+          path: "tasks",
+          populate: {
+            path: "subtasks",
+          },
+        })
         return goals
       } catch (err) {
         throw new Error(err)
