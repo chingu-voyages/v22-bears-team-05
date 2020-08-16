@@ -8,7 +8,7 @@ const taskSchema = new Schema({
     minlength: 1,
     maxlength: 20,
   },
-  subTasks: [
+  subtasks: [
     {
       type: Schema.Types.ObjectId,
       ref: "Subtask",
