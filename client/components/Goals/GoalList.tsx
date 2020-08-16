@@ -6,18 +6,28 @@ import { GoalListItem } from '.';
 const ListContainer = styled.div`
   background-color: white;
   max-width: 100%;
+  user-select: none;
 `;
 
-type Task = {};
-
-type Goal = {
-  name: string;
-  goalId: string;
-  tasks: Task[];
+type GoalProps = {
+  goals?: Goal[];
 };
 
-type GoalProps = {
-  goals: Goal[];
+type Goal = {
+  goalId: string;
+  name: string;
+  tasks?: Task[];
+};
+
+type Task = {
+  id: string;
+  name: string;
+  subtasks?: Subtask[];
+};
+
+type Subtask = {
+  id: string;
+  name: string;
 };
 
 const GoalList: FunctionComponent<GoalProps> = ({ goals }) => (

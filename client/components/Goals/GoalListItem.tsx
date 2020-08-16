@@ -9,27 +9,40 @@ const Container = styled.div`
 `;
 
 const ListItem = styled.div`
-  background-color: #fff;
-  border: 2px solid #407899;
+  background-color: #61bd8f;
+  border: 2px solid #61bd8f;
   margin: 0 0 0.5em;
   padding: 1em;
   box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.29);
   border-radius: 18px;
 `;
 
-type Task = {};
-
 type GoalProp = {
-  name: string;
   goalId: string;
-  tasks: Task[];
+  name: string;
+  tasks?: Task[];
 };
 
-const GoalListItem: FunctionComponent<GoalProp> = ({ name, goalId, tasks }) => {
+type Task = {
+  id: string;
+  name: string;
+  subtasks?: Subtask[];
+};
+
+type Subtask = {
+  id: string;
+  name: string;
+};
+
+const GoalListItem: FunctionComponent<GoalProp> = ({
+  name,
+  goalId,
+  tasks = [],
+}) => {
   const [showTasks, setShowTasks] = useState(false);
 
   const toggleShowTasks = () => {
-    setShowTasks(showTasks!);
+    setShowTasks(!showTasks);
   };
 
   return (
