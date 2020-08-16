@@ -27,6 +27,10 @@ const taskSchema = new Schema({
     ref: "Goal",
     default: null,
   },
+  totalCompletedSubtasks: {
+    type: Number,
+    default: 0,
+  },
 })
 
 module.exports = model("Task", taskSchema)

@@ -1,4 +1,4 @@
-const { model, Schema } = require("mongoose");
+const { model, Schema } = require("mongoose")
 
 const goalSchema = new Schema({
   user: {
@@ -23,10 +23,14 @@ const goalSchema = new Schema({
     type: Number,
     default: 0,
   },
+  totalCompletedSubtasks: {
+    type: Number,
+    default: 0,
+  },
   isCompleted: {
     type: Boolean,
     default: false,
   },
-});
+})
 
-module.exports = model("Goal", goalSchema);
+module.exports = model("Goal", goalSchema)
