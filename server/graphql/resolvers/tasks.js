@@ -20,5 +20,24 @@ module.exports = {
         throw new Error(err)
       }
     },
+    async deleteTask(_, { taskId }, context) {
+      if (context.req.isAuth === false) throw new Error("not authenticated")
+      try {
+        const currentTask = await Task.findById(taskId).populate("parent")
+        if (currentTask) {
+          const parentGoal = currentTask.parent
+          if (parentGoal) {
+            parentGoal.tasks = parentGoal.tasks.filter((id) => id !== taskId)
+            await parentGoal.save()
+          }
+          await currentTask.delete()
+          return parentGoal
+        } else {
+          throw new Error("That task does not exist")
+        }
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
   },
 }

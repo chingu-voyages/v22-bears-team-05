@@ -17,6 +17,7 @@ module.exports = gql`
     tasks: [Task]
     totalTimeInSeconds: Int
     isCompleted: Boolean
+    totalCompletedSubtasks: Int
   }
   type Task {
     _id: ID
@@ -25,6 +26,7 @@ module.exports = gql`
     subtasks: [Subtask]
     totalTimeInSeconds: Int
     isCompleted: Boolean
+    totalCompletedSubtasks: Int
   }
   type Subtask {
     _id: ID!
@@ -45,5 +47,6 @@ module.exports = gql`
     login(email: String!, password: String!): User!
     createGoal(goalName: String!): Goal!
     createTask(taskName: String!, goalId: String!): Task!
+    deleteTask(taskId: String!): Goal #can be null
   }
 `
