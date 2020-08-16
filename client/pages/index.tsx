@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import App from '../components/App';
 // import { initializeApollo } from "../lib/apolloClient"
 
-const IndexPage = () => <App>Boilerplate Code</App>;
+import Links from '../components/Links';
+
+const IndexPage: FunctionComponent = () => (
+  <App>
+    <Links />
+    <h1>Landing Page</h1>
+  </App>
+);
 
 /*
 fill out getStaticProps properly once the graphQL stuff is figured out
