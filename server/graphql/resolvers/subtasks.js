@@ -22,7 +22,7 @@ module.exports = {
         throw new Error(err)
       }
     },
-    async deleteTask(_, { subtaskId }, context) {
+    async deleteSubtask(_, { subtaskId }, context) {
       if (context.req.isAuth === false) throw new Error("not authenticated")
       try {
         const currentSubtask = await Subtask.findById(subtaskId).populate(
@@ -31,6 +31,29 @@ module.exports = {
         if (!currentSubtask) throw new Error("That subtask does not exist")
         const parentTask = currentSubtask.parent
         if (parentTask) {
+          parentTask.subtasks = parentTask.subtasks.filter(
+            (id) => id !== subtaskId
+          )
+          await parentTask.save()
+        }
+        await currentSubtask.delete()
+        return parentTask
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
+    async completeSubtask(_, { subtaskId }, context) {
+      if (context.req.isAuth === false) throw new Error("not authenticated")
+      try {
+        const currentSubtask = await Subtask.findById(subtaskId).populate(
+          "parent"
+        )
+        if (!currentSubtask)
+          throw new Error("A subtask with the specified id does not exist")
+        const parentTask = currentSubtask.parent
+        if (parentTask) {
+          //add to count and remove the task from the list
+          parentTask.totalCompletedSubtasks += 1
           parentTask.subtasks = parentTask.subtasks.filter(
             (id) => id !== subtaskId
           )
