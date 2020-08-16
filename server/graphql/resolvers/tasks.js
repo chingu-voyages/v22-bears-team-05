@@ -35,7 +35,7 @@ module.exports = {
         
         const parentGoal = currentTask.parent
         if (parentGoal) {
-          parentGoal.tasks = parentGoal.tasks.filter((id) => id !== taskId)
+          parentGoal.tasks = parentGoal.tasks.filter((id) => id === taskId)
           await parentGoal.save()
         }
         await currentTask.delete()
@@ -47,7 +47,7 @@ module.exports = {
     },
     async completeTask(_, { taskId }, context) {
       if (!context.req.isAuth) throw new Error("not authenticated")
-      
+
       try {
         const currentTask = await Task.findById(taskId).populate("parent")
         if (!currentTask)
@@ -63,7 +63,7 @@ module.exports = {
         if (parentGoal) {
           parentGoal.totalCompletedSubtasks +=
             currentTask.totalCompletedSubtasks
-          parentGoal.tasks = parentGoal.tasks.filter((id) => id !== taskId)
+          parentGoal.tasks = parentGoal.tasks.filter((id) => id === taskId)
           await parentGoal.save()
         }
         await currentTask.delete()
