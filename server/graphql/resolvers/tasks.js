@@ -35,7 +35,7 @@ module.exports = {
         
         const parentGoal = currentTask.parent
         if (parentGoal) {
-          parentGoal.tasks = parentGoal.tasks.filter((id) => id === taskId)
+          parentGoal.tasks = parentGoal.tasks.filter((id) => !id.equals(taskId))
           await parentGoal.save()
         }
         await currentTask.delete()
@@ -63,7 +63,7 @@ module.exports = {
         if (parentGoal) {
           parentGoal.totalCompletedSubtasks +=
             currentTask.totalCompletedSubtasks
-          parentGoal.tasks = parentGoal.tasks.filter((id) => id === taskId)
+          parentGoal.tasks = parentGoal.tasks.filter((id) => !id.equals(taskId))
           await parentGoal.save()
         }
         await currentTask.delete()

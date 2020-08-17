@@ -36,7 +36,7 @@ module.exports = {
         const parentTask = currentSubtask.parent
 
         if (parentTask) {
-          parentTask.subtasks = parentTask.subtasks.filter((id) => id === subtaskId)
+          parentTask.subtasks = parentTask.subtasks.filter((id) => id === !id.equals(subtaskId))
           await parentTask.save()
         }
         
@@ -58,7 +58,7 @@ module.exports = {
         if (parentTask) {
           //add to count and remove the task from the list
           parentTask.totalCompletedSubtasks += 1
-          parentTask.subtasks = parentTask.subtasks.filter((id) => id === subtaskId)
+          parentTask.subtasks = parentTask.subtasks.filter((id) => !id.equals(subtaskId))
           await parentTask.save()
         }
         await currentSubtask.delete()
