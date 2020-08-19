@@ -2,11 +2,8 @@ import React, { FunctionComponent } from 'react';
 import App from '../components/App';
 // import { initializeApollo } from "../lib/apolloClient"
 
-import Links from '../components/Links';
-
 const IndexPage: FunctionComponent = () => (
   <App>
-    <Links />
     <h1>Landing Page</h1>
   </App>
 );
