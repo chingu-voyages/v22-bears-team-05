@@ -1,7 +1,7 @@
 import React, { useState, FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import Links from '../components/Links';
+import App from '../components/App';
 
 const Form = styled.form`
   width: 100%;
@@ -15,19 +15,21 @@ const Form = styled.form`
     padding: 10px 0 10px 10px;
     max-width: 340px;
     font-size: 1.1em;
+    outline: none;
   }
 
   button {
-    border-radius: 17px;
+    border-radius: 40px;
     width: 100%;
     padding: 10px;
     margin: 0 auto;
-    border-radius: 0;
     height: 50px;
     background-color: #4ea5d9;
     max-width: 400px;
     font-size: 1.1em;
     border: none;
+    user-select: none;
+    outline: none;
   }
 `;
 
@@ -50,7 +52,7 @@ const Login: FunctionComponent = () => {
 
     const requestBody = {
       query: `
-        mutation Login($email: String!, $password: String!) {
+        query Login($email: String!, $password: String!) {
           login(
             email: $email,
             password: $password
@@ -104,8 +106,7 @@ const Login: FunctionComponent = () => {
   };
 
   return (
-    <>
-      <Links />
+    <App>
       <Form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">
@@ -133,7 +134,7 @@ const Login: FunctionComponent = () => {
         </div>
         <button type="submit">Login</button>
       </Form>
-    </>
+    </App>
   );
 };
 
