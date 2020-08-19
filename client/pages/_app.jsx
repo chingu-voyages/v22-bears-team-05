@@ -4,6 +4,8 @@ import { ApolloProvider } from '@apollo/client';
 import { useApollo } from '../lib/apolloClient';
 import 'typeface-montserrat';
 
+import GlobalStyle from '../theme/globalStyles';
+
 /**
  * Root App Component with ApolloProvider Wrapper
  */
@@ -12,6 +14,7 @@ const App = ({ Component, pageProps }) => {
 
   return (
     <ApolloProvider client={apolloClient}>
+      <GlobalStyle />
       <Component {...pageProps} />
     </ApolloProvider>
   );
