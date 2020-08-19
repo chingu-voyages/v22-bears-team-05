@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const App = ({children}) => {
-  return <main>{children}</main>;
-};
+import Links from './Links.tsx';
+
+const App = ({ children }) => (
+  <main>
+    <Links />
+    {children}
+  </main>
+);
 
 App.propTypes = {
   children: PropTypes.node.isRequired,
