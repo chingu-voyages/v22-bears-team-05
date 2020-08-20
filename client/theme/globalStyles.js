@@ -9,14 +9,34 @@ const GlobalStyle = createGlobalStyle`
     text-align: center;
   }
 
+  .center {
+    text-align: center;
+  }
+
   form {
     font-size: 1.1em;
+    
+    .error, .success {
+      text-align: center;
+      padding: 10px;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .success {
+      color: green;
+    }
+
+    > * {
+      margin: 15px 0;
+    }
   }
   
   input {
     font-family: Montserrat;
     width: 100%;
-    margin-bottom: 20px;
     padding: 10px 0 10px 10px;
     max-width: 340px;
     font-size: 1.1em;
