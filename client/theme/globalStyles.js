@@ -5,6 +5,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: Montserrat;
   }
 
+  .body--modal-open{
+    overflow: hidden;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     text-align: center;
   }
@@ -56,6 +60,7 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     user-select: none;
     outline: none;
+    cursor: pointer;
   }
 `;
 
