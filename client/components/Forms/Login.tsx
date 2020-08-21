@@ -149,12 +149,6 @@ const Login: FunctionComponent = () => {
       ) : (
         <Spinner />
       )}
-      <p className="center">
-        {'Not a member? '}
-        <Link href="/register">
-          <a href="/register">Create Account!</a>
-        </Link>
-      </p>
     </Form>
   );
 };
