@@ -1,8 +1,10 @@
-import React, { useState, FunctionComponent } from 'react';
+import { useRouter } from 'next/router';
+import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
-
+import { initializeApollo } from '../../lib/apolloClient';
 import Spinner from '../Spinner';
-import { login } from '../../utils/auth';
+import LOGIN_QUERY from './loginQuery';
+import LOGIN_VARIABLES from './loginVariables';
 
 const Form = styled.form`
   width: 100%;
@@ -37,6 +39,7 @@ const Login: FunctionComponent = () => {
   const [success, setSuccess] = useState(false);
   const [selectable, setSelectable] = useState(true);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.ChangeEvent<any>) => {
     e.preventDefault();
@@ -68,27 +71,21 @@ const Login: FunctionComponent = () => {
     setSelectable(false);
     setLoading(true);
 
+    const apolloClient = await initializeApollo();
+
     try {
-      const authData = await login(email, password);
-
-      if (!authData) {
-        setSelectable(true);
-        setLoading(false);
-        setError(LOGIN_ERRORS.loginFail);
-        return false;
-      }
-
-      const { token, id } = authData;
-
+      await apolloClient.resetStore();
+      await apolloClient.query({
+        query: LOGIN_QUERY,
+        variables: LOGIN_VARIABLES({ email, password }),
+      });
+      setSuccess(true);
+      router.push('/home');
+      return true;
+    } catch {
       setSelectable(true);
       setLoading(false);
-      setSuccess(true);
-
-      // TODO: call some apollo or context function to save this data
-      console.log(email, id, token);
-      return true;
-    } catch (err) {
-      console.log(err);
+      setError(LOGIN_ERRORS.loginFail);
       return false;
     }
   };
