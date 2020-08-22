@@ -1,5 +1,4 @@
 import React, { useState, FunctionComponent } from 'react';
-import Link from 'next/link';
 import styled from 'styled-components';
 
 import Spinner from '../Spinner';
@@ -44,6 +43,21 @@ const Login: FunctionComponent = () => {
 
     const { email, password } = formInput;
 
+    // Get error if necessary (for empty fields)
+    const getLoginError = (emailInput: string, passwordInput: string) => {
+      if (!emailInput) {
+        if (!passwordInput) {
+          return LOGIN_ERRORS.emptyFields;
+        }
+        return LOGIN_ERRORS.emptyEmail;
+      }
+
+      if (!passwordInput) {
+        return LOGIN_ERRORS.emptyPassword;
+      }
+      return null;
+    };
+
     const errorMessage = getLoginError(email, password);
     setError(errorMessage);
 
@@ -77,21 +91,6 @@ const Login: FunctionComponent = () => {
       console.log(err);
       return false;
     }
-  };
-
-  const getLoginError = (emailInput: string, passwordInput: string) => {
-    // Get error if necessary
-    if (!emailInput) {
-      if (!passwordInput) {
-        return LOGIN_ERRORS.emptyFields;
-      }
-      return LOGIN_ERRORS.emptyEmail;
-    }
-
-    if (!passwordInput) {
-      return LOGIN_ERRORS.emptyPassword;
-    }
-    return null;
   };
 
   const handleInputChange = (e: React.ChangeEvent<any>) => {
