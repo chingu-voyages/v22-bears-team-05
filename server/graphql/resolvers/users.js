@@ -18,7 +18,7 @@ function generateToken(user) {
 
 module.exports = {
   Query: {
-    async login(_, { email, password }) {
+    async login(_, { email, password }, context) {
       const errorMessage = "The username or password is invalid" //security best practice to not give too much information
       const errors = {}
       const user = await User.findOne({ email })
@@ -33,6 +33,10 @@ module.exports = {
         throw new UserInputError(errorMessage, { errors })
       }
       const token = generateToken(user)
+
+      // save userId to session!
+      context.req.session.userId = user._id;
+
       return {
         id: user._id,
         token,
@@ -83,6 +87,8 @@ module.exports = {
       const res = await newUser.save()
 
       const token = generateToken(res)
+
+      context.req.session.userId = res._id;
 
       return {
         id: res._id,

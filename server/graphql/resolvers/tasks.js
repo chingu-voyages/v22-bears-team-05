@@ -3,7 +3,7 @@ const Goal = require("../../models/Goal")
 module.exports = {
   Mutation: {
     async createTask(_, { taskName, goalId }, context) {
-      if (!context.req.isAuth) throw new Error("not authenticated")
+      if (!context.req.session.userId) throw new Error("not authenticated")
 
       try {
         const parentGoal = await Goal.findById(goalId)
@@ -25,7 +25,7 @@ module.exports = {
       }
     },
     async deleteTask(_, { taskId }, context) {
-      if (!context.req.isAuth) throw new Error("not authenticated")
+      if (!context.req.session.userId) throw new Error("not authenticated")
       
       try {
         const currentTask = await Task.findById(taskId).populate("parent")
@@ -46,7 +46,7 @@ module.exports = {
       }
     },
     async completeTask(_, { taskId }, context) {
-      if (!context.req.isAuth) throw new Error("not authenticated")
+      if (!context.req.session.userId) throw new Error("not authenticated")
 
       try {
         const currentTask = await Task.findById(taskId).populate("parent")

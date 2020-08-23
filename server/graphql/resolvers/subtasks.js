@@ -3,7 +3,7 @@ const Subtask = require("../../models/Subtask")
 module.exports = {
   Mutation: {
     async createSubtask(_, { subtaskName, taskId }, context) {
-      if (!context.req.isAuth) throw new Error("not authenticated")
+      if (!context.req.session.userId) throw new Error("not authenticated")
 
       try {
         const parentTask = await Task.findById(taskId)
@@ -25,7 +25,7 @@ module.exports = {
       }
     },
     async deleteSubtask(_, { subtaskId }, context) {
-      if (!context.req.isAuth) throw new Error("not authenticated")
+      if (!context.req.session.userId) throw new Error("not authenticated")
 
       try {
         const currentSubtask = await Subtask.findById(subtaskId).populate(
@@ -47,7 +47,7 @@ module.exports = {
       }
     },
     async completeSubtask(_, { subtaskId }, context) {
-      if (!context.req.isAuth) throw new Error("not authenticated")
+      if (!context.req.session.userId) throw new Error("not authenticated")
 
       try {
         const currentSubtask = await Subtask.findById(subtaskId).populate("parent")
