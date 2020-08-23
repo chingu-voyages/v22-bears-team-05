@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { gql, useQuery } from '@apollo/client';
 
+import { withApollo } from '../utils/withApollo';
 import App from '../components/App';
 import { GoalList } from '../components/Goals';
 
@@ -59,13 +61,38 @@ const GOALS: Goal[] = [
   },
 ];
 
-const HomePage = () => (
-  <App>
-    <Container>
-      <h1>Your Goals</h1>
-      <GoalList goals={GOALS} />
-    </Container>
-  </App>
-);
+const GET_GOALS_QUERY = gql`
+  query GetGoals {
+    getAllGoals {
+      _id
+      name
+      tasks {
+        _id
+        name
+        subtasks {
+          _id
+          name
+        }
+      }
+    }
+  }
+`;
 
-export default HomePage;
+const HomePage = () => {
+  // TODO: Replace with correct logic here
+  const { data, error } = useQuery(GET_GOALS_QUERY);
+  // To peek inside the output of this query,
+  // simply console log both data and error
+
+  // const client = useApolloClient();
+  return (
+    <App>
+      <Container>
+        <h1>Your Goals</h1>
+        <GoalList goals={GOALS} />
+      </Container>
+    </App>
+  );
+};
+
+export default withApollo({ ssr: true })(HomePage);
