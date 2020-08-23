@@ -26,6 +26,7 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "next": "latest",
+    "next-apollo": "^5.0.0",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
