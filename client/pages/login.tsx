@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
+import { withApollo } from '../utils/withApollo';
 import App from '../components/App';
 import Login from '../components/Forms/Login';
 
@@ -17,4 +18,4 @@ const LoginPage = () => (
   </App>
 );
 
-export default LoginPage;
+export default withApollo({ ssr: false })(LoginPage);
