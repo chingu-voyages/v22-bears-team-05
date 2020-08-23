@@ -1,24 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ApolloProvider } from '@apollo/client';
-import { useApollo } from '../lib/apolloClient';
 import 'typeface-montserrat';
 
 import GlobalStyle from '../theme/globalStyles';
 
 /**
- * Root App Component with ApolloProvider Wrapper
+ * Root App Component
  */
-const App = ({ Component, pageProps }) => {
-  const apolloClient = useApollo(pageProps.initialApolloState);
-
-  return (
-    <ApolloProvider client={apolloClient}>
-      <GlobalStyle />
-      <Component {...pageProps} />
-    </ApolloProvider>
-  );
-};
+const App = ({ Component, pageProps }) => (
+  <>
+    <GlobalStyle />
+    <Component {...pageProps} />
+  </>
+);
 
 App.propTypes = {
   Component: PropTypes.func.isRequired,
