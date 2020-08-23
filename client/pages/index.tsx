@@ -4,7 +4,7 @@ import App from '../components/App';
 
 const IndexPage: FunctionComponent = () => (
   <App>
-    <h1>Landing Page</h1>
+    <h1>Goal Tracker</h1>
   </App>
 );
 
