@@ -1,9 +1,16 @@
 import React, { FunctionComponent } from 'react';
 import App from '../components/App';
+import Head from 'next/head';
+
 // import { initializeApollo } from "../lib/apolloClient"
 
 const IndexPage: FunctionComponent = () => (
   <App>
+    <Head>
+      <title>Goal Tracker</title>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    </Head>
+
     <h1>Goal Tracker</h1>
   </App>
 );

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { gql, useQuery } from '@apollo/client';
+import Head from 'next/head';
 
 import { withApollo } from '../utils/withApollo';
 import App from '../components/App';
@@ -87,6 +88,11 @@ const HomePage = () => {
   // const client = useApolloClient();
   return (
     <App>
+      <Head>
+        <title>Goal Tracker | Home</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+
       <Container>
         <h1>Your Goals</h1>
         <GoalList goals={GOALS} />
