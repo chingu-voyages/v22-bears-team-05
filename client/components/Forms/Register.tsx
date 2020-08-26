@@ -26,14 +26,7 @@ const Form = styled.form`
     position: absolute;
     left: calc(100% - 40px);
     padding: 10px 0;
-  }
-
-  .validateIcon.success {
     color: #4f8a10;
-  }
-
-  .validateIcon.error {
-    color: #d8000c;
   }
 
   .passwordCriteria {
@@ -238,7 +231,7 @@ const Register: FunctionComponent = () => {
               disabled={!selectable}
             />
             {email && !emailError && (
-              <FaCheck size={25} className="validateIcon success" />
+              <FaCheck size={25} className="validateIcon" />
             )}
           </div>
         </label>
@@ -256,7 +249,7 @@ const Register: FunctionComponent = () => {
               disabled={!selectable}
             />
             {password && !passwordError && (
-              <FaCheck size={25} className="validateIcon success" />
+              <FaCheck size={25} className="validateIcon" />
             )}
           </div>
         </label>
@@ -282,7 +275,7 @@ const Register: FunctionComponent = () => {
               disabled={!selectable}
             />
             {password && confirmPassword === password && (
-              <FaCheck size={25} className="validateIcon success" />
+              <FaCheck size={25} className="validateIcon" />
             )}
           </div>
         </label>
