@@ -48,7 +48,6 @@ const Form = styled.form`
 `;
 
 const REGISTER_ERRORS = {
-  registerFail: 'Email or password is incorrect',
   invalidEmail: 'A Valid Email is Required to Sign Up',
   emptyPassword: 'Enter a Password',
   emptyConfirmPassword: 'Confirm Your Password',
