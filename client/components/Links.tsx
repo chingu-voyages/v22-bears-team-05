@@ -9,6 +9,9 @@ const Links: FunctionComponent = () => (
       <a href="/login">Login</a>
     </li>
     <li>
+      <a href="/register">Register</a>
+    </li>
+    <li>
       <a href="/home">App Home</a>
     </li>
   </ul>

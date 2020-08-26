@@ -3,8 +3,8 @@ import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 import { useApolloClient } from '@apollo/client';
 import Spinner from '../Spinner';
-import LOGIN_QUERY from './loginQuery';
-import LOGIN_VARIABLES from './loginVariables';
+import { LOGIN_QUERY } from '../../utils/graphql/query';
+import { LOGIN_VARIABLES } from '../../utils/graphql/variables';
 
 const Form = styled.form`
   width: 100%;
@@ -42,25 +42,25 @@ const Login: FunctionComponent = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  // Get error if necessary (for empty fields)
+  const getLoginError = (emailInput: string, passwordInput: string) => {
+    if (!emailInput) {
+      if (!passwordInput) {
+        return LOGIN_ERRORS.emptyFields;
+      }
+      return LOGIN_ERRORS.emptyEmail;
+    }
+
+    if (!passwordInput) {
+      return LOGIN_ERRORS.emptyPassword;
+    }
+    return null;
+  };
+
   const handleSubmit = async (e: React.ChangeEvent<any>) => {
     e.preventDefault();
 
     const { email, password } = formInput;
-
-    // Get error if necessary (for empty fields)
-    const getLoginError = (emailInput: string, passwordInput: string) => {
-      if (!emailInput) {
-        if (!passwordInput) {
-          return LOGIN_ERRORS.emptyFields;
-        }
-        return LOGIN_ERRORS.emptyEmail;
-      }
-
-      if (!passwordInput) {
-        return LOGIN_ERRORS.emptyPassword;
-      }
-      return null;
-    };
 
     const errorMessage = getLoginError(email, password);
     setError(errorMessage);
