@@ -2,10 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 
+import { withApollo } from '../utils/withApollo';
 import App from '../components/App';
 import Register from '../components/Forms/Register';
 
-const LoginPage = () => (
+const RegisterPage = () => (
   <App>
     <Head>
       <title>Goal Tracker | Register</title>
@@ -23,4 +24,4 @@ const LoginPage = () => (
   </App>
 );
 
-export default LoginPage;
+export default withApollo({ ssr: false })(RegisterPage);
