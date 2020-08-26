@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
-import { useMutation, useApolloClient } from '@apollo/client';
-import { FaCheck, FaTimesCircle } from 'react-icons/fa';
+import { useApolloClient } from '@apollo/client';
+import { FaCheck } from 'react-icons/fa';
+
 import Spinner from '../Spinner';
 import { REGISTER_MUTATION } from '../../utils/graphql/mutation';
 import { REGISTER_VARIABLES } from '../../utils/graphql/variables';
@@ -73,21 +74,17 @@ const initState: LoginInput = {
 
 const Register: FunctionComponent = () => {
   const client = useApolloClient();
+  const router = useRouter();
+
   const [formInput, setFormInput] = useState(initState);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [selectable, setSelectable] = useState(true);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const [
-    register,
-    { data, error: mutationError },
-  ] = useMutation(REGISTER_MUTATION, { errorPolicy: 'all' });
   const [passwordError, setPasswordError] = useState(false);
   const [emailError, setEmailError] = useState(false);
 
-  // Get error if necessary, after use submits
-  // There's also instant feedback for valid input but this is a failsafe
+  // Get error if necessary, after user submits
   const getRegisterError = (
     emailInput: string,
     passwordInput: string,
@@ -135,7 +132,7 @@ const Register: FunctionComponent = () => {
       });
 
       setSuccess(true);
-      router.push('/home');
+      window.location.pathname = '/home';
       return true;
     } catch (err) {
       setSelectable(true);
