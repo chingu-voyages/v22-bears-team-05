@@ -15,7 +15,7 @@ function validateRegisterInput(email, password, confirmPassword) {
   if (!email.match(emailRegex))
     errors.email = "Email address must be a valid email address"
   //password constraints: at least
-  const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[*.!@$%^&(){}[\]:;<>,\.\?\/~_\+\-=\|\\ ])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9*.!@$%^&(){}[\]:;<>,\.\?\/~_\+\-=\|\\ ]{6,128}$/
+  const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[*.!@#$%^&(){}[\]:;<>,\.\?\/~_\+\-=\|\\ ])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9*.!@#$%^&(){}[\]:;<>,\.\?\/~_\+\-=\|\\ ]{6,128}$/
   if (!password.match(passwordRegex))
     errors.password = "Password does not meet criteria"
   if (password !== confirmPassword)
