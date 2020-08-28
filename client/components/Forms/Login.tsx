@@ -2,9 +2,11 @@ import { useRouter } from 'next/router';
 import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 import { useApolloClient } from '@apollo/client';
+
 import Spinner from '../Spinner';
-import { LOGIN_QUERY } from '../../utils/graphql/query';
+import { LOGIN_MUTATION } from '../../utils/graphql/mutation';
 import { LOGIN_VARIABLES } from '../../utils/graphql/variables';
+import { MeDocument } from '../../utils/graphql/documents';
 
 const Form = styled.form`
   width: 100%;
@@ -74,10 +76,21 @@ const Login: FunctionComponent = () => {
 
     try {
       await client.resetStore();
-      await client.query({
-        query: LOGIN_QUERY,
+      await client.mutate({
+        mutation: LOGIN_MUTATION,
         variables: LOGIN_VARIABLES({ email, password }),
+        update: (cache, { data }) => {
+          cache.writeQuery({
+            query: MeDocument,
+            data: {
+              __typename: 'Query',
+              me: data?.login.user,
+            },
+          });
+          cache.evict({ fieldName: 'goals:{}' });
+        },
       });
+
       setSuccess(true);
       router.push('/home');
       return true;

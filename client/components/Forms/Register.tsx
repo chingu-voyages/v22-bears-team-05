@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router';
 import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
-import { useApolloClient } from '@apollo/client';
+import { useApolloClient, gql } from '@apollo/client';
 import { FaCheck } from 'react-icons/fa';
 
 import Spinner from '../Spinner';
 import { REGISTER_MUTATION } from '../../utils/graphql/mutation';
 import { REGISTER_VARIABLES } from '../../utils/graphql/variables';
+import { MeDocument } from '../../utils/graphql/documents';
 
 const Form = styled.form`
   width: 100%;
@@ -121,6 +122,16 @@ const Register: FunctionComponent = () => {
       await client.mutate({
         mutation: REGISTER_MUTATION,
         variables: REGISTER_VARIABLES({ email, password, confirmPassword }),
+        update: (cache, { data }) => {
+          cache.writeQuery({
+            query: MeDocument,
+            data: {
+              __typename: 'Query',
+              me: data?.register.user,
+            },
+          });
+          cache.evict({ fieldName: 'goals:{}' });
+        },
       });
 
       setSuccess(true);
