@@ -1,7 +1,7 @@
+import { useApolloClient } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
-import { useApolloClient } from '@apollo/client';
 import Spinner from '../Spinner';
 import LOGIN_QUERY from './loginQuery';
 import LOGIN_VARIABLES from './loginVariables';
@@ -79,7 +79,7 @@ const Login: FunctionComponent = () => {
         variables: LOGIN_VARIABLES({ email, password }),
       });
       setSuccess(true);
-      router.push('/home');
+      window.location.pathname = '/home';
       return true;
     } catch {
       setSelectable(true);

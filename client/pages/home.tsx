@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
 import { gql, useQuery } from '@apollo/client';
 import Head from 'next/head';
-
-import { withApollo } from '../utils/withApollo';
+import React from 'react';
+import styled from 'styled-components';
 import App from '../components/App';
 import { GoalList } from '../components/Goals';
+import Spinner from '../components/Spinner';
+import { withApollo } from '../utils/withApollo';
 
 const Container = styled.div`
   font-family: Montserrat;
@@ -28,41 +28,7 @@ type Subtask = {
   name: string;
 };
 
-const GOALS: Goal[] = [
-  {
-    goalId: '0',
-    name: 'Complete Chingu Voyage 22',
-    tasks: [
-      {
-        id: '0',
-        name: 'Sprint 1',
-        subtasks: [{ id: '0', name: 'A User Story' }],
-      },
-      { id: '1', name: 'Sprint 2' },
-      { id: '2', name: 'Sprint 3' },
-    ],
-  },
-  {
-    goalId: '1',
-    name: 'Learn GraphQL',
-    tasks: [{ id: '0', name: 'Finish howtographql.com tutorial' }],
-  },
-  {
-    goalId: '2',
-    name: 'Become a React Testing Master',
-    tasks: [
-      { id: '0', name: 'Follow Kent C Dodds' },
-      { id: '1', name: 'Read React-Testing-Library docs' },
-      { id: '2', name: 'Find a Tutorial' },
-    ],
-  },
-  {
-    goalId: '3',
-    name: 'A New Goal',
-  },
-];
-
-const GET_GOALS_QUERY = gql`
+export const GET_GOALS_QUERY = gql`
   query GetGoals {
     getAllGoals {
       _id
@@ -80,12 +46,19 @@ const GET_GOALS_QUERY = gql`
 `;
 
 const HomePage = () => {
-  // TODO: Replace with correct logic here
-  const { data, error } = useQuery(GET_GOALS_QUERY);
-  // To peek inside the output of this query,
-  // simply console log both data and error
+  const { data, error, loading } = useQuery(GET_GOALS_QUERY);
 
-  // const client = useApolloClient();
+  if (
+    error &&
+    error.message === 'not authenticated' &&
+    typeof window !== 'undefined'
+  ) {
+    window.location.pathname = '/login';
+  }
+
+  if (loading) return <Spinner />;
+  if (data === 'undefined') return null;
+
   return (
     <App>
       <Head>
@@ -95,7 +68,7 @@ const HomePage = () => {
 
       <Container>
         <h1>Your Goals</h1>
-        <GoalList goals={GOALS} />
+        <GoalList goals={data.getAllGoals} />
       </Container>
     </App>
   );

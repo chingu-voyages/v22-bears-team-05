@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server")
+const { gql } = require("apollo-server");
 
 module.exports = gql`
   type User {
@@ -37,6 +37,11 @@ module.exports = gql`
     timeStarted: String
     timeCompleted: String
   }
+  type DeletedData {
+    deletedGoals: Int
+    deletedTasks: Int
+    deletedSubtasks: Int
+  }
   type AuthData {
     id: ID!
     email: String!
@@ -48,8 +53,13 @@ module.exports = gql`
     getAllGoals: [Goal]!
   }
   type Mutation {
-    register(email: String!, password: String!, confirmPassword: String!): AuthData!
+    register(
+      email: String!
+      password: String!
+      confirmPassword: String!
+    ): AuthData!
     createGoal(goalName: String!): Goal!
+    deleteGoal(goalId: String!): DeletedData!
     createTask(taskName: String!, goalId: String!): Task!
     deleteTask(taskId: String!): Goal #can be null, for future considerations
     completeTask(taskId: String!): Goal #can be null, for future considerations
@@ -57,4 +67,4 @@ module.exports = gql`
     deleteSubtask(subtaskId: String!): Task #can be null, for future considerations
     completeSubtask(subtaskId: String!): Task #can be null, for future considerations
   }
-`
+`;
