@@ -1,3 +1,3 @@
-import LOGIN_QUERY from './login';
+import ME_QUERY from './me';
 
-export { LOGIN_QUERY };
+export { ME_QUERY };
