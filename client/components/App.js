@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Links from './Links.tsx';
+import NavBar from './NavBar';
 
 const App = ({ children }) => (
   <main>
-    <Links />
+    <NavBar />
     {children}
   </main>
 );

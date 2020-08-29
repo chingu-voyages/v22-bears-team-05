@@ -48,11 +48,12 @@ module.exports = gql`
     token: String!
   }
   type Query {
-    login(email: String!, password: String!): AuthData!
     userList: [UserView]
     getAllGoals: [Goal]!
+    me: User
   }
   type Mutation {
+    login(email: String!, password: String!): AuthData!
     register(
       email: String!
       password: String!

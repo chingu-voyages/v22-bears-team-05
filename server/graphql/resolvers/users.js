@@ -18,6 +18,28 @@ function generateToken(user) {
 
 module.exports = {
   Query: {
+    async userList() {
+      try {
+        const userData = await User.find()
+        const userList = userData.map((element) => {
+          return { email: element.email }
+        })
+        return userList
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
+    async me(_, __, { req }) {
+      if (!req.session.userId) {
+        return null;
+      }
+
+      const user = await User.findById(req.session.userId);
+      return user;
+    }
+  },
+
+  Mutation: {
     async login(_, { email, password }, context) {
       const errorMessage = "The username or password is invalid" //security best practice to not give too much information
       const errors = {}
@@ -43,20 +65,6 @@ module.exports = {
         email,
       }
     },
-    async userList() {
-      try {
-        const userData = await User.find()
-        const userList = userData.map((element) => {
-          return { email: element.email }
-        })
-        return userList
-      } catch (err) {
-        throw new Error(err)
-      }
-    },
-  },
-
-  Mutation: {
     async register(_, { email, password, confirmPassword }, context) {
       // Validate user data
       const { valid, errors } = validateRegisterInput(
