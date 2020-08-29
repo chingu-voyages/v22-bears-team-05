@@ -87,7 +87,7 @@ const Login: FunctionComponent = () => {
               me: data?.login.user,
             },
           });
-          cache.evict({ fieldName: 'goals:{}' });
+          cache.evict({ fieldName: 'getAllGoals:{}' });
         },
       });
 

@@ -31,7 +31,7 @@ const NavBar: FunctionComponent = () => {
     body = (
       <ul>
         <li>
-          <NextLink href="/home">App Home</NextLink>
+          <a href="/home">App Home</a>
         </li>
         <p>{`Logged in as ${data.me.email}`}</p>
       </ul>
