@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-
 import { GoalListItem, NewGoalButton } from '.';
 
 const ListContainer = styled.div`
@@ -14,7 +13,7 @@ type GoalProps = {
 };
 
 type Goal = {
-  goalId: string;
+  _id: string;
   name: string;
   tasks?: Task[];
 };
@@ -34,10 +33,8 @@ const GoalList: FunctionComponent<GoalProps> = ({ goals }) => (
   <ListContainer>
     <NewGoalButton />
     {goals.map((goal) => {
-      const { name, tasks, goalId } = goal;
-      return (
-        <GoalListItem key={goalId} name={name} tasks={tasks} goalId={goalId} />
-      );
+      const { name, tasks, _id } = goal;
+      return <GoalListItem key={_id} name={name} tasks={tasks} goalId={_id} />;
     })}
   </ListContainer>
 );
