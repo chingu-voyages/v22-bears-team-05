@@ -8,16 +8,12 @@ beforeAll(async () => await dbHandler.connect())
 
 afterAll(async () => await dbHandler.closeDatabase())
 
-function mockClientWithReq(server, userId) {
-    const { query, mutate } = createTestClient({
-        apolloServer: server,
-        extendMockRequest: { session: { userId } }
-    })
-    return { query, mutate }
-}
 test("resolvers", async () => {
     const server = createTestServer()
-    const { query, mutate } = mockClientWithReq(server, null)
+    const { query, mutate, setOptions } = createTestClient({
+        apolloServer: server,
+    })
+    setOptions({ request: { session: { userId: null } } })
 
     const registerTest = `
     mutation Register($email: String!, $password: String!, $confirmPassword: String!){
