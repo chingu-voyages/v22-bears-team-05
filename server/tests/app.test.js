@@ -8,14 +8,27 @@ beforeAll(async () => await dbHandler.connect())
 
 afterAll(async () => await dbHandler.closeDatabase())
 
-test("resolvers", async () => {
-    const server = createTestServer()
-    const { query, mutate, setOptions } = createTestClient({
-        apolloServer: server,
-    })
-    setOptions({ request: { session: { userId: null } } })
+function generateUIdRequest(userId = null) {
+    return { request: { session: { userId } } }
+}
 
-    const registerTest = `
+function getTestClientFunctions() {
+    const apolloServer = createTestServer()
+    return createTestClient({
+        apolloServer,
+    })
+}
+test("noUser", async () => {
+    const { query, setOptions } = getTestClientFunctions()
+    setOptions(generateUIdRequest())
+    const meResponse = await query(`{me {email id createdDate}}`)
+    expect(meResponse.data.me).toBeNull()
+})
+
+test("resolversIntegration", async () => {
+    const { query, mutate, setOptions } = getTestClientFunctions()
+    setOptions(generateUIdRequest())
+    const registerTemplate = `
     mutation Register($email: String!, $password: String!, $confirmPassword: String!){
         register(email: $email, password: $password, confirmPassword: $confirmPassword){
             email
@@ -23,17 +36,16 @@ test("resolvers", async () => {
         }
     }
 `
-    // const loginTest = `
-    // login
-    // mutation Login($email: String!, $password: String!){
-    //     login(email: $email, password: $password){
-    //         email
-    //         id
-    //     }
-    // }
-    // `
+    const registerResponse = await mutate(registerTemplate, { variables: { email: "abCd@gmail.com", password: "abCd1!", confirmPassword: "abCd1!" } });
+    let userId = registerResponse.data.register.id
+    expect(registerResponse.data.register.email).toEqual("abCd@gmail.com");
+    setOptions(generateUIdRequest(userId)) //put the user to the context
 
-    const response = await mutate(registerTest, { variables: { email: "abCd@gmail.com", password: "abCd1!", confirmPassword: "abCd1!" } });
-    console.log(response)
-    expect(response.data.register.email).toEqual("abCd@gmail.com");
+    const meResponse = await query(`{me {email id createdDate}}`)
+    expect(meResponse.data.me.id).toEqual(userId)
+
+    const reRegisterResponse = await mutate(registerTemplate, { variables: { email: "abCd@gmail.com", password: "abCd1!", confirmPassword: "abCd1!" } });
+    expect(reRegisterResponse.errors[0].message).toEqual("Email in use")
+
+
 })
