@@ -1,6 +1,19 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+
+  html,
+  *,
+  *::before,
+  *::after {
+    --color-green: #9BC995;
+    --color-dark-purple: #3F3047;
+    --color-blue: #4EA5D9;
+    --color-yellow: #EEF36A;
+    --color-red: #EE6055;
+    box-sizing: border-box;
+  }
+
   body {
     font-family: Montserrat;
   }
@@ -18,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   form {
-    font-size: 1.1em;
+    font-size: 1.1rem;
     
     .error, .success {
       text-align: center;
@@ -61,6 +74,10 @@ const GlobalStyle = createGlobalStyle`
     user-select: none;
     outline: none;
     cursor: pointer;
+  }
+
+  .margin-left-1{
+    margin-left: 10px;
   }
 `;
 

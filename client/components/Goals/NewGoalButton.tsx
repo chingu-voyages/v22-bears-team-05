@@ -1,30 +1,106 @@
+import { useMutation } from '@apollo/client';
 import React, { FunctionComponent, useState } from 'react';
-import styled from 'styled-components';
 import { FaPlus } from 'react-icons/fa';
+import styled from 'styled-components';
+import { CREATE_GOAL_MUTATION } from '../../utils/graphql/mutation';
+import { GET_GOALS_QUERY } from '../../utils/graphql/query';
+import { CREATE_GOAL_VARIABLES } from '../../utils/graphql/variables';
+import Spinner from '../Spinner';
+import Modal from '../Utilities/Modal';
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #61bd8f;
-  border: 2px solid #61bd8f;
+  background-color: #9bc995;
   margin: 0 0 0.5em;
   padding: 0.6em;
-  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.29);
-  border-radius: 18px;
+  border-radius: 100px;
+  cursor: pointer;
+`;
+
+const Form = styled.form`
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
 `;
 
 const NewGoalButton: FunctionComponent = () => {
   const [showModal, setShowModal] = useState(false);
+  const [newGoalName, setNewGoalName] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const maxNameLength = 20;
+  const maxCharLengthError = `The max length is ${maxNameLength} characters.`;
 
   const toggleForm = () => {
     setShowModal(!showModal);
+    setNewGoalName('');
+    setErrorMessage('');
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<any>) => {
+    e.persist();
+    if (e.target.value.length <= maxNameLength) {
+      setNewGoalName(e.target.value);
+      setErrorMessage('');
+    } else setErrorMessage(maxCharLengthError);
+  };
+
+  const [createGoal] = useMutation(CREATE_GOAL_MUTATION);
+
+  const handleSubmit = async (e: React.ChangeEvent<any>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      await createGoal({
+        variables: CREATE_GOAL_VARIABLES({ goalName: newGoalName }),
+        update: (cache, { data: newData }) => {
+          const goalData = cache.readQuery({
+            query: GET_GOALS_QUERY,
+          });
+          cache.writeQuery({
+            query: GET_GOALS_QUERY,
+            data: {
+              getAllGoals: [...goalData.getAllGoals, newData.createGoal],
+            },
+          });
+        },
+      });
+      toggleForm();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <ButtonContainer onClick={toggleForm}>
-      <FaPlus size={35} />
-    </ButtonContainer>
+    <>
+      <ButtonContainer onClick={toggleForm}>
+        <FaPlus size={35} />
+      </ButtonContainer>
+      <Modal isOpen={showModal} onClose={toggleForm} title="Add Goal">
+        <Form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="name">
+              Name
+              <input
+                type="text"
+                id="name"
+                name="name"
+                onChange={handleInputChange}
+                value={newGoalName}
+                autoFocus={true}
+                disabled={isLoading}
+              />
+            </label>
+          </div>
+          <p className="error">{errorMessage}</p>
+          {isLoading ? <Spinner /> : <button type="submit">Add Goal</button>}
+        </Form>
+      </Modal>
+    </>
   );
 };
 

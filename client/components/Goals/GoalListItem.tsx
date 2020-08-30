@@ -1,7 +1,8 @@
 import React, { FunctionComponent, useState } from 'react';
+import { FaCaretDown, FaCaretRight, FaCheck, FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
-
 import { TaskList } from '../Tasks';
+import DeleteGoalButton from './DeleteGoalButton';
 
 const Container = styled.div`
   display: flex;
@@ -9,13 +10,39 @@ const Container = styled.div`
 `;
 
 const ListItem = styled.div`
-  background-color: #61bd8f;
-  border: 2px solid #61bd8f;
+  border: 2px solid #4ea5d9;
   margin: 0 0 0.5em;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  display: flex;
+  text-transform: capitalize;
+`;
+
+const ItemName = styled.span`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
   padding: 1em;
-  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.29);
-  border-radius: 18px;
-  font-size: 1.2em;
+  width: 100%;
+`;
+
+const TaskIndicator = styled.span`
+  display: flex;
+  align-self: center;
+  margin-left: auto;
+  margin-right: 10px;
+  padding-left: 2ch;
+  font-size: 1.2rem;
+`;
+
+const NotificationDot = styled.div`
+  position: relative;
+  top: -1.5rem;
+  right: -0.75rem;
+  background-color: #ee6055;
+  border-radius: 10rem;
+  height: 10px;
+  width: 10px;
 `;
 
 type GoalProp = {
@@ -48,7 +75,24 @@ const GoalListItem: FunctionComponent<GoalProp> = ({
 
   return (
     <Container>
-      <ListItem onClick={toggleShowTasks}>{name}</ListItem>
+      <ListItem>
+        <ItemName onClick={toggleShowTasks}>
+          {name}
+          {showTasks ? <FaCaretDown size={20} /> : <FaCaretRight size={20} />}
+        </ItemName>
+        <TaskIndicator>
+          <FaEdit size={20} />
+          <DeleteGoalButton goalId={goalId} name={name} />
+          {tasks.length > 0 ? (
+            <>
+              {tasks.length}
+              <NotificationDot className="margin-left-1" />
+            </>
+          ) : (
+            <FaCheck size={20} className="margin-left-1" />
+          )}
+        </TaskIndicator>
+      </ListItem>
       {showTasks && <TaskList tasks={tasks} />}
     </Container>
   );

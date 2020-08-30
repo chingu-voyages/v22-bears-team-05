@@ -10,7 +10,7 @@ const Overlay = styled.div`
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1000;
+  z-index: 500;
 `;
 
 const Content = styled.div`
@@ -18,6 +18,7 @@ const Content = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 90%;
   background-color: #fff;
   z-index: 1000;
   border-radius: 5px;

@@ -1,12 +1,11 @@
+import { useApolloClient } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
-import { useApolloClient } from '@apollo/client';
-
-import Spinner from '../Spinner';
+import { MeDocument } from '../../utils/graphql/documents';
 import { LOGIN_MUTATION } from '../../utils/graphql/mutation';
 import { LOGIN_VARIABLES } from '../../utils/graphql/variables';
-import { MeDocument } from '../../utils/graphql/documents';
+import Spinner from '../Spinner';
 
 const Form = styled.form`
   width: 100%;
@@ -92,7 +91,7 @@ const Login: FunctionComponent = () => {
       });
 
       setSuccess(true);
-      router.push('/home');
+      window.location.pathname = '/home';
       return true;
     } catch {
       setSelectable(true);
