@@ -4,6 +4,8 @@ import NextLink from 'next/link';
 
 import { ME_QUERY } from '../utils/graphql/query';
 
+/* eslint jsx-a11y/anchor-is-valid: 0 */
+
 const NavBar: FunctionComponent = () => {
   const { data, loading, error } = useQuery(ME_QUERY);
   let body = null;
@@ -15,13 +17,19 @@ const NavBar: FunctionComponent = () => {
     body = (
       <ul>
         <li>
-          <NextLink href="/">Landing</NextLink>
+          <NextLink href="/">
+            <a>Landing</a>
+          </NextLink>
         </li>
         <li>
-          <NextLink href="/login">Login</NextLink>
+          <NextLink href="/login">
+            <a>Login</a>
+          </NextLink>
         </li>
         <li>
-          <NextLink href="/register">Register</NextLink>
+          <NextLink href="/register">
+            <a>Register</a>
+          </NextLink>
         </li>
       </ul>
     );
