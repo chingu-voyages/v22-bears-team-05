@@ -61,6 +61,11 @@ module.exports = gql`
     ): AuthData!
     createGoal(goalName: String!): Goal!
     deleteGoal(goalId: String!): DeletedData!
+    updateGoal(
+      goalId: String!
+      newGoalName: String
+      isCompleted: Boolean
+    ): Goal!
     createTask(taskName: String!, goalId: String!): Task!
     deleteTask(taskId: String!): Goal #can be null, for future considerations
     completeTask(taskId: String!): Goal #can be null, for future considerations

@@ -28,7 +28,7 @@ module.exports = {
       try {
         const newGoal = await Goal.create({
           user: context.req.session.userId,
-          name: goalName,
+          name: goalName.trim(),
         });
         return newGoal;
       } catch (err) {
@@ -43,12 +43,15 @@ module.exports = {
         deletedSubtasks = 0;
 
       try {
-        const currentGoal = await Goal.findById(goalId).populate({
+        const currentGoal = await Goal.findOne({
+          _id: goalId,
+          user: context.req.session.userId,
+        }).populate({
           path: "tasks",
           populate: { path: "subtasks" },
         });
         if (!currentGoal) {
-          throw new Error("Cannot find a goal by that ID");
+          throw new Error("Cannot find a goal with that ID");
         }
         const tasks = currentGoal.tasks;
         tasks.forEach(async (currentTask) => {
@@ -76,6 +79,28 @@ module.exports = {
           deletedTasks,
           deletedSubtasks,
         };
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+    async updateGoal(_, { goalId, newGoalName, isCompleted }, context) {
+      if (!context.req.session.userId) throw new Error("not authenticated");
+
+      try {
+        const currentGoal = await Goal.findOne({
+          _id: goalId,
+          user: context.req.session.userId,
+        }).populate({
+          path: "tasks",
+          populate: { path: "subtasks" },
+        });
+        if (!currentGoal) {
+          throw new Error("Cannot find a goal with that ID");
+        }
+        if (newGoalName) currentGoal.name = newGoalName.trim();
+        if (isCompleted !== undefined) currentGoal.isCompleted = isCompleted;
+        currentGoal.save();
+        return currentGoal;
       } catch (err) {
         throw new Error(err);
       }
