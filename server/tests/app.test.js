@@ -8,30 +8,36 @@ beforeAll(async () => await dbHandler.connect())
 
 afterAll(async () => await dbHandler.closeDatabase())
 
-test("resolvers", async () => {
-    const server = createTestServer()
-    console.log(createTestClient)
+function mockClientWithReq(server, userId) {
     const { query, mutate } = createTestClient({
         apolloServer: server,
-        extendMockRequest: { session: { userId: null } }
+        extendMockRequest: { session: { userId } }
     })
+    return { query, mutate }
+}
+test("resolvers", async () => {
+    const server = createTestServer()
+    const { query, mutate } = mockClientWithReq(server, null)
 
-    const registerTest = `{register(email:"abCd@gmail.com",password:"abCd1!"){email id}`
-    //   {
-    //     register(email:"abCd@gmail.com", password:"abCd1!") {
-    //       email
-    //       id
-    //     }
-    //   }
-    //   `
+    const registerTest = `
+    mutation Register($email: String!, $password: String!, $confirmPassword: String!){
+        register(email: $email, password: $password, confirmPassword: $confirmPassword){
+            email
+            id
+        }
+    }
+`
     // const loginTest = `
-    // {
-    //     login(email:"abCd@gmail.com", password:"abCd1!"){
+    // login
+    // mutation Login($email: String!, $password: String!){
+    //     login(email: $email, password: $password){
     //         email
     //         id
     //     }
     // }
     // `
-    const response = await query(registerTest);
-    expect(response.data.login.email).toEqual("abCd@gmail.com");
+
+    const response = await mutate(registerTest, { variables: { email: "abCd@gmail.com", password: "abCd1!", confirmPassword: "abCd1!" } });
+    console.log(response)
+    expect(response.data.register.email).toEqual("abCd@gmail.com");
 })
