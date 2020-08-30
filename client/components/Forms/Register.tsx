@@ -20,13 +20,13 @@ const Form = styled.form`
   .email {
     display: flex;
     flex-flow: row nowrap;
+    align-items: center;
     position: relative;
   }
 
   .validateIcon {
     position: absolute;
-    left: calc(100% - 40px);
-    padding: 10px 0;
+    left: 100%;
     color: #4f8a10;
   }
 
@@ -34,9 +34,13 @@ const Form = styled.form`
     color: black;
     list-style: none;
 
+    li {
+      padding-top: 5px;
+    }
+
     .icon {
       color: green;
-      padding-right: 10px;
+      margin-right: 10px;
     }
   }
 `;
@@ -194,8 +198,8 @@ const Register: FunctionComponent = () => {
   };
 
   const passwordCriteriaItem = (label: string, isValid: boolean) => (
-    <div style={{ paddingLeft: isValid ? 0 : 28 }}>
-      {isValid && <FaCheck size={18} className="icon" />}
+    <div style={{ paddingLeft: isValid ? 0 : 27 }}>
+      {isValid && <FaCheck size={17} className="icon" />}
       {label}
     </div>
   );
