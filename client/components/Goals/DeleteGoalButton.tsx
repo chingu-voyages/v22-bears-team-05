@@ -1,8 +1,10 @@
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import React, { FunctionComponent, useState } from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
 import styled from 'styled-components';
-import { GET_GOALS_QUERY } from '../../pages/home';
+import { DELETE_GOAL_MUTATION } from '../../utils/graphql/mutation';
+import { GET_GOALS_QUERY } from '../../utils/graphql/query';
+import { DELETE_GOAL_VARIABLES } from '../../utils/graphql/variables';
 import Spinner from '../Spinner';
 import Modal from '../Utilities/Modal';
 
@@ -32,16 +34,6 @@ const Note = styled.p`
   text-transform: uppercase;
 `;
 
-const DELETE_GOAL_MUTATION = gql`
-  mutation($goalId: String!) {
-    deleteGoal(goalId: $goalId) {
-      deletedGoals
-      deletedTasks
-      deletedSubtasks
-    }
-  }
-`;
-
 interface IProps {
   goalId: String;
   name: String;
@@ -57,15 +49,15 @@ const DeleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
     setErrorMessage('');
   };
 
-  const [deleteGoal, { data }] = useMutation(DELETE_GOAL_MUTATION);
+  const [deleteGoal] = useMutation(DELETE_GOAL_MUTATION);
 
   const handleSubmit = async (e: React.ChangeEvent<any>) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const res = await deleteGoal({
-        variables: { goalId },
-        update: (cache, { data: newData }) => {
+      await deleteGoal({
+        variables: DELETE_GOAL_VARIABLES({ goalId }),
+        update: (cache) => {
           const goalData = cache.readQuery({
             query: GET_GOALS_QUERY,
           });

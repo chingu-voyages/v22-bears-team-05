@@ -1,8 +1,10 @@
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import React, { FunctionComponent, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import styled from 'styled-components';
-import { GET_GOALS_QUERY } from '../../pages/home';
+import { CREATE_GOAL_MUTATION } from '../../utils/graphql/mutation';
+import { GET_GOALS_QUERY } from '../../utils/graphql/query';
+import { CREATE_GOAL_VARIABLES } from '../../utils/graphql/variables';
 import Spinner from '../Spinner';
 import Modal from '../Utilities/Modal';
 
@@ -21,24 +23,6 @@ const Form = styled.form`
   width: 100%;
   max-width: 350px;
   margin: 0 auto;
-`;
-
-const CREATE_GOAL_MUTATION = gql`
-  mutation($goalName: String!) {
-    createGoal(goalName: $goalName) {
-      _id
-      name
-      tasks {
-        _id
-        name
-        subtasks {
-          _id
-          name
-          description
-        }
-      }
-    }
-  }
 `;
 
 const NewGoalButton: FunctionComponent = () => {
@@ -69,8 +53,8 @@ const NewGoalButton: FunctionComponent = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const res = await createGoal({
-        variables: { goalName: newGoalName },
+      await createGoal({
+        variables: CREATE_GOAL_VARIABLES({ goalName: newGoalName }),
         update: (cache, { data: newData }) => {
           const goalData = cache.readQuery({
             query: GET_GOALS_QUERY,

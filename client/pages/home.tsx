@@ -1,10 +1,12 @@
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
 import App from '../components/App';
 import { GoalList } from '../components/Goals';
 import Spinner from '../components/Spinner';
+import { GET_GOALS_QUERY } from '../utils/graphql/query';
 import { withApollo } from '../utils/withApollo';
 
 const Container = styled.div`
@@ -28,36 +30,23 @@ type Subtask = {
   name: string;
 };
 
-export const GET_GOALS_QUERY = gql`
-  query GetGoals {
-    getAllGoals {
-      _id
-      name
-      tasks {
-        _id
-        name
-        subtasks {
-          _id
-          name
-        }
-      }
-    }
-  }
-`;
-
 const HomePage = () => {
+  const router = useRouter();
   const { data, error, loading } = useQuery(GET_GOALS_QUERY);
 
-  if (
+  const clientSideAndNotLoggedIn =
     error &&
     error.message === 'not authenticated' &&
-    typeof window !== 'undefined'
-  ) {
-    window.location.pathname = '/login';
+    typeof window !== 'undefined';
+
+  if (clientSideAndNotLoggedIn) {
+    router.replace('/login');
   }
 
   if (loading) return <Spinner />;
-  if (data === 'undefined') return null;
+  if (data === undefined) {
+    return null;
+  }
 
   return (
     <App>
