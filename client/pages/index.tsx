@@ -2,6 +2,8 @@ import React, { FunctionComponent } from 'react';
 import App from '../components/App';
 import Head from 'next/head';
 
+import { withApollo } from '../utils/withApollo';
+
 // import { initializeApollo } from "../lib/apolloClient"
 
 const IndexPage: FunctionComponent = () => (
@@ -34,4 +36,4 @@ export async function getStaticProps() {
   }
 }
 */
-export default IndexPage;
+export default withApollo({ ssr: false })(IndexPage);
