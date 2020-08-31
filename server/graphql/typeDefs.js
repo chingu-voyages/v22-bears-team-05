@@ -54,6 +54,7 @@ module.exports = gql`
   }
   type Mutation {
     login(email: String!, password: String!): AuthData!
+    logout: Boolean!
     register(
       email: String!
       password: String!

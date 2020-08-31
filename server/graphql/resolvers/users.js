@@ -3,6 +3,7 @@ const { UserInputError } = require("apollo-server")
 
 const User = require("../../models/User")
 const { validateRegisterInput } = require("./../../utils/validateRegisterInput")
+const { COOKIE_NAME } = require("../../constants")
 
 module.exports = {
   Query: {
@@ -93,5 +94,19 @@ module.exports = {
         email,
       }
     },
+    async logout(_, __, context) {
+      return new Promise((resolve) =>
+        context.req.session.destroy((err) => {
+          context.res.clearCookie(COOKIE_NAME);
+          if (err) {
+            console.log(err);
+            resolve(false);
+            return;
+          }
+
+          resolve(true);
+        })
+      );
+    }
   },
 }
