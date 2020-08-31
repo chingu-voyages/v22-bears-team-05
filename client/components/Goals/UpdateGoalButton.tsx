@@ -1,10 +1,9 @@
 import { useMutation } from '@apollo/client';
 import React, { FunctionComponent, useState } from 'react';
-import { FaTrashAlt } from 'react-icons/fa';
+import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
-import { DELETE_GOAL_MUTATION } from '../../utils/graphql/mutation';
-import { GET_GOALS_QUERY } from '../../utils/graphql/query';
-import { DELETE_GOAL_VARIABLES } from '../../utils/graphql/variables';
+import { UPDATE_GOAL_MUTATION } from '../../utils/graphql/mutation';
+import { UPDATE_GOAL_NAME_VARIABLES } from '../../utils/graphql/variables';
 import { useCheckIfAuth } from '../../utils/useCheckIfAuth';
 import Spinner from '../Spinner';
 import Modal from '../Utilities/Modal';
@@ -40,12 +39,15 @@ interface IProps {
   name: String;
 }
 
-const DeleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
+const UpdateGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [newGoalName, setNewGoalName] = useState(name);
   const [error, setError] = useState<Error | null>(null);
-  const [deleteGoal] = useMutation(DELETE_GOAL_MUTATION);
+  const [updateGoal] = useMutation(UPDATE_GOAL_MUTATION);
+  const maxNameLength = 20;
+  const maxCharLengthError = `The max length is ${maxNameLength} characters.`;
 
   useCheckIfAuth(error);
 
@@ -54,28 +56,25 @@ const DeleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
     setErrorMessage('');
   };
 
+  const handleInputChange = (e: React.ChangeEvent<any>) => {
+    e.persist();
+    if (e.target.value.length <= maxNameLength) {
+      setNewGoalName(e.target.value);
+      setErrorMessage('');
+    } else setErrorMessage(maxCharLengthError);
+  };
+
   const handleSubmit = async (e: React.ChangeEvent<any>) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await deleteGoal({
-        variables: DELETE_GOAL_VARIABLES({ goalId }),
-        update: (cache) => {
-          const goalData = cache.readQuery({
-            query: GET_GOALS_QUERY,
-          });
-          cache.writeQuery({
-            query: GET_GOALS_QUERY,
-            data: {
-              getAllGoals: [
-                ...goalData.getAllGoals.filter((goal) => goal._id !== goalId),
-              ],
-            },
-          });
-        },
+      await updateGoal({
+        variables: UPDATE_GOAL_NAME_VARIABLES({ goalId, newGoalName }),
       });
+      toggleForm();
     } catch (err) {
       setError(err);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -83,23 +82,30 @@ const DeleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
   return (
     <>
       <ButtonContainer onClick={toggleForm}>
-        <FaTrashAlt size={20} />
+        <FaEdit size={20} />
       </ButtonContainer>
-      <Modal isOpen={showModal} onClose={toggleForm} title="Delete Goal">
+      <Modal isOpen={showModal} onClose={toggleForm} title="Update Goal Name">
         <Form onSubmit={handleSubmit}>
-          <ConfirmMessage>
-            Are you sure you want to delete the following goal?
-          </ConfirmMessage>
-          <GoalName>{name}</GoalName>
-          <Note>
-            Note: All of its Tasks and Subtasks will be deleted as well.
-          </Note>
+          <div>
+            <label htmlFor="name">
+              Name
+              <input
+                type="text"
+                id="name"
+                name="name"
+                onChange={handleInputChange}
+                value={newGoalName}
+                autoFocus={true}
+                disabled={isLoading}
+              />
+            </label>
+          </div>
           <p className="error">{errorMessage}</p>
-          {isLoading ? <Spinner /> : <button type="submit">Delete Goal</button>}
+          {isLoading ? <Spinner /> : <button type="submit">Update</button>}
         </Form>
       </Modal>
     </>
   );
 };
 
-export default DeleteGoalButton;
+export default UpdateGoalButton;

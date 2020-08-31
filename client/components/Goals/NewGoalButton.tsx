@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { CREATE_GOAL_MUTATION } from '../../utils/graphql/mutation';
 import { GET_GOALS_QUERY } from '../../utils/graphql/query';
 import { CREATE_GOAL_VARIABLES } from '../../utils/graphql/variables';
+import { useCheckIfAuth } from '../../utils/useCheckIfAuth';
 import Spinner from '../Spinner';
 import Modal from '../Utilities/Modal';
 
@@ -29,9 +30,13 @@ const NewGoalButton: FunctionComponent = () => {
   const [showModal, setShowModal] = useState(false);
   const [newGoalName, setNewGoalName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [createGoal] = useMutation(CREATE_GOAL_MUTATION);
   const maxNameLength = 20;
   const maxCharLengthError = `The max length is ${maxNameLength} characters.`;
+
+  useCheckIfAuth(error);
 
   const toggleForm = () => {
     setShowModal(!showModal);
@@ -46,8 +51,6 @@ const NewGoalButton: FunctionComponent = () => {
       setErrorMessage('');
     } else setErrorMessage(maxCharLengthError);
   };
-
-  const [createGoal] = useMutation(CREATE_GOAL_MUTATION);
 
   const handleSubmit = async (e: React.ChangeEvent<any>) => {
     e.preventDefault();
@@ -69,7 +72,7 @@ const NewGoalButton: FunctionComponent = () => {
       });
       toggleForm();
     } catch (err) {
-      console.log(err);
+      setError(err);
     } finally {
       setIsLoading(false);
     }
