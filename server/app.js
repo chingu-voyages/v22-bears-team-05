@@ -13,7 +13,8 @@ const MONGODB = process.env.MONGO_CONNECTION_STRING
 
 const typeDefs = require("./graphql/typeDefs")
 const resolvers = require("./graphql/resolvers")
-const isAuth = require('./middleware/is-auth');
+const isAuth = require('./middleware/is-auth')
+const { COOKIE_NAME } = require("./constants")
 
 const PORT = 5000
 
@@ -54,7 +55,7 @@ async function startApp() {
     // });
     app.use(
       session({
-        name: "qid",
+        name: COOKIE_NAME,
         store: new RedisStore({
           client: redis,
           disableTouch: true,
