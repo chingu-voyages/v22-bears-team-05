@@ -40,8 +40,6 @@ const HomePage = () => {
     return null;
   }
 
-  console.log('test');
-
   return (
     <App>
       <Head>
