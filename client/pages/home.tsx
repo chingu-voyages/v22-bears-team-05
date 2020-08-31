@@ -39,7 +39,6 @@ const HomePage = () => {
   if (data === undefined) {
     return null;
   }
-  console.log(data.getAllGoals);
 
   return (
     <App>
