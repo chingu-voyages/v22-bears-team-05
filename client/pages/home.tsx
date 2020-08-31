@@ -40,6 +40,7 @@ const HomePage = () => {
   if (data === undefined) {
     return null;
   }
+  console.log(data.getAllGoals);
 
   return (
     <App>
@@ -50,7 +51,9 @@ const HomePage = () => {
 
       <Container>
         <h1>Your Goals</h1>
-        <GoalList goals={data.getAllGoals} />
+        <GoalList
+          goals={data.getAllGoals.filter((goal) => goal.isCompleted === false)}
+        />
       </Container>
     </App>
   );

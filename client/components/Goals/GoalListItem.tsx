@@ -1,9 +1,8 @@
 import React, { FunctionComponent, useState } from 'react';
-import { FaCaretDown, FaCaretRight, FaCheck } from 'react-icons/fa';
+import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
+import { CompleteGoalButton, DeleteGoalButton, UpdateGoalButton } from '.';
 import { TaskList } from '../Tasks';
-import DeleteGoalButton from './DeleteGoalButton';
-import UpdateGoalButton from './UpdateGoalButton';
 
 const Container = styled.div`
   display: flex;
@@ -90,7 +89,7 @@ const GoalListItem: FunctionComponent<GoalProp> = ({
               <NotificationDot className="margin-left-1" />
             </>
           ) : (
-            <FaCheck size={20} className="margin-left-1" />
+            <CompleteGoalButton goalId={goalId} name={name} />
           )}
         </TaskIndicator>
       </ListItem>
