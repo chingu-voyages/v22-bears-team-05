@@ -18,25 +18,36 @@ const Form = styled.form`
   .confirmPassword,
   .password,
   .email {
+    max-width: 340px;
     display: flex;
     flex-flow: row nowrap;
+    align-items: center;
     position: relative;
+    margin: 0 auto;
+
+    input {
+      padding-right: 40px;
+    }
   }
 
   .validateIcon {
     position: absolute;
-    left: calc(100% - 40px);
-    padding: 10px 0;
+    left: 100%;
     color: #4f8a10;
+    left: calc(100% - 35px);
   }
 
   .passwordCriteria {
     color: black;
     list-style: none;
 
+    li {
+      padding-top: 5px;
+    }
+
     .icon {
       color: green;
-      padding-right: 10px;
+      margin-right: 10px;
     }
   }
 `;
@@ -81,7 +92,7 @@ const Register: FunctionComponent = () => {
   const getRegisterError = (
     emailInput: string,
     passwordInput: string,
-    confirmPasswordInput: string
+    confirmPasswordInput: string,
   ) => {
     const emailRegex = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
     if (!emailInput || !emailInput.match(emailRegex)) {
@@ -194,8 +205,8 @@ const Register: FunctionComponent = () => {
   };
 
   const passwordCriteriaItem = (label: string, isValid: boolean) => (
-    <div style={{ paddingLeft: isValid ? 0 : 28 }}>
-      {isValid && <FaCheck size={18} className="icon" />}
+    <div style={{ paddingLeft: isValid ? 0 : 27 }}>
+      {isValid && <FaCheck size={17} className="icon" />}
       {label}
     </div>
   );
@@ -209,11 +220,11 @@ const Register: FunctionComponent = () => {
     const hasLowercase = /(?=.*[a-z])/.test(passwordInput);
     const hasNumber = /\d/.test(passwordInput);
     const hasSymbol = /^.*(?=.*[*.!@#$%^&(){}[\]:;<>,\.\?\/~_\+\-=\|\\ ]).*$/.test(
-      passwordInput
+      passwordInput,
     );
 
     criteria.push(
-      passwordCriteriaItem('At least 6 characters', hasNumCharacters)
+      passwordCriteriaItem('At least 6 characters', hasNumCharacters),
     );
     criteria.push(passwordCriteriaItem('1 Uppercase Letter', hasUppercase));
     criteria.push(passwordCriteriaItem('1 Lowercase Letter', hasLowercase));

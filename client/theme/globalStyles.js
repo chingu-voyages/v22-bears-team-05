@@ -60,6 +60,10 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
   }
 
+  input[type="email"] {
+    text-transform: lowercase;
+  }
+
   button {
     width: 100%;
     font-family: Montserrat;

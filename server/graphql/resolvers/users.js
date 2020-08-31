@@ -30,6 +30,10 @@ module.exports = {
     async login(_, { email, password }, context) {
       const errorMessage = "The username or password is invalid" //security best practice to not give too much information
       const errors = {}
+      
+      // email should be lowercase
+      email = email.toLowerCase();
+
       const user = await User.findOne({ email })
       if (!user) {
         //user does not exist
@@ -56,6 +60,10 @@ module.exports = {
         password,
         confirmPassword
       )
+
+      // email should be lowercase
+      email = email.toLowerCase();
+
       if (!valid) {
         throw new UserInputError("Errors", { errors })
       }

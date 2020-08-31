@@ -5,12 +5,15 @@ export const GET_GOALS_QUERY = gql`
     getAllGoals {
       _id
       name
+      isCompleted
       tasks {
         _id
         name
+        isCompleted
         subtasks {
           _id
           name
+          isCompleted
         }
       }
     }
