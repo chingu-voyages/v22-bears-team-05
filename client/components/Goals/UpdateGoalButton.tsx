@@ -4,6 +4,7 @@ import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
 import { UPDATE_GOAL_MUTATION } from '../../utils/graphql/mutation';
 import { UPDATE_GOAL_NAME_VARIABLES } from '../../utils/graphql/variables';
+import { useCheckIfAuth } from '../../utils/useCheckIfAuth';
 import Spinner from '../Spinner';
 import Modal from '../Utilities/Modal';
 
@@ -43,8 +44,12 @@ const UpdateGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [newGoalName, setNewGoalName] = useState(name);
+  const [error, setError] = useState<Error | null>(null);
   const maxNameLength = 20;
   const maxCharLengthError = `The max length is ${maxNameLength} characters.`;
+  const checkAuth = useCheckIfAuth();
+
+  checkAuth(error);
 
   const toggleForm = () => {
     setShowModal(!showModal);
@@ -70,7 +75,7 @@ const UpdateGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
       });
       toggleForm();
     } catch (err) {
-      console.log(err);
+      setError(err);
     } finally {
       setIsLoading(false);
     }

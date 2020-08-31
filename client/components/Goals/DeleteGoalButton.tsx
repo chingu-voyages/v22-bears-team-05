@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { DELETE_GOAL_MUTATION } from '../../utils/graphql/mutation';
 import { GET_GOALS_QUERY } from '../../utils/graphql/query';
 import { DELETE_GOAL_VARIABLES } from '../../utils/graphql/variables';
+import { useCheckIfAuth } from '../../utils/useCheckIfAuth';
 import Spinner from '../Spinner';
 import Modal from '../Utilities/Modal';
 
@@ -43,6 +44,11 @@ const DeleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  const checkAuth = useCheckIfAuth();
+
+  checkAuth(error);
 
   const toggleForm = () => {
     setShowModal(!showModal);
@@ -72,7 +78,7 @@ const DeleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
         },
       });
     } catch (err) {
-      console.log(err);
+      setError(err);
       setIsLoading(false);
     }
   };
