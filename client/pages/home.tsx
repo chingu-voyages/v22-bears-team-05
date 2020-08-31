@@ -31,10 +31,9 @@ type Subtask = {
 };
 
 const HomePage = () => {
-  const checkAuth = useCheckIfAuth();
   const { data, error, loading } = useQuery(GET_GOALS_QUERY);
 
-  checkAuth(error);
+  useCheckIfAuth(error);
 
   if (loading) return <Spinner />;
   if (data === undefined) {

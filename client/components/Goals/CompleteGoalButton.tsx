@@ -44,16 +44,14 @@ const CompleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const checkAuth = useCheckIfAuth();
+  const [updateGoal] = useMutation(UPDATE_GOAL_MUTATION);
 
-  checkAuth(error);
+  useCheckIfAuth(error);
 
   const toggleForm = () => {
     setShowModal(!showModal);
     setErrorMessage('');
   };
-
-  const [updateGoal] = useMutation(UPDATE_GOAL_MUTATION);
 
   const handleSubmit = async (e: React.ChangeEvent<any>) => {
     e.preventDefault();

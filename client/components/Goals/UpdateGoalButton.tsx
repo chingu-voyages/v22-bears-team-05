@@ -45,11 +45,11 @@ const UpdateGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [newGoalName, setNewGoalName] = useState(name);
   const [error, setError] = useState<Error | null>(null);
+  const [updateGoal] = useMutation(UPDATE_GOAL_MUTATION);
   const maxNameLength = 20;
   const maxCharLengthError = `The max length is ${maxNameLength} characters.`;
-  const checkAuth = useCheckIfAuth();
 
-  checkAuth(error);
+  useCheckIfAuth(error);
 
   const toggleForm = () => {
     setShowModal(!showModal);
@@ -63,8 +63,6 @@ const UpdateGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
       setErrorMessage('');
     } else setErrorMessage(maxCharLengthError);
   };
-
-  const [updateGoal] = useMutation(UPDATE_GOAL_MUTATION);
 
   const handleSubmit = async (e: React.ChangeEvent<any>) => {
     e.preventDefault();

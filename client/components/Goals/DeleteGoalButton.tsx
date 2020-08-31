@@ -45,17 +45,14 @@ const DeleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const [deleteGoal] = useMutation(DELETE_GOAL_MUTATION);
 
-  const checkAuth = useCheckIfAuth();
-
-  checkAuth(error);
+  useCheckIfAuth(error);
 
   const toggleForm = () => {
     setShowModal(!showModal);
     setErrorMessage('');
   };
-
-  const [deleteGoal] = useMutation(DELETE_GOAL_MUTATION);
 
   const handleSubmit = async (e: React.ChangeEvent<any>) => {
     e.preventDefault();

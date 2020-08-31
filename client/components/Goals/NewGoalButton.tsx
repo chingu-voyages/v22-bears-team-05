@@ -32,10 +32,11 @@ const NewGoalButton: FunctionComponent = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [createGoal] = useMutation(CREATE_GOAL_MUTATION);
   const maxNameLength = 20;
   const maxCharLengthError = `The max length is ${maxNameLength} characters.`;
-  const checkAuth = useCheckIfAuth();
-  checkAuth(error);
+
+  useCheckIfAuth(error);
 
   const toggleForm = () => {
     setShowModal(!showModal);
@@ -50,8 +51,6 @@ const NewGoalButton: FunctionComponent = () => {
       setErrorMessage('');
     } else setErrorMessage(maxCharLengthError);
   };
-
-  const [createGoal] = useMutation(CREATE_GOAL_MUTATION);
 
   const handleSubmit = async (e: React.ChangeEvent<any>) => {
     e.preventDefault();
