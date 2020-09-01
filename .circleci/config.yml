@@ -1,26 +1,16 @@
 version: 2.1
 jobs:
   build:
-    working_directory: ~/server
     docker:
       - image: circleci/node:10.16.3
     steps:
       - checkout
       - run:
-          name: pre ls check
-          command: ls
-      - run:
-          name: go to server directory
-          command: cd server
-      - run:
-          name: post ls check
-          command: ls
-      - run:
           name: update-npm
           command: "sudo npm install -g npm@5"
       - run:
           name: install-packages
-          command: npm install
+          command: cd server && npm install
       - run:
           name: test
-          command: npm run test
+          command: cd server && npm run test
