@@ -15,6 +15,7 @@ type GoalProps = {
 type Goal = {
   _id: string;
   name: string;
+  totalTimeInSeconds: number;
   tasks?: Task[];
 };
 
@@ -33,8 +34,16 @@ const GoalList: FunctionComponent<GoalProps> = ({ goals }) => (
   <ListContainer>
     <NewGoalButton />
     {goals.map((goal) => {
-      const { name, tasks, _id } = goal;
-      return <GoalListItem key={_id} name={name} tasks={tasks} goalId={_id} />;
+      const { name, tasks, _id, totalTimeInSeconds } = goal;
+      return (
+        <GoalListItem
+          key={_id}
+          name={name}
+          tasks={tasks}
+          goalId={_id}
+          totalTimeInSeconds={totalTimeInSeconds}
+        />
+      );
     })}
   </ListContainer>
 );
