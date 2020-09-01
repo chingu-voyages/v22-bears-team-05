@@ -1,12 +1,12 @@
 import { useQuery } from '@apollo/client';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
 import App from '../components/App';
 import { GoalList } from '../components/Goals';
 import Spinner from '../components/Spinner';
 import { GET_GOALS_QUERY } from '../utils/graphql/query';
+import { useCheckIfAuth } from '../utils/useCheckIfAuth';
 import { withApollo } from '../utils/withApollo';
 
 const Container = styled.div`
@@ -31,17 +31,9 @@ type Subtask = {
 };
 
 const HomePage = () => {
-  const router = useRouter();
   const { data, error, loading } = useQuery(GET_GOALS_QUERY);
 
-  const clientSideAndNotLoggedIn =
-    error &&
-    error.message === 'not authenticated' &&
-    typeof window !== 'undefined';
-
-  if (clientSideAndNotLoggedIn) {
-    router.replace('/login');
-  }
+  useCheckIfAuth(error);
 
   if (loading) return <Spinner />;
   if (data === undefined) {
@@ -57,7 +49,9 @@ const HomePage = () => {
 
       <Container>
         <h1>Your Goals</h1>
-        <GoalList goals={data.getAllGoals} />
+        <GoalList
+          goals={data.getAllGoals.filter((goal) => goal.isCompleted === false)}
+        />
       </Container>
     </App>
   );

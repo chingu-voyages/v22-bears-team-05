@@ -1,10 +1,9 @@
 import { useMutation } from '@apollo/client';
 import React, { FunctionComponent, useState } from 'react';
-import { FaTrashAlt } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa';
 import styled from 'styled-components';
-import { DELETE_GOAL_MUTATION } from '../../utils/graphql/mutation';
-import { GET_GOALS_QUERY } from '../../utils/graphql/query';
-import { DELETE_GOAL_VARIABLES } from '../../utils/graphql/variables';
+import { UPDATE_GOAL_MUTATION } from '../../utils/graphql/mutation';
+import { UPDATE_GOAL_COMPLETED_VARIABLES } from '../../utils/graphql/variables';
 import { useCheckIfAuth } from '../../utils/useCheckIfAuth';
 import Spinner from '../Spinner';
 import Modal from '../Utilities/Modal';
@@ -40,12 +39,12 @@ interface IProps {
   name: String;
 }
 
-const DeleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
+const CompleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const [deleteGoal] = useMutation(DELETE_GOAL_MUTATION);
+  const [updateGoal] = useMutation(UPDATE_GOAL_MUTATION);
 
   useCheckIfAuth(error);
 
@@ -58,24 +57,16 @@ const DeleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await deleteGoal({
-        variables: DELETE_GOAL_VARIABLES({ goalId }),
-        update: (cache) => {
-          const goalData = cache.readQuery({
-            query: GET_GOALS_QUERY,
-          });
-          cache.writeQuery({
-            query: GET_GOALS_QUERY,
-            data: {
-              getAllGoals: [
-                ...goalData.getAllGoals.filter((goal) => goal._id !== goalId),
-              ],
-            },
-          });
-        },
+      await updateGoal({
+        variables: UPDATE_GOAL_COMPLETED_VARIABLES({
+          goalId,
+          isCompleted: true,
+        }),
       });
+      toggleForm();
     } catch (err) {
       setError(err);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -83,23 +74,20 @@ const DeleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
   return (
     <>
       <ButtonContainer onClick={toggleForm}>
-        <FaTrashAlt size={20} />
+        <FaCheck size={20} />
       </ButtonContainer>
-      <Modal isOpen={showModal} onClose={toggleForm} title="Delete Goal">
+      <Modal isOpen={showModal} onClose={toggleForm} title="Complete Goal">
         <Form onSubmit={handleSubmit}>
           <ConfirmMessage>
-            Are you sure you want to delete the following goal?
+            Are you sure you want to complete this goal?
           </ConfirmMessage>
           <GoalName>{name}</GoalName>
-          <Note>
-            Note: All of its Tasks and Subtasks will be deleted as well.
-          </Note>
           <p className="error">{errorMessage}</p>
-          {isLoading ? <Spinner /> : <button type="submit">Delete Goal</button>}
+          {isLoading ? <Spinner /> : <button type="submit">Complete</button>}
         </Form>
       </Modal>
     </>
   );
 };
 
-export default DeleteGoalButton;
+export default CompleteGoalButton;
