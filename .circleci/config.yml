@@ -1,11 +1,13 @@
 version: 2.1
 jobs:
   build:
-    working_directory: /server
     docker:
       - image: circleci/node:10.16.3
     steps:
       - checkout
+      -run:
+        name: change to server
+        command: "cd server"
       - run:
           name: update-npm
           command: "sudo npm install -g npm@5"
