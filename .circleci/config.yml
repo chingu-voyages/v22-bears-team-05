@@ -7,8 +7,14 @@ jobs:
     steps:
       - checkout
       - run:
+          name: pre ls check
+          command: ls
+      - run:
           name: go to server directory
           command: cd server
+      - run:
+          name: post ls check
+          command: ls
       - run:
           name: update-npm
           command: "sudo npm install -g npm@5"
