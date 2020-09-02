@@ -7,21 +7,22 @@ import {
   TimeSpent,
   UpdateGoalButton,
 } from '.';
-import { TaskList } from '../Tasks';
+import { NewTaskButton, TaskList } from '../Tasks';
 
 const Container = styled.div`
   display: flex;
   flex-flow: column nowrap;
   width: 100%;
+  margin-bottom: 1em;
 `;
 
 const ListItem = styled.div`
-  border: 2px solid #4ea5d9;
-  margin: 0 0 0.5em;
-  border-radius: 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   font-size: 1.2rem;
   display: flex;
   text-transform: capitalize;
+  background-color: #eee;
 `;
 
 const MainInfo = styled.div`
@@ -35,6 +36,7 @@ const ItemName = styled.span`
   align-items: center;
   padding: 1em;
   width: 100%;
+  font-weight: 500;
 `;
 
 const TaskIndicator = styled.span`
@@ -43,6 +45,11 @@ const TaskIndicator = styled.span`
   margin-left: auto;
   font-size: 1.2rem;
   padding: 1em;
+`;
+
+const Notifications = styled.div`
+  margin: 0 10px;
+  font-weight: 700;
 `;
 
 const NotificationDot = styled.div`
@@ -102,17 +109,20 @@ const GoalListItem: FunctionComponent<GoalProp> = ({
               <UpdateGoalButton goalId={goalId} name={name} />
               <DeleteGoalButton goalId={goalId} name={name} />
               {tasks.length > 0 ? (
-                <>
+                <Notifications>
                   {tasks.length}
-                  <NotificationDot className="margin-left-1" />
-                </>
+                  <NotificationDot />
+                </Notifications>
               ) : (
                 <CompleteGoalButton goalId={goalId} name={name} />
               )}
             </TaskIndicator>
           </MainInfo>
           {showTasks ? (
-            <TimeSpent totalTimeInSeconds={totalTimeInSeconds} />
+            <>
+              <TimeSpent totalTimeInSeconds={totalTimeInSeconds} />
+              <NewTaskButton goalId={goalId} />
+            </>
           ) : null}
         </Container>
       </ListItem>

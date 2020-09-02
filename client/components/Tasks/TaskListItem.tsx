@@ -1,26 +1,33 @@
 import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
-
 import { TaskList } from '.';
 
 const Container = styled.div`
   display: flex;
+  align-items: center;
   flex-flow: column nowrap;
+  background-color: #eee;
+  &:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+  }
 `;
 
 const ListItem = styled.div<{ subtask: boolean }>`
-  background-color: #9ad5b8;
-  border: 2px solid #61bd8f;
-  margin: 0 0 1em;
+  background-color: #fff;
+  width: 95%;
+  margin-bottom: 0.5em;
+  text-transform: capitalize;
   padding: 1em;
-  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.29);
-  border-radius: 18px;
+  border-radius: 5px;
   ${(props) => props.subtask && 'background-color: #E0F2E9;'}
   ${(props) => props.subtask && 'border-color: #9AD5B8;'}
 `;
 
 type TaskProp = {
-  id: string;
+  _id: string;
   name: string;
   subtasks?: Subtask[];
   isSubtask: boolean;
@@ -32,7 +39,7 @@ type Subtask = {
 };
 
 const TaskListItem: FunctionComponent<TaskProp> = ({
-  id,
+  _id,
   name,
   subtasks = [],
   isSubtask = false,

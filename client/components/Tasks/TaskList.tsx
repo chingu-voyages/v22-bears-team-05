@@ -1,10 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-
 import { TaskListItem } from '.';
 
 const ListContainer = styled.div`
-  padding-left: 30px;
   display: flex;
   flex-flow: column nowrap;
 `;
@@ -15,7 +13,7 @@ type TasksProp = {
 };
 
 type Task = {
-  id: string;
+  _id: string;
   name: string;
   subtasks?: Subtask[];
 };
@@ -31,11 +29,11 @@ const TaskList: FunctionComponent<TasksProp> = ({
 }) => (
   <ListContainer>
     {tasks.map((task) => {
-      const { id, name, subtasks } = task;
+      const { _id, name, subtasks } = task;
       return (
         <TaskListItem
-          key={id}
-          taskId={id}
+          key={_id}
+          taskId={_id}
           name={name}
           subtasks={subtasks}
           isSubtask={isSubtask}

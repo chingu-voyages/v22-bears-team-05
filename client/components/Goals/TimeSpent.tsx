@@ -13,9 +13,6 @@ const Time = styled.div`
   font-size: 0.8rem;
   text-transform: uppercase;
   padding: 0.5em 1.4em 1.4em;
-  background-color: var(--color-yellow);
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
 `;
 
 const TimeSpent: FunctionComponent<IProps> = ({ totalTimeInSeconds }) => {
