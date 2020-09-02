@@ -15,6 +15,15 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    margin: 0;
+    padding: 0;
+  }
+
+  main {
+    margin: 1rem 2rem;
+  }
+
+  body {
     font-family: Montserrat;
   }
 
@@ -24,6 +33,11 @@ const GlobalStyle = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6 {
     text-align: center;
+  }
+
+  a {
+    color: black;
+    text-decoration: none;
   }
 
   .center {
