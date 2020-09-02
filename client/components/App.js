@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import NavBar from './NavBar';
+import Header from './Layout/Header';
 
 const App = ({ children }) => (
-  <main>
-    <NavBar />
-    {children}
-  </main>
+  <>
+    <Header />
+    <main>{children}</main>
+  </>
 );
 
 App.propTypes = {

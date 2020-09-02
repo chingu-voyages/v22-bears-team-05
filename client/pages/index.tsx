@@ -13,7 +13,7 @@ const IndexPage: FunctionComponent = () => (
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
 
-    <h1>Goal Tracker</h1>
+    <h1>About GoalTrack {`(Landing Page)`}</h1>
   </App>
 );
 
