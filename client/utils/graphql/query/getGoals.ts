@@ -6,6 +6,7 @@ export const GET_GOALS_QUERY = gql`
       _id
       name
       isCompleted
+      totalTimeInSeconds
       tasks {
         _id
         name
