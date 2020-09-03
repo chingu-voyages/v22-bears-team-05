@@ -21,7 +21,8 @@
     "no-unused-vars": "off",
     "import/extensions": "off",
     "linebreak-style": 0,
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "jsx-a11y/anchor-is-valid": "off"
   },
   "settings": {
     "import/resolver": {
