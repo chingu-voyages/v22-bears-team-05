@@ -6,6 +6,7 @@ import UPDATE_GOAL_NAME_VARIABLES from './updateGoalName';
 import UPDATE_GOAL_COMPLETED_VARIABLES from './updateGoalCompleted';
 import CREATE_TASK_VARIABLES from './createTask';
 import DELETE_TASK_VARIABLES from './deleteTask';
+import UPDATE_TASK_NAME_VARIABLES from './updateTaskName';
 
 export {
   LOGIN_VARIABLES,
@@ -16,4 +17,5 @@ export {
   UPDATE_GOAL_COMPLETED_VARIABLES,
   CREATE_TASK_VARIABLES,
   DELETE_TASK_VARIABLES,
+  UPDATE_TASK_NAME_VARIABLES,
 };

@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
-import { DeleteTaskButton, TaskList } from '.';
+import { DeleteTaskButton, TaskList, UpdateTaskButton } from '.';
 
 const Container = styled.div`
   display: flex;
@@ -84,6 +84,7 @@ const TaskListItem: FunctionComponent<TaskProp> = ({
             )}
           </ItemName>
           <TaskIndicator>
+            <UpdateTaskButton taskId={taskId} name={name} />
             <DeleteTaskButton taskName={name} taskId={taskId} />
           </TaskIndicator>
         </MainInfo>
