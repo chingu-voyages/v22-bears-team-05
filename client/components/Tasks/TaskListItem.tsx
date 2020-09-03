@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
+import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
-import { TaskList } from '.';
+import { DeleteTaskButton, TaskList } from '.';
 
 const Container = styled.div`
   display: flex;
@@ -26,8 +27,29 @@ const ListItem = styled.div<{ subtask: boolean }>`
   ${(props) => props.subtask && 'border-color: #9AD5B8;'}
 `;
 
+const MainInfo = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+const ItemName = styled.span`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.5em 0;
+  width: 100%;
+  font-weight: 500;
+`;
+
+const TaskIndicator = styled.span`
+  display: flex;
+  align-self: center;
+  margin-left: auto;
+  font-size: 1.2rem;
+`;
+
 type TaskProp = {
-  _id: string;
+  taskId: string;
   name: string;
   subtasks?: Subtask[];
   isSubtask: boolean;
@@ -39,13 +61,12 @@ type Subtask = {
 };
 
 const TaskListItem: FunctionComponent<TaskProp> = ({
-  _id,
+  taskId,
   name,
   subtasks = [],
   isSubtask = false,
 }) => {
   const [showSubtasks, setShowSubtasks] = useState(false);
-
   const toggleShowSubtasks = () => {
     setShowSubtasks(!showSubtasks);
   };
@@ -53,7 +74,19 @@ const TaskListItem: FunctionComponent<TaskProp> = ({
   return (
     <Container>
       <ListItem onClick={toggleShowSubtasks} subtask={isSubtask}>
-        {name}
+        <MainInfo>
+          <ItemName>
+            {name}
+            {showSubtasks ? (
+              <FaCaretDown size={20} />
+            ) : (
+              <FaCaretRight size={20} />
+            )}
+          </ItemName>
+          <TaskIndicator>
+            <DeleteTaskButton taskName={name} taskId={taskId} />
+          </TaskIndicator>
+        </MainInfo>
       </ListItem>
       {showSubtasks && <TaskList tasks={subtasks} isSubtask />}
     </Container>

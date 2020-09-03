@@ -40,13 +40,28 @@ module.exports = {
         }
 
         const parentGoal = currentTask.parent;
+        if (!parentGoal.user.equals(context.req.session.userId)) {
+          throw new Error("You are not authorized to delete that task");
+        }
+
         if (parentGoal) {
+          currentTask.subtasks.forEach(async (subtask) => {
+            const res = await Subtask.deleteOne({
+              _id: subtask._id,
+              user: context.req.session.userId,
+            });
+          });
+
+          const res = await Task.deleteOne({
+            _id: taskId,
+            user: context.req.session.userId,
+          });
+
           parentGoal.tasks = parentGoal.tasks.filter(
             (id) => !id.equals(taskId),
           );
           await parentGoal.save();
         }
-        await currentTask.delete();
 
         return parentGoal;
       } catch (err) {

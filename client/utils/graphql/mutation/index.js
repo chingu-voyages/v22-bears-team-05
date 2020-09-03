@@ -5,6 +5,7 @@ import CREATE_GOAL_MUTATION from './createGoal';
 import LOGOUT_MUTATION from './logout';
 import UPDATE_GOAL_MUTATION from './updateGoal';
 import CREATE_TASK_MUTATION from './createTask';
+import DELETE_TASK_MUTATION from './deleteTask';
 
 export {
   LOGIN_MUTATION,
@@ -14,4 +15,5 @@ export {
   LOGOUT_MUTATION,
   UPDATE_GOAL_MUTATION,
   CREATE_TASK_MUTATION,
+  DELETE_TASK_MUTATION,
 };
