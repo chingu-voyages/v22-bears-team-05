@@ -1,21 +1,17 @@
 import React, { FunctionComponent } from 'react';
-import { useQuery, useApolloClient, useMutation } from '@apollo/client';
+import { useApolloClient, useMutation } from '@apollo/client';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import {
-  FaUserCircle as ProfileIcon,
-  FaSignOutAlt as SignOutIcon,
-} from 'react-icons/fa';
+import { FaSignOutAlt as SignOutIcon } from 'react-icons/fa';
 
-import { ME_QUERY } from '../../utils/graphql/query';
 import { LOGOUT_MUTATION } from '../../utils/graphql/mutation';
 
-/* eslint jsx-a11y/anchor-is-valid: 0 */
 /* eslint jsx-a11y/no-static-element-interactions: 0 */
 
 const Nav = styled.div`
   display: flex;
+  justify-content: center;
   flex-flow: row nowrap;
 
   a {
@@ -23,17 +19,25 @@ const Nav = styled.div`
     color: black;
     font-weight: 600;
   }
+
+  @media only screen and (max-width: 500px) {
+    opacity: 0;
+    height: 0;
+    transition: all 300ms ease-out;
+    ${(props) => props.show && 'opacity: 1;'}
+    ${(props) => props.show && 'height: 25px;'}
+  }
 `;
 
 const NavItem = styled.div`
-  padding: 1rem 0.5rem;
+  padding: 0.25rem 0.5rem;
 
   display: flex;
   align-items: center;
   color: #333;
 
-  @media only screen and (min-width: 800px) {
-    padding: 1rem 2rem;
+  @media only screen and (min-width: 500px) {
+    padding: 1rem 1rem;
   }
 `;
 
@@ -44,12 +48,13 @@ const Logout = styled.div`
   align-items: center;
 `;
 
-type LoginState = {
+type NavProps = {
   isLoggedIn: boolean;
   email: string;
+  show: boolean;
 };
 
-const NavBar: FunctionComponent<LoginState> = ({ isLoggedIn, email }) => {
+const NavBar: FunctionComponent<NavProps> = ({ isLoggedIn, email, show }) => {
   const apolloClient = useApolloClient();
   const router = useRouter();
   const [logout] = useMutation(LOGOUT_MUTATION);
@@ -59,7 +64,7 @@ const NavBar: FunctionComponent<LoginState> = ({ isLoggedIn, email }) => {
   // User is not authenticated
   if (!isLoggedIn) {
     body = (
-      <Nav>
+      <Nav show={show}>
         <NextLink href="/">
           <a>
             <NavItem>About</NavItem>
@@ -81,7 +86,7 @@ const NavBar: FunctionComponent<LoginState> = ({ isLoggedIn, email }) => {
     // User is authenticated
   } else {
     body = (
-      <Nav>
+      <Nav show={show}>
         <NavItem>{`Signed in as ${email}`}</NavItem>
         <Logout
           onClick={async (e) => {

@@ -1,26 +1,55 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import NextLink from 'next/link';
+import { useQuery } from '@apollo/client';
+import { FaBars } from 'react-icons/fa';
 
 import NavBar from './NavBar';
-import { useApolloClient, useQuery } from '@apollo/client';
+
 import { ME_QUERY } from '../../utils/graphql/query';
 
 const Container = styled.header`
+  position: relative;
   display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
+  flex-flow: column nowrap;
+  justify-content: center;
   align-items: center;
   padding: 0;
   margin: 0;
   background-color: white;
 
   padding: 0.5rem 2rem;
+  z-index: 10;
+
+  .header__main {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  @media only screen and (min-width: 500px) {
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    .header__main {
+      width: auto;
+    }
+  }
+`;
+
+const NavButton = styled.div`
+  display: flex;
+  align-items: center;
+  @media only screen and (min-width: 500px) {
+    display: none;
+  }
 `;
 
 const Header: React.FC = () => {
-  const { data, loading, error } = useQuery(ME_QUERY);
+  const { data } = useQuery(ME_QUERY);
+  const [showNav, setShowNav] = useState(false);
 
   let logoHref = '/';
   let isLoggedIn = false;
@@ -33,14 +62,23 @@ const Header: React.FC = () => {
     logoHref = '/home';
   }
 
+  const toggleNav = () => {
+    setShowNav(!showNav);
+  };
+
   return (
     <Container>
-      <NextLink href={logoHref}>
-        <a>
-          <h1>GoalTrack</h1>
-        </a>
-      </NextLink>
-      <NavBar isLoggedIn={isLoggedIn} email={email} />
+      <div className="header__main">
+        <NextLink href={logoHref}>
+          <a>
+            <h2>GoalTrack</h2>
+          </a>
+        </NextLink>
+        <NavButton onClick={toggleNav}>
+          <FaBars size={32} />
+        </NavButton>
+      </div>
+      <NavBar isLoggedIn={isLoggedIn} email={email} show={showNav} />
     </Container>
   );
 };
