@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import NextLink from 'next/link';
 import { useQuery } from '@apollo/client';
@@ -50,17 +50,18 @@ const NavButton = styled.div`
 const Header: React.FC = () => {
   const { data } = useQuery(ME_QUERY);
   const [showNav, setShowNav] = useState(false);
-
-  let logoHref = '/';
-  let isLoggedIn = false;
-  let email = '';
+  const [logoHref, setLogoHref] = useState('/');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginEmail, setLoginEmail] = useState('');
 
   // User is Authenticated
-  if (data?.me) {
-    email = data.me.email;
-    isLoggedIn = true;
-    logoHref = '/home';
-  }
+  useEffect(() => {
+    if (data?.me) {
+      setLoginEmail(data.me.email);
+      setIsLoggedIn(true);
+      setLogoHref('/home');
+    }
+  }, [loginEmail, isLoggedIn, logoHref, data]);
 
   const toggleNav = () => {
     setShowNav(!showNav);
@@ -78,7 +79,7 @@ const Header: React.FC = () => {
           <FaBars size={32} />
         </NavButton>
       </div>
-      <NavBar isLoggedIn={isLoggedIn} email={email} show={showNav} />
+      <NavBar isLoggedIn={isLoggedIn} email={loginEmail} show={showNav} />
     </Container>
   );
 };
