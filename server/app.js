@@ -63,7 +63,7 @@ async function startApp() {
           httpOnly: true,
           sameSite: "none", // csrf
           secure: __prod__, // cookie only works in https
-          domain: "http",
+          domain: undefined,
         },
         saveUninitialized: false,
         secret: process.env.SESSION_SECRET,
