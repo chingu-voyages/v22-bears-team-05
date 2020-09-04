@@ -49,13 +49,14 @@ const NavButton = styled.div`
 
 const Header: React.FC = () => {
   const { data } = useQuery(ME_QUERY);
+
   const [showNav, setShowNav] = useState(false);
   const [logoHref, setLogoHref] = useState('/');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginEmail, setLoginEmail] = useState('');
 
-  // User is Authenticated
   useEffect(() => {
+    // User is Authenticated
     if (data?.me) {
       setLoginEmail(data.me.email);
       setIsLoggedIn(true);
