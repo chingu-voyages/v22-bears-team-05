@@ -45,15 +45,15 @@ async function startApp() {
         credentials: true,
       }),
     );
-    // app.use((req, res, next) => {
-    //   res.setHeader('Access-Control-Allow-Origin', '*');
-    //   res.setHeader('Access-Control-Methods', 'POST,GET,OPTIONS');
-    //   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    //   if (req.method === 'OPTIONS') {
-    //     return res.sendStatus(200);
-    //   }
-    //   next();
-    // });
+    app.use((req, res, next) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Methods', 'POST,GET,OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+      }
+      next();
+    });
     app.use(
       session({
         name: COOKIE_NAME,
