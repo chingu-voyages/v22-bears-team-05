@@ -16,8 +16,6 @@ const resolvers = require("./graphql/resolvers")
 const isAuth = require('./middleware/is-auth')
 const { COOKIE_NAME } = require("./constants")
 
-const PORT = 5000
-
 const app = express()
 
 async function startApp() {
@@ -79,7 +77,7 @@ async function startApp() {
       cors: false,
     })
     app.listen({ port: PORT }, () => {
-      const serverUrl = `http://localhost:${PORT}`
+      const serverUrl = `http://localhost:${process.env.PORT}`
       console.log(`Server started on ${serverUrl}`)
       console.log(`Graphql playground can be found at ${serverUrl}/graphql`)
     })
