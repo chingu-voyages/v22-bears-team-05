@@ -19,21 +19,6 @@ const Form = styled.form`
   margin: 0 auto;
 `;
 
-const ConfirmMessage = styled.p`
-  font-size: 1.2rem;
-`;
-
-const GoalName = styled.p`
-  font-weight: 700;
-  margin-bottom: 50px;
-  text-transform: capitalize;
-`;
-
-const Note = styled.p`
-  font-size: 0.7rem;
-  text-transform: uppercase;
-`;
-
 interface IProps {
   goalId: string;
   name: string;

@@ -7,6 +7,7 @@ import {
   TimeSpent,
   UpdateGoalButton,
 } from '.';
+import { Task } from '../../types';
 import { NewTaskButton, TaskList } from '../Tasks';
 
 const Container = styled.div`
@@ -68,21 +69,6 @@ interface IProps {
   totalTimeInSeconds: number;
   tasks?: Task[];
 }
-
-type Task = {
-  _id: string;
-  name: string;
-  isCompleted: boolean;
-  totalTimeInSeconds: number;
-  subtasks?: Subtask[];
-};
-
-type Subtask = {
-  _id: string;
-  name: string;
-  totalTimeInSeconds: number;
-  isCompleted: boolean;
-};
 
 const GoalListItem: FunctionComponent<IProps> = ({
   name,

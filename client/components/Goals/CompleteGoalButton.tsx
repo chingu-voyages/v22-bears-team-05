@@ -29,11 +29,6 @@ const GoalName = styled.p`
   text-transform: capitalize;
 `;
 
-const Note = styled.p`
-  font-size: 0.7rem;
-  text-transform: uppercase;
-`;
-
 interface IProps {
   goalId: string;
   name: string;
