@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { GoalListItem, NewGoalButton } from '.';
+import { Goal } from '../../types';
 
 const ListContainer = styled.div`
   background-color: white;
@@ -10,28 +11,6 @@ const ListContainer = styled.div`
 
 type GoalProps = {
   goals?: Goal[];
-};
-
-type Goal = {
-  _id: string;
-  name: string;
-  totalTimeInSeconds: number;
-  tasks?: Task[];
-};
-
-type Task = {
-  _id: string;
-  name: string;
-  totalTimeInSeconds: number;
-  isCompleted: boolean;
-  subtasks?: Subtask[];
-};
-
-type Subtask = {
-  _id: string;
-  name: string;
-  totalTimeInSeconds: number;
-  isCompleted: boolean;
 };
 
 const GoalList: FunctionComponent<GoalProps> = ({ goals }) => (

@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { TaskListItem } from '.';
+import { Task } from '../../types';
 
 const fadeIn = keyframes`
   from {
@@ -22,21 +23,6 @@ interface IProps {
   tasks: Task[];
   isSubtask: boolean;
 }
-
-type Task = {
-  _id: string;
-  name: string;
-  isCompleted: boolean;
-  totalTimeInSeconds: number;
-  subtasks?: Subtask[];
-};
-
-type Subtask = {
-  _id: string;
-  name: string;
-  totalTimeInSeconds: number;
-  isCompleted: boolean;
-};
 
 const TaskList: FunctionComponent<IProps> = ({
   tasks = [],

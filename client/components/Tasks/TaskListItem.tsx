@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState } from 'react';
 import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
 import { DeleteTaskButton, TaskList, UpdateTaskButton } from '.';
+import { Subtask } from '../../types';
 import { TimeSpent } from '../Goals';
 import CompleteTaskButton from './CompleteTaskButton';
 
@@ -65,21 +66,15 @@ const NotificationDot = styled.div`
   width: 10px;
 `;
 
-type TaskProp = {
+interface IProps {
   taskId: string;
   name: string;
   totalTimeInSeconds: number;
   subtasks?: Subtask[];
   isSubtask: boolean;
-};
+}
 
-type Subtask = {
-  _id: string;
-  name: string;
-  isCompleted: boolean;
-};
-
-const TaskListItem: FunctionComponent<TaskProp> = ({
+const TaskListItem: FunctionComponent<IProps> = ({
   taskId,
   name,
   totalTimeInSeconds,
