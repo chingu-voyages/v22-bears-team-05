@@ -14,16 +14,14 @@ const MONGODB = process.env.MONGO_CONNECTION_STRING
 const typeDefs = require("./graphql/typeDefs")
 const resolvers = require("./graphql/resolvers")
 const isAuth = require('./middleware/is-auth')
-const { COOKIE_NAME } = require("./constants")
-
-const PORT = 5000
+const { COOKIE_NAME, __prod__ } = require("./constants")
 
 const app = express()
 
 async function startApp() {
   try {
     const RedisStore = connectRedis(session);
-    const redis = new Redis();
+    const redis = new Redis(process.env.REDIS_URL);
     
     const apolloServer = new ApolloServer({
       typeDefs,
@@ -40,7 +38,7 @@ async function startApp() {
     app.set("trust proxy", 1);
     app.use(
       cors({
-        origin: "http://localhost:3000",
+        origin: process.env.ORIGIN || process.env.CORS_ORIGIN || "http://localhost:3000",
         credentials: true,
       })
     );
@@ -63,8 +61,8 @@ async function startApp() {
         cookie: {
           maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
           httpOnly: true,
-          sameSite: "lax", // csrf
-          secure: false, // cookie only works in https
+          sameSite: "none", // csrf
+          secure: __prod__, // cookie only works in https
           domain: undefined,
         },
         saveUninitialized: false,
@@ -78,8 +76,8 @@ async function startApp() {
       app,
       cors: false,
     })
-    app.listen({ port: PORT }, () => {
-      const serverUrl = `http://localhost:${PORT}`
+    app.listen({ port: process.env.PORT }, () => {
+      const serverUrl = `http://localhost:${process.env.PORT}`
       console.log(`Server started on ${serverUrl}`)
       console.log(`Graphql playground can be found at ${serverUrl}/graphql`)
     })

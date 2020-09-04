@@ -35,8 +35,8 @@ const Note = styled.p`
 `;
 
 interface IProps {
-  goalId: String;
-  name: String;
+  goalId: string;
+  name: string;
 }
 
 const CompleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
