@@ -38,17 +38,21 @@ async function startApp() {
     app.set("trust proxy", 1);
     app.use(
       cors({
+        origin:
+          process.env.ORIGIN ||
+          process.env.CORS_ORIGIN ||
+          "http://localhost:3000",
         credentials: true,
       }),
     );
-    app.use((req, res, next) => {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Methods', 'POST,GET,OPTIONS');
-      if (req.method === 'OPTIONS') {
-        return res.sendStatus(200);
-      }
-      next();
-    });
+    // app.use((req, res, next) => {
+    //   res.setHeader('Access-Control-Allow-Origin', '*');
+    //   res.setHeader('Access-Control-Methods', 'POST,GET,OPTIONS');
+    //   if (req.method === 'OPTIONS') {
+    //     return res.sendStatus(200);
+    //   }
+    //   next();
+    // });
     app.use(
       session({
         name: COOKIE_NAME,
