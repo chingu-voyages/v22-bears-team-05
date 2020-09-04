@@ -14,7 +14,7 @@ const MONGODB = process.env.MONGO_CONNECTION_STRING
 const typeDefs = require("./graphql/typeDefs")
 const resolvers = require("./graphql/resolvers")
 const isAuth = require('./middleware/is-auth')
-const { COOKIE_NAME } = require("./constants")
+const { COOKIE_NAME, __prod__ } = require("./constants")
 
 const app = express()
 
@@ -38,7 +38,7 @@ async function startApp() {
     app.set("trust proxy", 1);
     app.use(
       cors({
-        origin: process.env.origin || "http://localhost:3000",
+        origin: process.env.ORIGIN || "http://localhost:3000",
         credentials: true,
       })
     );
@@ -62,7 +62,7 @@ async function startApp() {
           maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
           httpOnly: true,
           sameSite: "lax", // csrf
-          secure: false, // cookie only works in https
+          secure: __prod__, // cookie only works in https
           domain: undefined,
         },
         saveUninitialized: false,
