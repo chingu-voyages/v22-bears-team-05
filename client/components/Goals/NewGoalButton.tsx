@@ -63,13 +63,13 @@ const NewGoalButton: FunctionComponent = () => {
       await createGoal({
         variables: CREATE_GOAL_VARIABLES({ goalName: newGoalName }),
         update: (cache, { data: newData }) => {
-          const goalData = cache.readQuery({
+          const { getAllGoals } = cache.readQuery({
             query: GET_GOALS_QUERY,
           });
           cache.writeQuery({
             query: GET_GOALS_QUERY,
             data: {
-              getAllGoals: [...goalData.getAllGoals, newData.createGoal],
+              getAllGoals: [...getAllGoals, newData.createGoal],
             },
           });
         },

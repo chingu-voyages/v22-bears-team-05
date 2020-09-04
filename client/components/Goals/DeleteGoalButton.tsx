@@ -61,15 +61,14 @@ const DeleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
       await deleteGoal({
         variables: DELETE_GOAL_VARIABLES({ goalId }),
         update: (cache) => {
-          const goalData = cache.readQuery({
+          const { getAllGoals } = cache.readQuery({
             query: GET_GOALS_QUERY,
           });
+
           cache.writeQuery({
             query: GET_GOALS_QUERY,
             data: {
-              getAllGoals: [
-                ...goalData.getAllGoals.filter((goal) => goal._id !== goalId),
-              ],
+              getAllGoals: [...getAllGoals.filter(({ _id }) => _id !== goalId)],
             },
           });
         },

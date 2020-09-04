@@ -77,17 +77,17 @@ const NewTaskButton: FunctionComponent<IProps> = ({ goalId }) => {
         variables: CREATE_TASK_VARIABLES({ goalId, taskName: newTaskName }),
         update: (cache, { data: newData }) => {
           const newTask = newData.createTask;
-          const goalData = cache.readQuery({
+          const { getAllGoals } = cache.readQuery({
             query: GET_GOALS_QUERY,
           });
-          const goalToUpdate = goalData.getAllGoals.filter(
-            (goal) => goal._id === goalId,
+          const goalToUpdate = getAllGoals.filter(
+            ({ _id }) => _id === goalId,
           )[0];
           const updatedGoal = [...goalToUpdate.tasks, newTask];
           cache.writeQuery({
             query: GET_GOALS_QUERY,
             data: {
-              getAllGoals: [...goalData.getAllGoals, updatedGoal],
+              getAllGoals: [...getAllGoals, updatedGoal],
             },
           });
         },
@@ -117,7 +117,7 @@ const NewTaskButton: FunctionComponent<IProps> = ({ goalId }) => {
                 name="name"
                 onChange={handleInputChange}
                 value={newTaskName}
-                autoFocus={true}
+                autoFocus
                 disabled={isLoading}
               />
             </label>
