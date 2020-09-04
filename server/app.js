@@ -23,7 +23,7 @@ const app = express()
 async function startApp() {
   try {
     const RedisStore = connectRedis(session);
-    const redis = new Redis();
+    const redis = new Redis(process.env.REDIS_URL);
     
     const apolloServer = new ApolloServer({
       typeDefs,
