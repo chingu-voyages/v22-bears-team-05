@@ -1,10 +1,21 @@
 import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { TaskListItem } from '.';
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
 
 const ListContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
+  animation: ${fadeIn} 300ms ease-out forwards;
 `;
 
 interface IProps {

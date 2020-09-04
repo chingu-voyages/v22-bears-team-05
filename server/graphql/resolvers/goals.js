@@ -99,10 +99,10 @@ module.exports = {
         }
         if (newGoalName) currentGoal.name = newGoalName.trim();
         if (isCompleted !== undefined) {
-          if (isCompleted === false) currentGoal.isCompleted = isCompleted;
+          if (!isCompleted) currentGoal.isCompleted = isCompleted;
           else {
             currentGoal.tasks.forEach((task) => {
-              if (task.isCompleted === false)
+              if (!task.isCompleted)
                 throw new Error("There are still uncompleted tasks");
             });
             currentGoal.isCompleted = isCompleted;

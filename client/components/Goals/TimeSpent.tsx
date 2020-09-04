@@ -1,11 +1,21 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { FaRegClock } from 'react-icons/fa';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 interface IProps {
   totalTimeInSeconds: number;
   paddingSmall?: boolean;
 }
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
 
 const Time = styled.div`
   display: flex;
@@ -13,6 +23,7 @@ const Time = styled.div`
   width: 100%;
   font-size: 0.8rem;
   text-transform: uppercase;
+  animation: ${fadeIn} 300ms ease-out forwards;
   padding: ${({ paddingSmall }) =>
     paddingSmall ? '0.5em 0 0 0' : '0.5em 1.4em 1.4em'};
 `;

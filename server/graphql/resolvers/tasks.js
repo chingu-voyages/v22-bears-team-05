@@ -47,10 +47,10 @@ module.exports = {
 
         if (newTaskName) task.name = newTaskName.trim();
         if (isCompleted !== undefined) {
-          if (isCompleted === false) task.isCompleted = isCompleted;
+          if (!isCompleted) task.isCompleted = isCompleted;
           else {
             task.subtasks.forEach((subtask) => {
-              if (subtask.isCompleted === false)
+              if (!subtask.isCompleted)
                 throw new Error("There are still uncompleted subtasks");
             });
             task.isCompleted = isCompleted;
@@ -110,36 +110,6 @@ module.exports = {
 
         parentGoal.tasks = parentGoal.tasks.filter((id) => !id.equals(taskId));
         await parentGoal.save();
-
-        return parentGoal;
-      } catch (err) {
-        throw new Error(err);
-      }
-    },
-    async completeTask(_, { taskId }, context) {
-      //can be deleted soon, should be replaced by updateTask
-      if (!context.req.session.userId) throw new Error("not authenticated");
-
-      try {
-        const currentTask = await Task.findById(taskId).populate("parent");
-        if (!currentTask) throw new Error("That task does not exist");
-
-        if (currentTask.subtasks.length > 0) {
-          throw new Error(
-            "Task cannot be completed while it still contains subtasks",
-          );
-        }
-
-        const parentGoal = currentTask.parent;
-        if (parentGoal) {
-          parentGoal.totalCompletedSubtasks +=
-            currentTask.totalCompletedSubtasks;
-          parentGoal.tasks = parentGoal.tasks.filter(
-            (id) => !id.equals(taskId),
-          );
-          await parentGoal.save();
-        }
-        await currentTask.delete();
 
         return parentGoal;
       } catch (err) {

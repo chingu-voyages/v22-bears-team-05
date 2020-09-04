@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import React, { FunctionComponent, useState } from 'react';
 import { FaRegPlusSquare } from 'react-icons/fa';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { CREATE_TASK_MUTATION } from '../../utils/graphql/mutation';
 import { GET_GOALS_QUERY } from '../../utils/graphql/query';
 import { CREATE_TASK_VARIABLES } from '../../utils/graphql/variables';
@@ -12,6 +12,16 @@ import Modal from '../Utilities/Modal';
 interface IProps {
   goalId: string;
 }
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -24,6 +34,7 @@ const ButtonContainer = styled.div`
   text-transform: uppercase;
   font-size: 1rem;
   font-weight: 700;
+  animation: ${fadeIn} 300ms ease-out forwards;
 `;
 
 const Form = styled.form`
