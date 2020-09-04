@@ -8,9 +8,15 @@ jobs:
       - run:
           name: update-npm
           command: "sudo npm install -g npm@5"
+      - restore_cache:
+          key: -node-v1-{{ checksum "server/package-lock.json" }}
       - run:
           name: install-packages
           command: cd server && npm install
+      - save_cache:
+          key: -node-v1-{{checksum "server/package-lock.json"}}
+          paths:
+            -  server/node_modules
       - run:
           name: test
           command: cd server && npm run test
