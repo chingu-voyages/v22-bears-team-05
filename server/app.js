@@ -76,7 +76,7 @@ async function startApp() {
       app,
       cors: false,
     })
-    app.listen({ port: PORT }, () => {
+    app.listen({ port: process.env.PORT }, () => {
       const serverUrl = `http://localhost:${process.env.PORT}`
       console.log(`Server started on ${serverUrl}`)
       console.log(`Graphql playground can be found at ${serverUrl}/graphql`)
