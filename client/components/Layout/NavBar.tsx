@@ -48,11 +48,11 @@ const Logout = styled.div`
   align-items: center;
 `;
 
-type NavProps = {
+interface NavProps {
   isLoggedIn: boolean;
   email: string;
   show: boolean;
-};
+}
 
 const NavBar: FunctionComponent<NavProps> = ({ isLoggedIn, email, show }) => {
   const apolloClient = useApolloClient();
