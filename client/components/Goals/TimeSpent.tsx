@@ -1,10 +1,21 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { FaRegClock } from 'react-icons/fa';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 interface IProps {
   totalTimeInSeconds: number;
+  paddingSmall?: boolean;
 }
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
 
 const Time = styled.div`
   display: flex;
@@ -12,13 +23,15 @@ const Time = styled.div`
   width: 100%;
   font-size: 0.8rem;
   text-transform: uppercase;
-  padding: 0.5em 1.4em 1.4em;
-  background-color: var(--color-yellow);
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  animation: ${fadeIn} 300ms ease-out forwards;
+  padding: ${({ paddingSmall }) =>
+    paddingSmall ? '0.5em 0 0 0' : '0.5em 1.4em 1.4em'};
 `;
 
-const TimeSpent: FunctionComponent<IProps> = ({ totalTimeInSeconds }) => {
+const TimeSpent: FunctionComponent<IProps> = ({
+  totalTimeInSeconds,
+  paddingSmall = false,
+}) => {
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -34,7 +47,7 @@ const TimeSpent: FunctionComponent<IProps> = ({ totalTimeInSeconds }) => {
     setMinutes(Math.floor(timeLeft / secondsInMinute));
   }, [totalTimeInSeconds, secondsInDay, secondsInHour, secondsInMinute]);
   return (
-    <Time>
+    <Time paddingSmall={paddingSmall}>
       <FaRegClock size={20} />
       &nbsp; {days ? <>{days}d </> : null}
       {days || hours ? <> {hours}h </> : null}

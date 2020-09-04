@@ -49,8 +49,8 @@ const CompleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
   useCheckIfAuth(error);
 
   const toggleForm = () => {
-    setShowModal(!showModal);
     setErrorMessage('');
+    setShowModal(!showModal);
   };
 
   const handleSubmit = async (e: React.ChangeEvent<any>) => {
@@ -66,7 +66,6 @@ const CompleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
       toggleForm();
     } catch (err) {
       setError(err);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -78,9 +77,7 @@ const CompleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
       </ButtonContainer>
       <Modal isOpen={showModal} onClose={toggleForm} title="Complete Goal">
         <Form onSubmit={handleSubmit}>
-          <ConfirmMessage>
-            Are you sure you want to complete this goal?
-          </ConfirmMessage>
+          <ConfirmMessage>Are you sure this goal is completed?</ConfirmMessage>
           <GoalName>{name}</GoalName>
           <p className="error">{errorMessage}</p>
           {isLoading ? <Spinner /> : <button type="submit">Complete</button>}

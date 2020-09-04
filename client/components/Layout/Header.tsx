@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import NextLink from 'next/link';
 import { useQuery } from '@apollo/client';
+import NextLink from 'next/link';
+import React, { useEffect, useState } from 'react';
 import { FaBars } from 'react-icons/fa';
-
-import NavBar from './NavBar';
-
+import styled from 'styled-components';
 import { ME_QUERY } from '../../utils/graphql/query';
+import NavBar from './NavBar';
 
 const Container = styled.header`
   position: relative;
@@ -18,7 +16,7 @@ const Container = styled.header`
   margin: 0;
   background-color: white;
 
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 1rem;
   z-index: 10;
 
   .header__main {

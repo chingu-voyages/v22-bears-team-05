@@ -2,8 +2,8 @@ import { useMutation } from '@apollo/client';
 import React, { FunctionComponent, useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
-import { UPDATE_GOAL_MUTATION } from '../../utils/graphql/mutation';
-import { UPDATE_GOAL_NAME_VARIABLES } from '../../utils/graphql/variables';
+import { UPDATE_TASK_MUTATION } from '../../utils/graphql/mutation';
+import { UPDATE_TASK_NAME_VARIABLES } from '../../utils/graphql/variables';
 import { useCheckIfAuth } from '../../utils/useCheckIfAuth';
 import Spinner from '../Spinner';
 import Modal from '../Utilities/Modal';
@@ -23,7 +23,7 @@ const ConfirmMessage = styled.p`
   font-size: 1.2rem;
 `;
 
-const GoalName = styled.p`
+const TaskName = styled.p`
   font-weight: 700;
   margin-bottom: 50px;
   text-transform: capitalize;
@@ -35,17 +35,17 @@ const Note = styled.p`
 `;
 
 interface IProps {
-  goalId: string;
+  taskId: string;
   name: string;
 }
 
-const UpdateGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
+const UpdateTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [newGoalName, setNewGoalName] = useState(name);
+  const [newTaskName, setNewTaskName] = useState(name);
   const [error, setError] = useState<Error | null>(null);
-  const [updateGoal] = useMutation(UPDATE_GOAL_MUTATION);
+  const [updateTask] = useMutation(UPDATE_TASK_MUTATION);
   const maxNameLength = 20;
   const maxCharLengthError = `The max length is ${maxNameLength} characters.`;
 
@@ -59,7 +59,7 @@ const UpdateGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
   const handleInputChange = (e: React.ChangeEvent<any>) => {
     e.persist();
     if (e.target.value.length <= maxNameLength) {
-      setNewGoalName(e.target.value);
+      setNewTaskName(e.target.value);
       setErrorMessage('');
     } else setErrorMessage(maxCharLengthError);
   };
@@ -68,8 +68,8 @@ const UpdateGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await updateGoal({
-        variables: UPDATE_GOAL_NAME_VARIABLES({ goalId, newGoalName }),
+      await updateTask({
+        variables: UPDATE_TASK_NAME_VARIABLES({ taskId, newTaskName }),
       });
       toggleForm();
     } catch (err) {
@@ -84,7 +84,7 @@ const UpdateGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
       <ButtonContainer onClick={toggleForm}>
         <FaEdit size={20} />
       </ButtonContainer>
-      <Modal isOpen={showModal} onClose={toggleForm} title="Update Goal Name">
+      <Modal isOpen={showModal} onClose={toggleForm} title="Update Task Name">
         <Form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="name">
@@ -94,7 +94,7 @@ const UpdateGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
                 id="name"
                 name="name"
                 onChange={handleInputChange}
-                value={newGoalName}
+                value={newTaskName}
                 autoFocus={true}
                 disabled={isLoading}
               />
@@ -108,4 +108,4 @@ const UpdateGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
   );
 };
 
-export default UpdateGoalButton;
+export default UpdateTaskButton;

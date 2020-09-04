@@ -1,27 +1,40 @@
 import { useMutation } from '@apollo/client';
 import React, { FunctionComponent, useState } from 'react';
 import { FaRegPlusSquare } from 'react-icons/fa';
-import styled from 'styled-components';
-import { CREATE_GOAL_MUTATION } from '../../utils/graphql/mutation';
+import styled, { keyframes } from 'styled-components';
+import { CREATE_TASK_MUTATION } from '../../utils/graphql/mutation';
 import { GET_GOALS_QUERY } from '../../utils/graphql/query';
-import { CREATE_GOAL_VARIABLES } from '../../utils/graphql/variables';
+import { CREATE_TASK_VARIABLES } from '../../utils/graphql/variables';
 import { useCheckIfAuth } from '../../utils/useCheckIfAuth';
 import Spinner from '../Spinner';
 import Modal from '../Utilities/Modal';
+
+interface IProps {
+  goalId: string;
+}
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #9bc995;
+  background-color: var(--color-blue);
   margin: 0 0 0.5em;
   padding: 0.6em;
-  border-radius: 100px;
   cursor: pointer;
   text-transform: uppercase;
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: 700;
-  margin-bottom: 1.5em;
+  animation: ${fadeIn} 300ms ease-out forwards;
 `;
 
 const Form = styled.form`
@@ -30,13 +43,13 @@ const Form = styled.form`
   margin: 0 auto;
 `;
 
-const NewGoalButton: FunctionComponent = () => {
+const NewTaskButton: FunctionComponent<IProps> = ({ goalId }) => {
   const [showModal, setShowModal] = useState(false);
-  const [newGoalName, setNewGoalName] = useState('');
+  const [newTaskName, setNewTaskName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [createGoal] = useMutation(CREATE_GOAL_MUTATION);
+  const [createTask] = useMutation(CREATE_TASK_MUTATION);
   const maxNameLength = 20;
   const maxCharLengthError = `The max length is ${maxNameLength} characters.`;
 
@@ -44,14 +57,14 @@ const NewGoalButton: FunctionComponent = () => {
 
   const toggleForm = () => {
     setShowModal(!showModal);
-    setNewGoalName('');
+    setNewTaskName('');
     setErrorMessage('');
   };
 
   const handleInputChange = (e: React.ChangeEvent<any>) => {
     e.persist();
     if (e.target.value.length <= maxNameLength) {
-      setNewGoalName(e.target.value);
+      setNewTaskName(e.target.value);
       setErrorMessage('');
     } else setErrorMessage(maxCharLengthError);
   };
@@ -60,16 +73,21 @@ const NewGoalButton: FunctionComponent = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await createGoal({
-        variables: CREATE_GOAL_VARIABLES({ goalName: newGoalName }),
+      await createTask({
+        variables: CREATE_TASK_VARIABLES({ goalId, taskName: newTaskName }),
         update: (cache, { data: newData }) => {
+          const newTask = newData.createTask;
           const goalData = cache.readQuery({
             query: GET_GOALS_QUERY,
           });
+          const goalToUpdate = goalData.getAllGoals.filter(
+            (goal) => goal._id === goalId,
+          )[0];
+          const updatedGoal = [...goalToUpdate.tasks, newTask];
           cache.writeQuery({
             query: GET_GOALS_QUERY,
             data: {
-              getAllGoals: [...goalData.getAllGoals, newData.createGoal],
+              getAllGoals: [...goalData.getAllGoals, updatedGoal],
             },
           });
         },
@@ -85,10 +103,10 @@ const NewGoalButton: FunctionComponent = () => {
   return (
     <>
       <ButtonContainer onClick={toggleForm}>
-        Add Goal &nbsp;
+        Add Task &nbsp;
         <FaRegPlusSquare size={20} />
       </ButtonContainer>
-      <Modal isOpen={showModal} onClose={toggleForm} title="Add Goal">
+      <Modal isOpen={showModal} onClose={toggleForm} title="Add Task">
         <Form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="name">
@@ -98,18 +116,18 @@ const NewGoalButton: FunctionComponent = () => {
                 id="name"
                 name="name"
                 onChange={handleInputChange}
-                value={newGoalName}
+                value={newTaskName}
                 autoFocus={true}
                 disabled={isLoading}
               />
             </label>
           </div>
           <p className="error">{errorMessage}</p>
-          {isLoading ? <Spinner /> : <button type="submit">Add Goal</button>}
+          {isLoading ? <Spinner /> : <button type="submit">Add Task</button>}
         </Form>
       </Modal>
     </>
   );
 };
 
-export default NewGoalButton;
+export default NewTaskButton;

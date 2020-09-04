@@ -1,47 +1,63 @@
 import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
-
+import styled, { keyframes } from 'styled-components';
 import { TaskListItem } from '.';
 
-const ListContainer = styled.div`
-  padding-left: 30px;
-  display: flex;
-  flex-flow: column nowrap;
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 `;
 
-type TasksProp = {
+const ListContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  animation: ${fadeIn} 300ms ease-out forwards;
+`;
+
+interface IProps {
   tasks: Task[];
   isSubtask: boolean;
-};
+}
 
 type Task = {
-  id: string;
+  _id: string;
   name: string;
+  isCompleted: boolean;
+  totalTimeInSeconds: number;
   subtasks?: Subtask[];
 };
 
 type Subtask = {
-  id: string;
+  _id: string;
   name: string;
+  totalTimeInSeconds: number;
+  isCompleted: boolean;
 };
 
-const TaskList: FunctionComponent<TasksProp> = ({
+const TaskList: FunctionComponent<IProps> = ({
   tasks = [],
   isSubtask = false,
 }) => (
   <ListContainer>
-    {tasks.map((task) => {
-      const { id, name, subtasks } = task;
-      return (
-        <TaskListItem
-          key={id}
-          taskId={id}
-          name={name}
-          subtasks={subtasks}
-          isSubtask={isSubtask}
-        />
-      );
-    })}
+    {tasks
+      .filter((task) => task.isCompleted === false)
+      .map((task) => {
+        const { _id, name, totalTimeInSeconds, isCompleted, subtasks } = task;
+        return (
+          <TaskListItem
+            key={_id}
+            taskId={_id}
+            name={name}
+            totalTimeInSeconds={totalTimeInSeconds}
+            subtasks={subtasks}
+            isSubtask={isSubtask}
+          />
+        );
+      })}
   </ListContainer>
 );
 
