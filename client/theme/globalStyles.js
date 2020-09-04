@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   main {
-    margin: 1rem 2rem;
+    margin: 1rem 1rem;
   }
 
   body {

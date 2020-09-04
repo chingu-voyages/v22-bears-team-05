@@ -16,12 +16,14 @@ type Task = {
   _id: string;
   name: string;
   isCompleted: boolean;
+  totalTimeInSeconds: number;
   subtasks?: Subtask[];
 };
 
 type Subtask = {
   _id: string;
   name: string;
+  totalTimeInSeconds: number;
   isCompleted: boolean;
 };
 
@@ -33,12 +35,13 @@ const TaskList: FunctionComponent<IProps> = ({
     {tasks
       .filter((task) => task.isCompleted === false)
       .map((task) => {
-        const { _id, name, subtasks } = task;
+        const { _id, name, totalTimeInSeconds, isCompleted, subtasks } = task;
         return (
           <TaskListItem
             key={_id}
             taskId={_id}
             name={name}
+            totalTimeInSeconds={totalTimeInSeconds}
             subtasks={subtasks}
             isSubtask={isSubtask}
           />

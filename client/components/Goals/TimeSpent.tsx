@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 interface IProps {
   totalTimeInSeconds: number;
+  paddingSmall?: boolean;
 }
 
 const Time = styled.div`
@@ -12,10 +13,14 @@ const Time = styled.div`
   width: 100%;
   font-size: 0.8rem;
   text-transform: uppercase;
-  padding: 0.5em 1.4em 1.4em;
+  padding: ${({ paddingSmall }) =>
+    paddingSmall ? '0.5em 0 0 0' : '0.5em 1.4em 1.4em'};
 `;
 
-const TimeSpent: FunctionComponent<IProps> = ({ totalTimeInSeconds }) => {
+const TimeSpent: FunctionComponent<IProps> = ({
+  totalTimeInSeconds,
+  paddingSmall = false,
+}) => {
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -31,7 +36,7 @@ const TimeSpent: FunctionComponent<IProps> = ({ totalTimeInSeconds }) => {
     setMinutes(Math.floor(timeLeft / secondsInMinute));
   }, [totalTimeInSeconds, secondsInDay, secondsInHour, secondsInMinute]);
   return (
-    <Time>
+    <Time paddingSmall={paddingSmall}>
       <FaRegClock size={20} />
       &nbsp; {days ? <>{days}d </> : null}
       {days || hours ? <> {hours}h </> : null}

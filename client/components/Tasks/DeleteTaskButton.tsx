@@ -35,8 +35,8 @@ const Note = styled.p`
 `;
 
 interface IProps {
-  taskId: String;
-  taskName: String;
+  taskId: string;
+  taskName: string;
 }
 
 const DeleteTaskButton: FunctionComponent<IProps> = ({ taskId, taskName }) => {

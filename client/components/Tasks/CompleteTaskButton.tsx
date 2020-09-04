@@ -35,8 +35,8 @@ const Note = styled.p`
 `;
 
 interface IProps {
-  taskId: String;
-  name: String;
+  taskId: string;
+  name: string;
 }
 
 const CompleteTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {

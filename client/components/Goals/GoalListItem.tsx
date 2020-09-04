@@ -62,26 +62,29 @@ const NotificationDot = styled.div`
   width: 10px;
 `;
 
-type GoalProp = {
+interface IProps {
   goalId: string;
   name: string;
   totalTimeInSeconds: number;
   tasks?: Task[];
-};
+}
 
 type Task = {
   _id: string;
   name: string;
   isCompleted: boolean;
+  totalTimeInSeconds: number;
   subtasks?: Subtask[];
 };
 
 type Subtask = {
-  id: string;
+  _id: string;
   name: string;
+  totalTimeInSeconds: number;
+  isCompleted: boolean;
 };
 
-const GoalListItem: FunctionComponent<GoalProp> = ({
+const GoalListItem: FunctionComponent<IProps> = ({
   name,
   goalId,
   totalTimeInSeconds,

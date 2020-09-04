@@ -20,14 +20,18 @@ type Goal = {
 };
 
 type Task = {
-  id: string;
+  _id: string;
   name: string;
+  totalTimeInSeconds: number;
+  isCompleted: boolean;
   subtasks?: Subtask[];
 };
 
 type Subtask = {
-  id: string;
+  _id: string;
   name: string;
+  totalTimeInSeconds: number;
+  isCompleted: boolean;
 };
 
 const GoalList: FunctionComponent<GoalProps> = ({ goals }) => (
