@@ -2,8 +2,8 @@ import { useMutation } from '@apollo/client';
 import React, { FunctionComponent, useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import styled from 'styled-components';
-import { UPDATE_GOAL_MUTATION } from '../../utils/graphql/mutation';
-import { UPDATE_GOAL_COMPLETED_VARIABLES } from '../../utils/graphql/variables';
+import { UPDATE_TASK_MUTATION } from '../../utils/graphql/mutation';
+import { UPDATE_TASK_COMPLETED_VARIABLES } from '../../utils/graphql/variables';
 import { useCheckIfAuth } from '../../utils/useCheckIfAuth';
 import Spinner from '../Spinner';
 import Modal from '../Utilities/Modal';
@@ -35,16 +35,16 @@ const Note = styled.p`
 `;
 
 interface IProps {
-  goalId: String;
+  taskId: String;
   name: String;
 }
 
-const CompleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
+const CompleteTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const [updateGoal] = useMutation(UPDATE_GOAL_MUTATION);
+  const [updateTask] = useMutation(UPDATE_TASK_MUTATION);
 
   useCheckIfAuth(error);
 
@@ -57,9 +57,9 @@ const CompleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await updateGoal({
-        variables: UPDATE_GOAL_COMPLETED_VARIABLES({
-          goalId,
+      await updateTask({
+        variables: UPDATE_TASK_COMPLETED_VARIABLES({
+          taskId,
           isCompleted: true,
         }),
       });
@@ -75,9 +75,9 @@ const CompleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
       <ButtonContainer onClick={toggleForm}>
         <FaCheck size={20} />
       </ButtonContainer>
-      <Modal isOpen={showModal} onClose={toggleForm} title="Complete Goal">
+      <Modal isOpen={showModal} onClose={toggleForm} title="Complete Task">
         <Form onSubmit={handleSubmit}>
-          <ConfirmMessage>Are you sure this goal is completed?</ConfirmMessage>
+          <ConfirmMessage>Are you sure this task is completed?</ConfirmMessage>
           <GoalName>{name}</GoalName>
           <p className="error">{errorMessage}</p>
           {isLoading ? <Spinner /> : <button type="submit">Complete</button>}
@@ -87,4 +87,4 @@ const CompleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
   );
 };
 
-export default CompleteGoalButton;
+export default CompleteTaskButton;

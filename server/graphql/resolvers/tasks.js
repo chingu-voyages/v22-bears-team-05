@@ -46,7 +46,16 @@ module.exports = {
         }
 
         if (newTaskName) task.name = newTaskName.trim();
-        if (isCompleted !== undefined) task.isCompleted = isCompleted;
+        if (isCompleted !== undefined) {
+          if (isCompleted === false) task.isCompleted = isCompleted;
+          else {
+            task.subtasks.forEach((subtask) => {
+              if (subtask.isCompleted === false)
+                throw new Error("There are still uncompleted subtasks");
+            });
+            task.isCompleted = isCompleted;
+          }
+        }
         await task.save();
 
         const goalToReturn = await Goal.findOne({

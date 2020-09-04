@@ -98,7 +98,16 @@ module.exports = {
           throw new Error("Cannot find a goal with that ID");
         }
         if (newGoalName) currentGoal.name = newGoalName.trim();
-        if (isCompleted !== undefined) currentGoal.isCompleted = isCompleted;
+        if (isCompleted !== undefined) {
+          if (isCompleted === false) currentGoal.isCompleted = isCompleted;
+          else {
+            currentGoal.tasks.forEach((task) => {
+              if (task.isCompleted === false)
+                throw new Error("There are still uncompleted tasks");
+            });
+            currentGoal.isCompleted = isCompleted;
+          }
+        }
         currentGoal.save();
         return currentGoal;
       } catch (err) {

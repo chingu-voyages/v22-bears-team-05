@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState } from 'react';
 import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
 import { DeleteTaskButton, TaskList, UpdateTaskButton } from '.';
+import CompleteTaskButton from './CompleteTaskButton';
 
 const Container = styled.div`
   display: flex;
@@ -48,6 +49,21 @@ const TaskIndicator = styled.span`
   font-size: 1.2rem;
 `;
 
+const Notifications = styled.div`
+  margin: 0 10px;
+  font-weight: 700;
+`;
+
+const NotificationDot = styled.div`
+  position: relative;
+  top: -1.5rem;
+  right: -0.75rem;
+  background-color: #ee6055;
+  border-radius: 10rem;
+  height: 10px;
+  width: 10px;
+`;
+
 type TaskProp = {
   taskId: string;
   name: string;
@@ -56,8 +72,9 @@ type TaskProp = {
 };
 
 type Subtask = {
-  subtaskId: string;
+  _id: string;
   name: string;
+  isCompleted: boolean;
 };
 
 const TaskListItem: FunctionComponent<TaskProp> = ({
@@ -86,6 +103,17 @@ const TaskListItem: FunctionComponent<TaskProp> = ({
           <TaskIndicator>
             <UpdateTaskButton taskId={taskId} name={name} />
             <DeleteTaskButton taskName={name} taskId={taskId} />
+            {subtasks.length > 0 ? (
+              <Notifications>
+                {
+                  subtasks.filter((subtask) => subtask.isCompleted === false)
+                    .length
+                }
+                <NotificationDot />
+              </Notifications>
+            ) : (
+              <CompleteTaskButton taskId={taskId} name={name} />
+            )}
           </TaskIndicator>
         </MainInfo>
       </ListItem>

@@ -70,8 +70,9 @@ type GoalProp = {
 };
 
 type Task = {
-  id: string;
+  _id: string;
   name: string;
+  isCompleted: boolean;
   subtasks?: Subtask[];
 };
 
@@ -110,7 +111,7 @@ const GoalListItem: FunctionComponent<GoalProp> = ({
               <DeleteGoalButton goalId={goalId} name={name} />
               {tasks.length > 0 ? (
                 <Notifications>
-                  {tasks.length}
+                  {tasks.filter((task) => task.isCompleted === false).length}
                   <NotificationDot />
                 </Notifications>
               ) : (
@@ -126,7 +127,7 @@ const GoalListItem: FunctionComponent<GoalProp> = ({
           ) : null}
         </Container>
       </ListItem>
-      {showTasks && <TaskList tasks={tasks} />}
+      {showTasks && <TaskList tasks={tasks} isSubtask={false} />}
     </Container>
   );
 };

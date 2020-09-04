@@ -1,3 +1,4 @@
+import CompleteTaskButton from './CompleteTaskButton';
 import DeleteTaskButton from './DeleteTaskButton';
 import NewTaskButton from './NewTaskButton';
 import TaskList from './TaskList';
@@ -10,4 +11,5 @@ export {
   NewTaskButton,
   DeleteTaskButton,
   UpdateTaskButton,
+  CompleteTaskButton,
 };

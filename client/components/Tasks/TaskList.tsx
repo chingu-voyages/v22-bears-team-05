@@ -7,39 +7,43 @@ const ListContainer = styled.div`
   flex-flow: column nowrap;
 `;
 
-type TasksProp = {
+interface IProps {
   tasks: Task[];
   isSubtask: boolean;
-};
+}
 
 type Task = {
   _id: string;
   name: string;
+  isCompleted: boolean;
   subtasks?: Subtask[];
 };
 
 type Subtask = {
-  id: string;
+  _id: string;
   name: string;
+  isCompleted: boolean;
 };
 
-const TaskList: FunctionComponent<TasksProp> = ({
+const TaskList: FunctionComponent<IProps> = ({
   tasks = [],
   isSubtask = false,
 }) => (
   <ListContainer>
-    {tasks.map((task) => {
-      const { _id, name, subtasks } = task;
-      return (
-        <TaskListItem
-          key={_id}
-          taskId={_id}
-          name={name}
-          subtasks={subtasks}
-          isSubtask={isSubtask}
-        />
-      );
-    })}
+    {tasks
+      .filter((task) => task.isCompleted === false)
+      .map((task) => {
+        const { _id, name, subtasks } = task;
+        return (
+          <TaskListItem
+            key={_id}
+            taskId={_id}
+            name={name}
+            subtasks={subtasks}
+            isSubtask={isSubtask}
+          />
+        );
+      })}
   </ListContainer>
 );
 
