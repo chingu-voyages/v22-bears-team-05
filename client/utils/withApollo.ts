@@ -3,9 +3,14 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { NextPageContext } from 'next';
 import { createWithApollo } from './createWithApollo';
 
+let serverUri = 'http://localhost:5000/graphql';
+if (process.env.NODE_ENV === 'production') {
+  serverUri = 'https://chingu-v22-bears05.herokuapp.com/graphql';
+}
+
 const createClient = (ctx: NextPageContext) =>
   new ApolloClient({
-    uri: 'http://localhost:5000/graphql',
+    uri: serverUri,
     credentials: 'include',
     headers: {
       cookie:
