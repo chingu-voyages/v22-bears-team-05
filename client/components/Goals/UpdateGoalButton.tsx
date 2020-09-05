@@ -80,7 +80,7 @@ const UpdateGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
                 name="name"
                 onChange={handleInputChange}
                 value={newGoalName}
-                autoFocus={true}
+                autoFocus
                 disabled={isLoading}
               />
             </label>

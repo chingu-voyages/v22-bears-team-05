@@ -80,7 +80,7 @@ const UpdateTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
                 name="name"
                 onChange={handleInputChange}
                 value={newTaskName}
-                autoFocus={true}
+                autoFocus
                 disabled={isLoading}
               />
             </label>

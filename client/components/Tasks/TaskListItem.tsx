@@ -26,8 +26,8 @@ const ListItem = styled.div<{ subtask: boolean }>`
   text-transform: capitalize;
   padding: 1em;
   border-radius: 5px;
-  ${(props) => props.subtask && 'background-color: #E0F2E9;'}
-  ${(props) => props.subtask && 'border-color: #9AD5B8;'}
+  ${({ subtask }) => subtask && 'background-color: #E0F2E9;'}
+  ${({ subtask }) => subtask && 'border-color: #9AD5B8;'}
 `;
 
 const MainInfo = styled.div`
@@ -120,7 +120,7 @@ const TaskListItem: FunctionComponent<IProps> = ({
           </>
         ) : null}
       </ListItem>
-      {showSubtasks && <TaskList tasks={subtasks} isSubtask />}
+      {showSubtasks && <TaskList subtasks={subtasks} isSubtask />}
     </Container>
   );
 };
