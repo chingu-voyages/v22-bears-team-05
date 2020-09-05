@@ -4,18 +4,12 @@ const { createTestClient } = require("apollo-server-integration-testing");
 const dbHandler = require("./dbHandler")
 const createTestServer = require("../testServer")
 
-beforeAll(async () => await dbHandler.connect())
+const registerTemplate = require("./templates/registerTemplate")
+const loginTemplate = require("./templates/loginTemplate")
 
+beforeAll(async () => await dbHandler.connect())
 afterAll(async () => await dbHandler.closeDatabase())
 
-const registerTemplate = `
-    mutation Register($email: String!, $password: String!, $confirmPassword: String!){
-        register(email: $email, password: $password, confirmPassword: $confirmPassword){
-            email
-            id
-        }
-    }
-`
 
 function generateUIdRequest(userId = null) {
     return { request: { session: { userId } } }
@@ -27,6 +21,7 @@ function getTestClientFunctions() {
     setOptions(generateUIdRequest())
     return { query, mutate, setOptions }
 }
+
 test("noUser", async () => {
     const { query } = getTestClientFunctions()
     const meResponse = await query(`{me {email id createdDate}}`)
@@ -69,6 +64,14 @@ test("invalidRegisterEmail", async () => {
     expect(errorsObject).toHaveProperty("email")
 })
 
+//testing an invalid login
+test("invalidLogin", async () => {
+    const { mutate } = getTestClientFunctions()
+    const invalidLoginResponse = await mutate(loginTemplate, { variables: { email: "invalidEmail.com", password: "randomPassword" } })
+    const loginError = invalidLoginResponse.errors[0].extensions.errors
+    expect(loginError).toHaveProperty("general")
+})
+
 //testing all register errors together
 test("invalidRegisterConstraints", async () => {
     const { mutate } = getTestClientFunctions()
@@ -94,5 +97,11 @@ test("resolversIntegration", async () => {
     const reRegisterResponse = await mutate(registerTemplate, { variables: { email: "abCd@gmail.com", password: "abCd1!", confirmPassword: "abCd1!" } });
     expect(reRegisterResponse.errors[0].message).toEqual("Email in use")
 
+    const loginErrorResponse = await mutate(loginTemplate, { variables: { email: "abCd@gmail.com", password: "hi" } });
+    const loginErrors = loginErrorResponse.errors[0].extensions.errors
+    expect(loginErrors).toHaveProperty("general") //the login error is a general error
+
+    const validLoginResponse = await mutate(loginTemplate, { variables: { email: "abCd@gmail.com", password: "abCd1!" } })
+    expect(validLoginResponse.data.login.id).toEqual(userId)
 
 })
