@@ -13,7 +13,6 @@ const MONGODB = process.env.MONGO_CONNECTION_STRING;
 
 const typeDefs = require("./graphql/typeDefs");
 const resolvers = require("./graphql/resolvers");
-const isAuth = require("./middleware/is-auth");
 const { COOKIE_NAME, __prod__ } = require("./constants");
 
 const app = express();
@@ -36,23 +35,14 @@ async function startApp() {
     //middleware
     app.use(bodyParser.json());
     app.set("trust proxy", 1);
+    
     app.use(
       cors({
-        origin:
-          process.env.ORIGIN ||
-          process.env.CORS_ORIGIN ||
-          "http://localhost:3000",
+        origin: process.env.ORIGIN || "http://localhost:3000",
         credentials: true,
       }),
     );
-    // app.use((req, res, next) => {
-    //   res.setHeader('Access-Control-Allow-Origin', '*');
-    //   res.setHeader('Access-Control-Methods', 'POST,GET,OPTIONS');
-    //   if (req.method === 'OPTIONS') {
-    //     return res.sendStatus(200);
-    //   }
-    //   next();
-    // });
+
     app.use(
       session({
         name: COOKIE_NAME,
@@ -72,7 +62,6 @@ async function startApp() {
         resave: false,
       }),
     );
-    //app.use(isAuth);
 
     apolloServer.applyMiddleware({
       app,
