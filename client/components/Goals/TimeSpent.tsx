@@ -1,14 +1,10 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { FaRegClock } from 'react-icons/fa';
-import styled, { keyframes, StyledFunction } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 interface IProps {
   totalTimeInSeconds: number;
   paddingSmall?: boolean;
-}
-
-interface StyleProp {
-  paddingSmall: boolean;
 }
 
 const fadeIn = keyframes`
@@ -21,9 +17,7 @@ const fadeIn = keyframes`
   }
 `;
 
-// const input: StyledFunction<YourProps & React.HTMLProps<HTMLInputElement>> = styled.input
-// const WrappedText = styled<SomeInterface>(Text)
-const Time = styled.div<StyleProp>`
+const Time = styled.div<{ paddingSmall: boolean }>`
   display: flex;
   align-items: center;
   width: 100%;
@@ -55,9 +49,10 @@ const TimeSpent: FunctionComponent<IProps> = ({
   return (
     <Time paddingSmall={paddingSmall}>
       <FaRegClock size={20} />
-      &nbsp; {days ? <>{days}d </> : null}
-      {days || hours ? <> {hours}h </> : null}
-      {minutes}m
+      &nbsp;
+      {days ? <>{`${days}d`}</> : null}
+      {days || hours ? <>{`${hours}h`}</> : null}
+      {`${minutes}m`}
     </Time>
   );
 };

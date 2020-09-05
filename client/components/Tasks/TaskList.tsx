@@ -29,43 +29,36 @@ const TaskList: FunctionComponent<IProps> = ({
   tasks = [],
   subtasks = [],
   isSubtask = false,
-}) => (
-  <ListContainer>
-    {tasks &&
-      tasks
-        .filter((task) => task.isCompleted === false)
-        .map((task) => {
-          const { _id, name, totalTimeInSeconds, isCompleted } = task;
-
-          return (
-            <TaskListItem
-              key={_id}
-              taskId={_id}
-              name={name}
-              totalTimeInSeconds={totalTimeInSeconds}
-              subtasks={subtasks}
-              isSubtask={isSubtask}
-            />
-          );
-        })}
-    {subtasks &&
-      subtasks
-        .filter((task) => task.isCompleted === false)
-        .map((task) => {
-          const { _id, name, totalTimeInSeconds, isCompleted } = task;
-
-          return (
-            <TaskListItem
-              key={_id}
-              taskId={_id}
-              name={name}
-              totalTimeInSeconds={totalTimeInSeconds}
-              subtasks={subtasks}
-              isSubtask={isSubtask}
-            />
-          );
-        })}
-  </ListContainer>
-);
+}) => {
+  let itemList = null;
+  if (tasks) {
+    itemList = tasks
+      .filter((task) => task.isCompleted === false)
+      .map(({ _id, name, totalTimeInSeconds, isCompleted }) => (
+        <TaskListItem
+          key={_id}
+          taskId={_id}
+          name={name}
+          totalTimeInSeconds={totalTimeInSeconds}
+          subtasks={subtasks}
+          isSubtask={isSubtask}
+        />
+      ));
+  } else if (subtasks) {
+    itemList = subtasks
+      .filter((task) => task.isCompleted === false)
+      .map(({ _id, name, totalTimeInSeconds, isCompleted }) => (
+        <TaskListItem
+          key={_id}
+          taskId={_id}
+          name={name}
+          totalTimeInSeconds={totalTimeInSeconds}
+          subtasks={subtasks}
+          isSubtask={isSubtask}
+        />
+      ));
+  }
+  return <ListContainer>{itemList}</ListContainer>;
+};
 
 export default TaskList;

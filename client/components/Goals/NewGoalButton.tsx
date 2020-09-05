@@ -99,7 +99,7 @@ const NewGoalButton: FunctionComponent = () => {
                 name="name"
                 onChange={handleInputChange}
                 value={newGoalName}
-                autoFocus={true}
+                autoFocus
                 disabled={isLoading}
               />
             </label>

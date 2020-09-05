@@ -68,7 +68,7 @@ const DeleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
           cache.writeQuery({
             query: GET_GOALS_QUERY,
             data: {
-              getAllGoals: [...getAllGoals.filter(({ _id }) => _id !== goalId)],
+              getAllGoals: getAllGoals.filter(({ _id }) => _id !== goalId),
             },
           });
         },
