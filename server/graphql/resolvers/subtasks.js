@@ -19,7 +19,6 @@ module.exports = {
           context.req.session.userId,
         );
         if (!userOwnsRelatedGoal) {
-          console.log(parentTask.parent);
           throw new Error(
             "You do not have authorization to create a subtask on that task",
           );
@@ -32,7 +31,7 @@ module.exports = {
         parentTask.subtasks.push(newSubtask._id);
         await parentTask.save();
 
-        const taskToReturn = Task.findById(parentTask._id).populate({
+        const taskToReturn = await Task.findById(parentTask._id).populate({
           path: "subtasks",
         });
 
@@ -45,21 +44,35 @@ module.exports = {
       if (!context.req.session.userId) throw new Error("not authenticated");
 
       try {
-        const currentSubtask = await Subtask.findById(subtaskId).populate(
-          "parent",
-        );
-        if (!currentSubtask) throw new Error("Cannot find subtask by that ID");
+        const currentSubtask = await Subtask.findById(subtaskId).populate({
+          path: "parent",
+        });
+        if (!currentSubtask)
+          throw new Error("Cannot find subtask with that ID");
 
-        const parentTask = currentSubtask.parent;
+        const parentTask = await Task.findById(currentSubtask.parent).populate({
+          path: "subtasks",
+          path: "parent",
+        });
+
+        const userOwnsRelatedGoal = parentTask.parent.user.equals(
+          context.req.session.userId,
+        );
+        if (!userOwnsRelatedGoal) {
+          throw new Error(
+            "You do not have authorization to create a subtask on that task",
+          );
+        }
 
         if (parentTask) {
           parentTask.subtasks = parentTask.subtasks.filter(
-            (id) => id === !id.equals(subtaskId),
+            (id) => !id.equals(subtaskId),
           );
           await parentTask.save();
         }
 
         await currentSubtask.delete();
+
         return parentTask;
       } catch (err) {
         throw new Error(err);

@@ -23,6 +23,9 @@ const Container = styled.div`
 const ListItem = styled.div<{ showSubtasks: boolean }>`
   background-color: #fff;
   width: 95%;
+  &:not(:first-child) {
+    margin-top: 0.5em;
+  }
   margin-bottom: ${({ showSubtasks }) => (showSubtasks ? '0' : '0.5em')};
   text-transform: capitalize;
   padding: 1em;

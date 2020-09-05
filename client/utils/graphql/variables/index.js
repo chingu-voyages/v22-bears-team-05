@@ -9,6 +9,7 @@ import DELETE_TASK_VARIABLES from './deleteTask';
 import UPDATE_TASK_NAME_VARIABLES from './updateTaskName';
 import UPDATE_TASK_COMPLETED_VARIABLES from './updateTaskCompleted';
 import CREATE_SUBTASK_VARIABLES from './createSubtask';
+import DELETE_SUBTASK_VARIABLES from './deleteSubtask';
 
 export {
   LOGIN_VARIABLES,
@@ -22,4 +23,5 @@ export {
   UPDATE_TASK_NAME_VARIABLES,
   UPDATE_TASK_COMPLETED_VARIABLES,
   CREATE_SUBTASK_VARIABLES,
+  DELETE_SUBTASK_VARIABLES,
 };

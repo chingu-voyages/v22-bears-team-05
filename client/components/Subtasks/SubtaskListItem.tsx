@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
+import { DeleteSubtaskButton } from '.';
 import { TimeSpent } from '../Goals';
 
 const Container = styled.div`
@@ -89,6 +90,9 @@ const TaskListItem: FunctionComponent<IProps> = ({
           {name}
           {showDetails ? <FaCaretDown size={20} /> : <FaCaretRight size={20} />}
         </ItemName>
+        <TaskIndicator>
+          <DeleteSubtaskButton subtaskId={subtaskId} subtaskName={name} />
+        </TaskIndicator>
       </MainInfo>
       {showDetails ? (
         <>

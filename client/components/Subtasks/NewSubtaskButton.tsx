@@ -77,22 +77,6 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
           taskId,
           subtaskName: newSubtaskName,
         }),
-        // update: (cache, { data: newData }) => {
-        //   const newTask = newData.createTask;
-        //   const goalData = cache.readQuery({
-        //     query: GET_GOALS_QUERY,
-        //   });
-        //   const goalToUpdate = goalData.getAllGoals.filter(
-        //     (goal) => goal._id === goalId,
-        //   )[0];
-        //   const updatedGoal = [...goalToUpdate.tasks, newTask];
-        //   cache.writeQuery({
-        //     query: GET_GOALS_QUERY,
-        //     data: {
-        //       getAllGoals: [...goalData.getAllGoals, updatedGoal],
-        //     },
-        //   });
-        // },
       });
       toggleForm();
     } catch (err) {
