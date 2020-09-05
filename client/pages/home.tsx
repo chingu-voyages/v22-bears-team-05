@@ -11,6 +11,8 @@ import { withApollo } from '../utils/withApollo';
 
 const Container = styled.div`
   font-family: Montserrat;
+  margin: 0 auto;
+  max-width: 1500px;
 `;
 
 type Goal = {

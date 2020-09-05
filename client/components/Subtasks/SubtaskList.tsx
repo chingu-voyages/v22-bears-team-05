@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { TaskListItem } from '.';
-import { Task } from '../../types';
+import { SubtaskListItem } from '.';
+import { Subtask } from '../../types';
 
 const fadeIn = keyframes`
   from {
@@ -16,30 +16,30 @@ const fadeIn = keyframes`
 const ListContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
+  width: 100%;
   animation: ${fadeIn} 300ms ease-out forwards;
 `;
 
 interface IProps {
-  tasks: Task[];
+  subtasks: Subtask[];
 }
 
-const TaskList: FunctionComponent<IProps> = ({ tasks = [] }) => (
+const SubtaskList: FunctionComponent<IProps> = ({ subtasks = [] }) => (
   <ListContainer>
-    {tasks
-      .filter((task) => task.isCompleted === false)
-      .map((task) => {
-        const { _id, name, totalTimeInSeconds, isCompleted, subtasks } = task;
+    {subtasks
+      .filter((subtask) => subtask.isCompleted === false)
+      .map((subtask) => {
+        const { _id, name, totalTimeInSeconds, isCompleted } = subtask;
         return (
-          <TaskListItem
+          <SubtaskListItem
             key={_id}
-            taskId={_id}
+            subtaskId={_id}
             name={name}
             totalTimeInSeconds={totalTimeInSeconds}
-            subtasks={subtasks}
           />
         );
       })}
   </ListContainer>
 );
 
-export default TaskList;
+export default SubtaskList;

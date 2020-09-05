@@ -7,6 +7,7 @@ import UPDATE_GOAL_MUTATION from './updateGoal';
 import CREATE_TASK_MUTATION from './createTask';
 import DELETE_TASK_MUTATION from './deleteTask';
 import UPDATE_TASK_MUTATION from './updateTask';
+import CREATE_SUBTASK_MUTATION from './createSubtask';
 
 export {
   LOGIN_MUTATION,
@@ -18,4 +19,5 @@ export {
   CREATE_TASK_MUTATION,
   DELETE_TASK_MUTATION,
   UPDATE_TASK_MUTATION,
+  CREATE_SUBTASK_MUTATION,
 };

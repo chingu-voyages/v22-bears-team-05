@@ -1,9 +1,10 @@
 import React, { FunctionComponent, useState } from 'react';
 import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
-import { DeleteTaskButton, TaskList, UpdateTaskButton } from '.';
+import { DeleteTaskButton, UpdateTaskButton } from '.';
 import { Subtask } from '../../types';
 import { TimeSpent } from '../Goals';
+import { NewSubtaskButton, SubtaskList } from '../Subtasks';
 import CompleteTaskButton from './CompleteTaskButton';
 
 const Container = styled.div`
@@ -19,15 +20,14 @@ const Container = styled.div`
   }
 `;
 
-const ListItem = styled.div<{ subtask: boolean }>`
+const ListItem = styled.div<{ showSubtasks: boolean }>`
   background-color: #fff;
   width: 95%;
-  margin-bottom: 0.5em;
+  margin-bottom: ${({ showSubtasks }) => (showSubtasks ? '0' : '0.5em')};
   text-transform: capitalize;
   padding: 1em;
-  border-radius: 5px;
-  ${({ subtask }) => subtask && 'background-color: #E0F2E9;'}
-  ${({ subtask }) => subtask && 'border-color: #9AD5B8;'}
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 `;
 
 const MainInfo = styled.div`
@@ -71,7 +71,6 @@ interface IProps {
   name: string;
   totalTimeInSeconds: number;
   subtasks?: Subtask[];
-  isSubtask: boolean;
 }
 
 const TaskListItem: FunctionComponent<IProps> = ({
@@ -79,7 +78,6 @@ const TaskListItem: FunctionComponent<IProps> = ({
   name,
   totalTimeInSeconds,
   subtasks = [],
-  isSubtask = false,
 }) => {
   const [showSubtasks, setShowSubtasks] = useState(false);
   const toggleShowSubtasks = () => {
@@ -88,7 +86,7 @@ const TaskListItem: FunctionComponent<IProps> = ({
 
   return (
     <Container>
-      <ListItem onClick={toggleShowSubtasks} subtask={isSubtask}>
+      <ListItem onClick={toggleShowSubtasks} showSubtasks={showSubtasks}>
         <MainInfo>
           <ItemName>
             {name}
@@ -120,7 +118,13 @@ const TaskListItem: FunctionComponent<IProps> = ({
           </>
         ) : null}
       </ListItem>
-      {showSubtasks && <TaskList subtasks={subtasks} isSubtask />}
+
+      {showSubtasks && (
+        <>
+          <NewSubtaskButton taskId={taskId} />
+          <SubtaskList subtasks={subtasks} />
+        </>
+      )}
     </Container>
   );
 };

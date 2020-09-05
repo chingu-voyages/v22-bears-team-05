@@ -116,7 +116,7 @@ const GoalListItem: FunctionComponent<IProps> = ({
           ) : null}
         </Container>
       </ListItem>
-      {showTasks && <TaskList tasks={tasks} isSubtask={false} />}
+      {showTasks && <TaskList tasks={tasks} />}
     </Container>
   );
 };

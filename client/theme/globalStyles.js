@@ -85,9 +85,11 @@ const GlobalStyle = createGlobalStyle`
     margin: 0 auto;
     border-radius: 40px;
     height: 50px;
-    background-color: #4ea5d9;
+    background-color: var(--color-green);
     max-width: 400px;
     font-size: 1.1em;
+    font-weight: 700;
+    letter-spacing: 2px;
     border: none;
     user-select: none;
     outline: none;

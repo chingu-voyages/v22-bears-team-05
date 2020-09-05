@@ -13,11 +13,13 @@ const Container = styled.header`
   justify-content: center;
   align-items: center;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
   background-color: white;
 
   padding: 0.5rem 1rem;
   z-index: 10;
+
+  max-width: 1500px;
 
   .header__main {
     display: flex;
