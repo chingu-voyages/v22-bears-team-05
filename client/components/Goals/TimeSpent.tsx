@@ -17,7 +17,7 @@ const fadeIn = keyframes`
   }
 `;
 
-const Time = styled.div`
+const Time = styled.div<{ paddingSmall: boolean }>`
   display: flex;
   align-items: center;
   width: 100%;
@@ -49,9 +49,10 @@ const TimeSpent: FunctionComponent<IProps> = ({
   return (
     <Time paddingSmall={paddingSmall}>
       <FaRegClock size={20} />
-      &nbsp; {days ? <>{days}d </> : null}
-      {days || hours ? <> {hours}h </> : null}
-      {minutes}m
+      &nbsp;
+      {days ? <>{`${days}d`}</> : null}
+      {days || hours ? <>{`${hours}h`}</> : null}
+      {`${minutes}m`}
     </Time>
   );
 };

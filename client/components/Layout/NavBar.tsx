@@ -9,7 +9,11 @@ import { LOGOUT_MUTATION } from '../../utils/graphql/mutation';
 
 /* eslint jsx-a11y/no-static-element-interactions: 0 */
 
-const Nav = styled.div`
+interface NavProp {
+  show: boolean;
+}
+
+const Nav = styled.div<NavProp>`
   display: flex;
   justify-content: center;
   flex-flow: row nowrap;

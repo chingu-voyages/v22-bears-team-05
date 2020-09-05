@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-const UPDATE_GOAL_MUTATION = gql`
+const UPDATE_TASK_MUTATION = gql`
   mutation($taskId: String!, $newTaskName: String, $isCompleted: Boolean) {
     updateTask(
       taskId: $taskId
@@ -17,4 +17,4 @@ const UPDATE_GOAL_MUTATION = gql`
   }
 `;
 
-export default UPDATE_GOAL_MUTATION;
+export default UPDATE_TASK_MUTATION;
