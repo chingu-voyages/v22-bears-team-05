@@ -6,6 +6,7 @@ const createTestServer = require("../testServer")
 
 const registerTemplate = require("./templates/registerTemplate")
 const loginTemplate = require("./templates/loginTemplate")
+const allGoalsString = require("./templates/allGoalsString")
 const errorConstants = require("./constants/errorConstants")
 
 beforeAll(async () => await dbHandler.connect())
@@ -104,5 +105,8 @@ test("resolversIntegration", async () => {
 
     const validLoginResponse = await mutate(loginTemplate, { variables: { email: "abCd@gmail.com", password: "abCd1!" } })
     expect(validLoginResponse.data.login.id).toEqual(userId)
+
+    const initialGoalsResponse = await query(allGoalsString)
+    expect(initialGoalsResponse.data.getAllGoals).toEqual([])
 
 })
