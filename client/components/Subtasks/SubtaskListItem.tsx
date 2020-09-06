@@ -1,19 +1,17 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
-import { DeleteSubtaskButton, PauseSubtaskButton, StartSubtaskButton } from '.';
+import {
+  CompleteSubtaskButton,
+  DeleteSubtaskButton,
+  PauseSubtaskButton,
+  StartSubtaskButton,
+} from '.';
 import { TimeSpent } from '../Goals';
 
 const Container = styled.div`
   display: flex;
-  align-items: center;
-  flex-flow: column nowrap;
-  background-color: #eee;
-  &:last-child {
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    margin-bottom: 2em;
-  }
+  justify-content: space-between;
 `;
 
 const ListItem = styled.div<{ started?: number }>`
@@ -51,21 +49,6 @@ const TaskIndicator = styled.span`
   align-self: center;
   margin-left: auto;
   font-size: 1.2rem;
-`;
-
-const Notifications = styled.div`
-  margin: 0 10px;
-  font-weight: 700;
-`;
-
-const NotificationDot = styled.div`
-  position: relative;
-  top: -1.5rem;
-  right: -0.75rem;
-  background-color: #ee6055;
-  border-radius: 10rem;
-  height: 10px;
-  width: 10px;
 `;
 
 interface IProps {
@@ -132,7 +115,10 @@ const SubtaskListItem: FunctionComponent<IProps> = ({
         />
       ) : null}
       {showDetails && timeStarted ? (
-        <PauseSubtaskButton subtaskId={subtaskId} />
+        <Container>
+          <PauseSubtaskButton subtaskId={subtaskId} />
+          <CompleteSubtaskButton subtaskId={subtaskId} />
+        </Container>
       ) : null}
     </ListItem>
   );
