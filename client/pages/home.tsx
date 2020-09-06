@@ -11,26 +11,7 @@ import { withApollo } from '../utils/withApollo';
 
 const Container = styled.div`
   font-family: Montserrat;
-  margin: 0 auto;
-  max-width: 1500px;
 `;
-
-type Goal = {
-  goalId: string;
-  name: string;
-  tasks?: Task[];
-};
-
-type Task = {
-  id: string;
-  name: string;
-  subtasks?: Subtask[];
-};
-
-type Subtask = {
-  id: string;
-  name: string;
-};
 
 const HomePage = () => {
   const { data, error, loading } = useQuery(GET_GOALS_QUERY);

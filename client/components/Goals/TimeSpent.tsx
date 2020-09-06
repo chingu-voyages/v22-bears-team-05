@@ -5,6 +5,7 @@ import styled, { keyframes } from 'styled-components';
 interface IProps {
   totalTimeInSeconds: number;
   paddingSmall?: boolean;
+  displaySeconds?: boolean;
 }
 
 const fadeIn = keyframes`
@@ -31,10 +32,12 @@ const Time = styled.div<{ paddingSmall: boolean }>`
 const TimeSpent: FunctionComponent<IProps> = ({
   totalTimeInSeconds,
   paddingSmall = false,
+  displaySeconds = false,
 }) => {
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
   const secondsInDay = 60 * 60 * 24;
   const secondsInHour = 60 * 60;
   const secondsInMinute = 60;
@@ -45,14 +48,20 @@ const TimeSpent: FunctionComponent<IProps> = ({
     setHours(Math.floor(timeLeft / secondsInHour));
     timeLeft %= secondsInHour;
     setMinutes(Math.floor(timeLeft / secondsInMinute));
+    timeLeft %= secondsInMinute;
+    setSeconds(timeLeft);
   }, [totalTimeInSeconds, secondsInDay, secondsInHour, secondsInMinute]);
   return (
     <Time paddingSmall={paddingSmall}>
       <FaRegClock size={20} />
       &nbsp;
       {days ? <>{`${days}d`}</> : null}
+      &nbsp;
       {days || hours ? <>{`${hours}h`}</> : null}
+      &nbsp;
       {`${minutes}m`}
+      &nbsp;
+      {displaySeconds ? `${seconds}s` : null}
     </Time>
   );
 };

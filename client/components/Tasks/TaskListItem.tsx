@@ -69,6 +69,10 @@ const NotificationDot = styled.div`
   width: 10px;
 `;
 
+const Spacer = styled.div`
+  height: 0.5em;
+`;
+
 interface IProps {
   taskId: string;
   name: string;
@@ -126,6 +130,7 @@ const TaskListItem: FunctionComponent<IProps> = ({
         <>
           <NewSubtaskButton taskId={taskId} />
           <SubtaskList subtasks={subtasks} />
+          {subtasks.length === 0 ? <Spacer /> : null}
         </>
       )}
     </Container>

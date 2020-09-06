@@ -29,13 +29,20 @@ const SubtaskList: FunctionComponent<IProps> = ({ subtasks = [] }) => (
     {subtasks
       .filter((subtask) => subtask.isCompleted === false)
       .map((subtask) => {
-        const { _id, name, totalTimeInSeconds, isCompleted } = subtask;
+        const {
+          _id,
+          name,
+          totalTimeInSeconds,
+          isCompleted,
+          timeStarted,
+        } = subtask;
         return (
           <SubtaskListItem
             key={_id}
             subtaskId={_id}
             name={name}
             totalTimeInSeconds={totalTimeInSeconds}
+            timeStarted={timeStarted}
           />
         );
       })}

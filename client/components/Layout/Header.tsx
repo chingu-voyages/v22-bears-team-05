@@ -19,8 +19,6 @@ const Container = styled.header`
   padding: 0.5rem 1rem;
   z-index: 10;
 
-  max-width: 1500px;
-
   .header__main {
     display: flex;
     flex-flow: row nowrap;

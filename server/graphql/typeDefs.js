@@ -75,7 +75,8 @@ module.exports = gql`
       isCompleted: Boolean
     ): Goal!
     createSubtask(subtaskName: String!, taskId: String!): Task!
-    deleteSubtask(subtaskId: String!): Task #can be null, for future considerations
+    deleteSubtask(subtaskId: String!): Task!
+    startSubtask(subtaskId: String!): Subtask!
     completeSubtask(subtaskId: String!): Task #can be null, for future considerations
   }
 `;

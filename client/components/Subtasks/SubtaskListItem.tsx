@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
-import { DeleteSubtaskButton } from '.';
+import { DeleteSubtaskButton, StartSubtaskButton } from '.';
 import { TimeSpent } from '../Goals';
 
 const Container = styled.div`
@@ -16,8 +16,9 @@ const Container = styled.div`
   }
 `;
 
-const ListItem = styled.div`
-  background-color: #fff;
+const ListItem = styled.div<{ started?: number }>`
+  background-color: ${({ started }) =>
+    started ? 'var(--color-yellow)' : '#fff'};
   width: 95%;
   border-bottom: 1px solid #ccc;
   text-transform: capitalize;
@@ -71,20 +72,35 @@ interface IProps {
   subtaskId: string;
   name: string;
   totalTimeInSeconds: number;
+  timeStarted: number;
 }
 
-const TaskListItem: FunctionComponent<IProps> = ({
+const SubtaskListItem: FunctionComponent<IProps> = ({
   subtaskId,
   name,
   totalTimeInSeconds,
+  timeStarted,
 }) => {
   const [showDetails, setShowDetails] = useState(false);
+  const [timePassed, setTimePassed] = useState(() =>
+    timeStarted ? Math.floor((Date.now() - timeStarted) / 1000) : null,
+  );
   const toggleShowSubtasks = () => {
     setShowDetails(!showDetails);
   };
 
+  useEffect(() => {
+    function incrementTimePassed() {
+      if (timeStarted !== null) setTimePassed((prev) => prev + 1);
+    }
+    const interval = setInterval(incrementTimePassed, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [timeStarted]);
+
   return (
-    <ListItem onClick={toggleShowSubtasks}>
+    <ListItem onClick={toggleShowSubtasks} started={timeStarted}>
       <MainInfo>
         <ItemName>
           {name}
@@ -94,13 +110,21 @@ const TaskListItem: FunctionComponent<IProps> = ({
           <DeleteSubtaskButton subtaskId={subtaskId} subtaskName={name} />
         </TaskIndicator>
       </MainInfo>
-      {showDetails ? (
+      {showDetails || timeStarted ? (
         <>
-          <TimeSpent totalTimeInSeconds={totalTimeInSeconds} paddingSmall />
+          {timeStarted ? (
+            <TimeSpent
+              totalTimeInSeconds={timePassed}
+              paddingSmall
+              displaySeconds
+            />
+          ) : (
+            <StartSubtaskButton subtaskId={subtaskId} />
+          )}
         </>
       ) : null}
     </ListItem>
   );
 };
 
-export default TaskListItem;
+export default SubtaskListItem;

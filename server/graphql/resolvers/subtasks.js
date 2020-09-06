@@ -60,7 +60,7 @@ module.exports = {
         );
         if (!userOwnsRelatedGoal) {
           throw new Error(
-            "You do not have authorization to create a subtask on that task",
+            "You do not have authorization to delete that subtask",
           );
         }
 
@@ -74,6 +74,38 @@ module.exports = {
         await currentSubtask.delete();
 
         return parentTask;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+    async startSubtask(_, { subtaskId }, context) {
+      if (!context.req.session.userId) throw new Error("not authenticated");
+
+      try {
+        const currentSubtask = await Subtask.findById(subtaskId).populate({
+          path: "parent",
+        });
+        if (!currentSubtask)
+          throw new Error("Cannot find subtask with that ID");
+
+        const parentTask = await Task.findById(currentSubtask.parent).populate({
+          path: "parent",
+        });
+
+        const userOwnsRelatedGoal = parentTask.parent.user.equals(
+          context.req.session.userId,
+        );
+        if (!userOwnsRelatedGoal) {
+          throw new Error(
+            "You do not have authorization to start that subtask",
+          );
+        }
+
+        currentSubtask.timeStarted = Date.now();
+
+        await currentSubtask.save();
+
+        return currentSubtask;
       } catch (err) {
         throw new Error(err);
       }
