@@ -1,9 +1,9 @@
 import { useMutation } from '@apollo/client';
 import React, { FunctionComponent, useState } from 'react';
-import { FaPause } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa';
 import styled from 'styled-components';
-import { PAUSE_SUBTASK_MUTATION } from '../../utils/graphql/mutation';
-import { PAUSE_SUBTASK_VARIABLES } from '../../utils/graphql/variables';
+import { COMPLETE_SUBTASK_MUTATION } from '../../utils/graphql/mutation';
+import { COMPLETE_SUBTASK_VARIABLES } from '../../utils/graphql/variables';
 import { useCheckIfAuth } from '../../utils/useCheckIfAuth';
 import Spinner from '../Spinner';
 
@@ -25,11 +25,11 @@ interface IProps {
   subtaskId: string;
 }
 
-const PauseSubtaskButton: FunctionComponent<IProps> = ({ subtaskId }) => {
+const CompleteSubtaskButton: FunctionComponent<IProps> = ({ subtaskId }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const [pauseSubtask] = useMutation(PAUSE_SUBTASK_MUTATION);
+  const [completeSubtask] = useMutation(COMPLETE_SUBTASK_MUTATION);
 
   useCheckIfAuth(error);
 
@@ -37,8 +37,8 @@ const PauseSubtaskButton: FunctionComponent<IProps> = ({ subtaskId }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await pauseSubtask({
-        variables: PAUSE_SUBTASK_VARIABLES({ subtaskId }),
+      await completeSubtask({
+        variables: COMPLETE_SUBTASK_VARIABLES({ subtaskId }),
       });
     } catch (err) {
       setError(err);
@@ -53,8 +53,8 @@ const PauseSubtaskButton: FunctionComponent<IProps> = ({ subtaskId }) => {
           <Spinner />
         ) : (
           <>
-            Pause&nbsp;
-            <FaPause size={20} />
+            Complete&nbsp;
+            <FaCheck size={20} />
           </>
         )}
       </ButtonContainer>
@@ -62,4 +62,4 @@ const PauseSubtaskButton: FunctionComponent<IProps> = ({ subtaskId }) => {
   );
 };
 
-export default PauseSubtaskButton;
+export default CompleteSubtaskButton;

@@ -1,3 +1,4 @@
+const Goal = require("../../models/Goal");
 const Task = require("../../models/Task");
 const Subtask = require("../../models/Subtask");
 module.exports = {
@@ -129,7 +130,7 @@ module.exports = {
         );
         if (!userOwnsRelatedGoal) {
           throw new Error(
-            "You do not have authorization to start that subtask",
+            "You do not have authorization to pause that subtask",
           );
         }
 
@@ -153,24 +154,56 @@ module.exports = {
       if (!context.req.session.userId) throw new Error("not authenticated");
 
       try {
-        const currentSubtask = await Subtask.findById(subtaskId).populate(
-          "parent",
+        const currentSubtask = await Subtask.findById(subtaskId).populate({
+          path: "parent",
+        });
+        if (!currentSubtask)
+          throw new Error("Cannot find subtask with that ID");
+
+        const parentTask = await Task.findById(currentSubtask.parent).populate({
+          path: "parent",
+        });
+
+        const userOwnsRelatedGoal = parentTask.parent.user.equals(
+          context.req.session.userId,
+        );
+        if (!userOwnsRelatedGoal) {
+          throw new Error(
+            "You do not have authorization to complete that subtask",
+          );
+        }
+
+        if (!currentSubtask.timeStarted)
+          throw new Error("You cannot complete a subtask that is not started");
+
+        const millisecondsInSecond = 1000;
+        currentSubtask.totalTimeInSeconds += Math.floor(
+          (Date.now() - currentSubtask.timeStarted) / millisecondsInSecond,
         );
 
-        if (!currentSubtask) throw new Error("Cannot find subtask by that ID");
+        const totalTimeInSeconds = currentSubtask.totalTimeInSeconds;
 
-        const parentTask = currentSubtask.parent;
-        if (parentTask) {
-          //add to count and remove the task from the list
-          parentTask.totalCompletedSubtasks += 1;
-          parentTask.subtasks = parentTask.subtasks.filter(
-            (id) => !id.equals(subtaskId),
-          );
-          await parentTask.save();
-        }
         await currentSubtask.delete();
 
-        return parentTask;
+        parentTask.totalTimeInSeconds += totalTimeInSeconds;
+        parentTask.totalCompletedSubtasks += 1;
+        parentTask.subtasks = parentTask.subtasks.filter(
+          (id) => !id.equals(subtaskId),
+        );
+        await parentTask.save();
+
+        const goal = await Goal.findById(parentTask.parent).populate({
+          path: "tasks",
+          populate: {
+            path: "subtasks",
+          },
+        });
+
+        goal.totalTimeInSeconds += totalTimeInSeconds;
+        goal.totalCompletedSubtasks += 1;
+        await goal.save();
+
+        return goal;
       } catch (err) {
         throw new Error(err);
       }
