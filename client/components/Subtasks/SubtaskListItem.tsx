@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
-import { DeleteSubtaskButton, StartSubtaskButton } from '.';
+import { DeleteSubtaskButton, PauseSubtaskButton, StartSubtaskButton } from '.';
 import { TimeSpent } from '../Goals';
 
 const Container = styled.div`
@@ -81,10 +81,24 @@ const SubtaskListItem: FunctionComponent<IProps> = ({
   totalTimeInSeconds,
   timeStarted,
 }) => {
+  const getStartTime = () => {
+    const millisecondsInSecond = 1000;
+    let startTime: number | null;
+    if (timeStarted) {
+      startTime =
+        Math.floor((Date.now() - timeStarted) / millisecondsInSecond) +
+        totalTimeInSeconds;
+    } else startTime = totalTimeInSeconds;
+    return startTime;
+  };
+
   const [showDetails, setShowDetails] = useState(false);
-  const [timePassed, setTimePassed] = useState(() =>
-    timeStarted ? Math.floor((Date.now() - timeStarted) / 1000) : null,
-  );
+  const [timePassed, setTimePassed] = useState(getStartTime);
+
+  const handleSetTimePassed = () => {
+    setTimePassed((prev) => totalTimeInSeconds);
+  };
+
   const toggleShowSubtasks = () => {
     setShowDetails(!showDetails);
   };
@@ -110,18 +124,15 @@ const SubtaskListItem: FunctionComponent<IProps> = ({
           <DeleteSubtaskButton subtaskId={subtaskId} subtaskName={name} />
         </TaskIndicator>
       </MainInfo>
-      {showDetails || timeStarted ? (
-        <>
-          {timeStarted ? (
-            <TimeSpent
-              totalTimeInSeconds={timePassed}
-              paddingSmall
-              displaySeconds
-            />
-          ) : (
-            <StartSubtaskButton subtaskId={subtaskId} />
-          )}
-        </>
+      <TimeSpent totalTimeInSeconds={timePassed} paddingSmall displaySeconds />
+      {showDetails && !timeStarted ? (
+        <StartSubtaskButton
+          subtaskId={subtaskId}
+          handleSetTimePassed={handleSetTimePassed}
+        />
+      ) : null}
+      {showDetails && timeStarted ? (
+        <PauseSubtaskButton subtaskId={subtaskId} />
       ) : null}
     </ListItem>
   );
