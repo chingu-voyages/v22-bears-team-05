@@ -13,23 +13,6 @@ const Container = styled.div`
   font-family: Montserrat;
 `;
 
-type Goal = {
-  goalId: string;
-  name: string;
-  tasks?: Task[];
-};
-
-type Task = {
-  id: string;
-  name: string;
-  subtasks?: Subtask[];
-};
-
-type Subtask = {
-  id: string;
-  name: string;
-};
-
 const HomePage = () => {
   const { data, error, loading } = useQuery(GET_GOALS_QUERY);
 

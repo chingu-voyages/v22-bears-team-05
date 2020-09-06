@@ -21,7 +21,8 @@ const ButtonContainer = styled.div`
   text-transform: uppercase;
   font-size: 1.3rem;
   font-weight: 700;
-  margin-bottom: 1.5em;
+  margin: 1.5em auto;
+  max-width: 300px;
 `;
 
 const Form = styled.form`
@@ -105,7 +106,7 @@ const NewGoalButton: FunctionComponent = () => {
             </label>
           </div>
           <p className="error">{errorMessage}</p>
-          {isLoading ? <Spinner /> : <button type="submit">Add Goal</button>}
+          {isLoading ? <Spinner /> : <button type="submit">Add</button>}
         </Form>
       </Modal>
     </>

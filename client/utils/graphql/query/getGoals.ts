@@ -16,6 +16,7 @@ export const GET_GOALS_QUERY = gql`
           _id
           name
           isCompleted
+          timeStarted
           totalTimeInSeconds
         }
       }

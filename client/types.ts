@@ -19,4 +19,5 @@ export type Subtask = {
   name: string;
   totalTimeInSeconds: number;
   isCompleted: boolean;
+  timeStarted?: number;
 };

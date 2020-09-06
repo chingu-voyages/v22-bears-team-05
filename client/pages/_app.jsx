@@ -4,9 +4,6 @@ import 'typeface-montserrat';
 
 import GlobalStyle from '../theme/globalStyles';
 
-/**
- * Root App Component
- */
 const App = ({ Component, pageProps }) => (
   <>
     <GlobalStyle />

@@ -13,7 +13,7 @@ const Container = styled.header`
   justify-content: center;
   align-items: center;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
   background-color: white;
 
   padding: 0.5rem 1rem;
