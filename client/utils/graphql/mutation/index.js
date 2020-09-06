@@ -10,6 +10,7 @@ import UPDATE_TASK_MUTATION from './updateTask';
 import CREATE_SUBTASK_MUTATION from './createSubtask';
 import DELETE_SUBTASK_MUTATION from './deleteSubtask';
 import START_SUBTASK_MUTATION from './startSubtask';
+import PAUSE_SUBTASK_MUTATION from './pauseSubtask';
 
 export {
   LOGIN_MUTATION,
@@ -24,4 +25,5 @@ export {
   CREATE_SUBTASK_MUTATION,
   DELETE_SUBTASK_MUTATION,
   START_SUBTASK_MUTATION,
+  PAUSE_SUBTASK_MUTATION,
 };

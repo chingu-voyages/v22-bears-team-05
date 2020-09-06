@@ -1,9 +1,9 @@
 import { useMutation } from '@apollo/client';
 import React, { FunctionComponent, useState } from 'react';
-import { FaPlay } from 'react-icons/fa';
+import { FaPause } from 'react-icons/fa';
 import styled from 'styled-components';
-import { START_SUBTASK_MUTATION } from '../../utils/graphql/mutation';
-import { START_SUBTASK_VARIABLES } from '../../utils/graphql/variables';
+import { PAUSE_SUBTASK_MUTATION } from '../../utils/graphql/mutation';
+import { PAUSE_SUBTASK_VARIABLES } from '../../utils/graphql/variables';
 import { useCheckIfAuth } from '../../utils/useCheckIfAuth';
 import Spinner from '../Spinner';
 
@@ -23,17 +23,13 @@ const ButtonContainer = styled.div`
 
 interface IProps {
   subtaskId: string;
-  handleSetTimePassed: () => void;
 }
 
-const StartSubtaskButton: FunctionComponent<IProps> = ({
-  subtaskId,
-  handleSetTimePassed,
-}) => {
+const StartSubtaskButton: FunctionComponent<IProps> = ({ subtaskId }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const [startSubtask] = useMutation(START_SUBTASK_MUTATION);
+  const [pauseSubtask] = useMutation(PAUSE_SUBTASK_MUTATION);
 
   useCheckIfAuth(error);
 
@@ -41,10 +37,9 @@ const StartSubtaskButton: FunctionComponent<IProps> = ({
     e.preventDefault();
     setIsLoading(true);
     try {
-      await startSubtask({
-        variables: START_SUBTASK_VARIABLES({ subtaskId }),
+      await pauseSubtask({
+        variables: PAUSE_SUBTASK_VARIABLES({ subtaskId }),
       });
-      handleSetTimePassed();
     } catch (err) {
       setError(err);
       setIsLoading(false);
@@ -58,8 +53,8 @@ const StartSubtaskButton: FunctionComponent<IProps> = ({
           <Spinner />
         ) : (
           <>
-            Start&nbsp;
-            <FaPlay size={20} />
+            Pause&nbsp;
+            <FaPause size={20} />
           </>
         )}
       </ButtonContainer>
