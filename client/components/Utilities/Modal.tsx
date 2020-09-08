@@ -19,6 +19,7 @@ const Content = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 90%;
+  max-width: 500px;
   background-color: #fff;
   z-index: 1000;
   border-radius: 5px;
@@ -49,6 +50,7 @@ const CloseButton = styled.button`
   height: unset;
   margin: 0;
   padding: 0;
+  background-color: var(--color-blue);
 `;
 
 interface IProps {
@@ -90,7 +92,7 @@ const Modal: FunctionComponent<IProps> = ({
         <ChildrenContainer>{children}</ChildrenContainer>
       </Content>
     </>,
-    document.getElementById('modal')
+    document.getElementById('modal'),
   );
 };
 

@@ -1,4 +1,4 @@
-const { model, Schema } = require("mongoose")
+const { model, Schema } = require("mongoose");
 
 const subtaskSchema = new Schema({
   name: {
@@ -17,8 +17,8 @@ const subtaskSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  timeStarted: Date,
-  timeCompleted: Date,
+  timeStarted: Number,
+  timeCompleted: Number,
   totalTimeInSeconds: {
     type: Number,
     default: 0,
@@ -28,6 +28,6 @@ const subtaskSchema = new Schema({
     ref: "Task",
     default: null,
   },
-})
+});
 
-module.exports = model("Subtask", subtaskSchema)
+module.exports = model("Subtask", subtaskSchema);
