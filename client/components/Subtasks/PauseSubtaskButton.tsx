@@ -9,16 +9,7 @@ import Spinner from '../Spinner';
 
 const ButtonContainer = styled.div`
   cursor: pointer;
-  display: flex;
-  justify-content: center;
-  background-color: #ccc;
-  padding: 0.6em;
-  margin-top: 0.75em;
-  border-radius: 100px;
-  width: 48%;
-  &:hover {
-    opacity: 0.8;
-  }
+  margin-left: 10px;
 `;
 
 interface IProps {
@@ -49,14 +40,7 @@ const PauseSubtaskButton: FunctionComponent<IProps> = ({ subtaskId }) => {
   return (
     <>
       <ButtonContainer onClick={handleSubmit}>
-        {isLoading ? (
-          <Spinner />
-        ) : (
-          <>
-            Pause&nbsp;
-            <FaPause size={20} />
-          </>
-        )}
+        {isLoading ? <Spinner small /> : <FaPause size={20} />}
       </ButtonContainer>
     </>
   );
