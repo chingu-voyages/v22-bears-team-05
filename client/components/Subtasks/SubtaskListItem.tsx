@@ -104,22 +104,25 @@ const SubtaskListItem: FunctionComponent<IProps> = ({
           {showDetails ? <FaCaretDown size={20} /> : <FaCaretRight size={20} />}
         </ItemName>
         <TaskIndicator>
+          {timeStarted ? (
+            <>
+              <PauseSubtaskButton subtaskId={subtaskId} />
+              <CompleteSubtaskButton subtaskId={subtaskId} />
+            </>
+          ) : (
+            <StartSubtaskButton
+              subtaskId={subtaskId}
+              handleSetTimePassed={handleSetTimePassed}
+            />
+          )}
           <DeleteSubtaskButton subtaskId={subtaskId} subtaskName={name} />
         </TaskIndicator>
       </MainInfo>
       <TimeSpent totalTimeInSeconds={timePassed} paddingSmall displaySeconds />
-      {showDetails && !timeStarted ? (
-        <StartSubtaskButton
-          subtaskId={subtaskId}
-          handleSetTimePassed={handleSetTimePassed}
-        />
-      ) : null}
-      {showDetails && timeStarted ? (
-        <Container>
-          <PauseSubtaskButton subtaskId={subtaskId} />
-          <CompleteSubtaskButton subtaskId={subtaskId} />
-        </Container>
-      ) : null}
+      {showDetails
+        ? //display subtask description here
+          null
+        : null}
     </ListItem>
   );
 };
