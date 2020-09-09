@@ -38,7 +38,7 @@ const NewGoalButton: FunctionComponent = () => {
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [createGoal] = useMutation(CREATE_GOAL_MUTATION);
-  const maxNameLength = 20;
+  const maxNameLength = 30;
   const maxCharLengthError = `The max length is ${maxNameLength} characters.`;
 
   useCheckIfAuth(error);
@@ -81,9 +81,7 @@ const NewGoalButton: FunctionComponent = () => {
       toggleForm();
     } catch (err) {
       setError(err);
-      if (newGoalName.length === 0) {
-        setErrorMessage('The name field is required.');
-      } else setErrorMessage(err.message);
+      setErrorMessage(err.message);
     } finally {
       setIsLoading(false);
     }

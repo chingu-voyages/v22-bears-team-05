@@ -31,7 +31,7 @@ const UpdateTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
   const [newTaskName, setNewTaskName] = useState(name);
   const [error, setError] = useState<Error | null>(null);
   const [updateTask] = useMutation(UPDATE_TASK_MUTATION);
-  const maxNameLength = 20;
+  const maxNameLength = 30;
   const maxCharLengthError = `The max length is ${maxNameLength} characters.`;
 
   useCheckIfAuth(error);
@@ -62,9 +62,7 @@ const UpdateTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
       toggleForm();
     } catch (err) {
       setError(err);
-      if (newTaskName.length === 0) {
-        setErrorMessage('The name field is required.');
-      } else setErrorMessage(err.message);
+      setErrorMessage(err.message);
     } finally {
       setIsLoading(false);
     }

@@ -6,7 +6,7 @@ const subtaskSchema = new Schema({
     required: [true, "A subtask must have a name."],
     trim: true,
     minlength: 1,
-    maxlength: 20,
+    maxlength: 30,
   },
   description: {
     type: String,

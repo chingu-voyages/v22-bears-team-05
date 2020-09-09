@@ -41,7 +41,7 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [createSubtask] = useMutation(CREATE_SUBTASK_MUTATION);
-  const maxNameLength = 20;
+  const maxNameLength = 30;
   const maxCharLengthError = `The max length is ${maxNameLength} characters.`;
 
   useCheckIfAuth(error);
@@ -75,10 +75,8 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
       });
       toggleForm();
     } catch (err) {
-      setError(err.message);
-      if (newSubtaskName.length === 0) {
-        setErrorMessage('The name field is required.');
-      } else setErrorMessage(err.message);
+      setError(err);
+      setErrorMessage(err.message);
     } finally {
       setIsLoading(false);
     }
