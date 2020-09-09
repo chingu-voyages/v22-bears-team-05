@@ -9,9 +9,11 @@ import {
 } from '.';
 import { TimeSpent } from '../Goals';
 
-const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
+const Description = styled.div`
+  margin-top: 1em;
+  text-transform: none;
+  font-size: 0.9rem;
+  font-weight: 300;
 `;
 
 const ListItem = styled.div<{ started?: number }>`
@@ -40,7 +42,7 @@ const ItemName = styled.span`
   display: flex;
   align-items: center;
   width: 100%;
-  font-weight: 400;
+  font-weight: 500;
 `;
 
 const TaskIndicator = styled.span`
@@ -53,6 +55,7 @@ const TaskIndicator = styled.span`
 interface IProps {
   subtaskId: string;
   name: string;
+  description: string;
   totalTimeInSeconds: number;
   timeStarted: number;
 }
@@ -60,6 +63,7 @@ interface IProps {
 const SubtaskListItem: FunctionComponent<IProps> = ({
   subtaskId,
   name,
+  description,
   totalTimeInSeconds,
   timeStarted,
 }) => {
@@ -118,10 +122,7 @@ const SubtaskListItem: FunctionComponent<IProps> = ({
         </TaskIndicator>
       </MainInfo>
       <TimeSpent totalTimeInSeconds={timePassed} paddingSmall />
-      {showDetails
-        ? //display subtask description here
-          null
-        : null}
+      {showDetails ? <Description>{description}</Description> : null}
     </ListItem>
   );
 };

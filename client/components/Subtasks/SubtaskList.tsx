@@ -32,6 +32,7 @@ const SubtaskList: FunctionComponent<IProps> = ({ subtasks = [] }) => (
         const {
           _id,
           name,
+          description,
           totalTimeInSeconds,
           isCompleted,
           timeStarted,
@@ -41,6 +42,7 @@ const SubtaskList: FunctionComponent<IProps> = ({ subtasks = [] }) => (
             key={_id}
             subtaskId={_id}
             name={name}
+            description={description}
             totalTimeInSeconds={totalTimeInSeconds}
             timeStarted={timeStarted}
           />

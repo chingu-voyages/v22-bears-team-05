@@ -81,7 +81,7 @@ const NewGoalButton: FunctionComponent = () => {
       toggleForm();
     } catch (err) {
       setError(err);
-      setErrorMessage(err.message);
+      setErrorMessage(/\s\S*\s(.*)/.exec(err.message)[1]);
     } finally {
       setIsLoading(false);
     }

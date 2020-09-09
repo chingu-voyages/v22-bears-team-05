@@ -65,17 +65,22 @@ const GlobalStyle = createGlobalStyle`
     }
   }
   
-  input {
+  input,
+  textarea {
     font-family: Montserrat;
     width: 100%;
     padding: 10px 0 10px 10px;
-    max-width: 340px;
     font-size: 1.1em;
     outline: none;
+    display: inline-block;
   }
 
   input[type="email"] {
     text-transform: lowercase;
+  }
+
+  label {
+    padding: .75em 0 1em;
   }
 
   button {
