@@ -68,7 +68,7 @@ const DeleteTaskButton: FunctionComponent<IProps> = ({ taskId, taskName }) => {
 
   return (
     <>
-      <ButtonContainer onClick={toggleForm}>
+      <ButtonContainer onClick={toggleForm} title="Delete Task">
         <FaTrashAlt size={20} />
       </ButtonContainer>
       <Modal isOpen={showModal} onClose={toggleForm} title="Delete Task">

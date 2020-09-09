@@ -44,7 +44,7 @@ const StartSubtaskButton: FunctionComponent<IProps> = ({
 
   return (
     <>
-      <ButtonContainer onClick={handleSubmit}>
+      <ButtonContainer onClick={handleSubmit} title="Start Subtask">
         {isLoading ? <Spinner small /> : <FaPlay size={20} />}
       </ButtonContainer>
     </>

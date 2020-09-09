@@ -66,7 +66,7 @@ const UpdateGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
 
   return (
     <>
-      <ButtonContainer onClick={toggleForm}>
+      <ButtonContainer onClick={toggleForm} title="Edit Goal Name">
         <FaEdit size={20} />
       </ButtonContainer>
       <Modal isOpen={showModal} onClose={toggleForm} title="Update Goal Name">

@@ -52,7 +52,7 @@ const TimeSpent: FunctionComponent<IProps> = ({
     setSeconds(timeLeft);
   }, [totalTimeInSeconds, secondsInDay, secondsInHour, secondsInMinute]);
   return (
-    <Time paddingSmall={paddingSmall}>
+    <Time paddingSmall={paddingSmall} title="Time Spent">
       <FaRegClock size={20} />
       &nbsp;
       {days ? <>{`${days}d`}</> : null}

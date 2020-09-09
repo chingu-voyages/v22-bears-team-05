@@ -24,16 +24,8 @@ const fadeIn = keyframes`
 
 const ButtonContainer = styled.div`
   display: flex;
-  width: 95%;
-  justify-content: center;
-  align-items: center;
-  background-color: #ccc;
-  padding: 0.6em;
+  margin-left: 10px;
   cursor: pointer;
-  text-transform: uppercase;
-  font-size: 1rem;
-  font-weight: 700;
-  animation: ${fadeIn} 300ms ease-out forwards;
 `;
 
 const Form = styled.form`
@@ -88,8 +80,7 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
 
   return (
     <>
-      <ButtonContainer onClick={toggleForm}>
-        Add Subtask &nbsp;
+      <ButtonContainer onClick={toggleForm} title="Add a Subtask">
         <FaRegPlusSquare size={20} />
       </ButtonContainer>
       <Modal isOpen={showModal} onClose={toggleForm} title="Add Subtask">

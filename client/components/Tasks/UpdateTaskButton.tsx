@@ -66,7 +66,7 @@ const UpdateTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
 
   return (
     <>
-      <ButtonContainer onClick={toggleForm}>
+      <ButtonContainer onClick={toggleForm} title="Edit Task Name">
         <FaEdit size={20} />
       </ButtonContainer>
       <Modal isOpen={showModal} onClose={toggleForm} title="Update Task Name">

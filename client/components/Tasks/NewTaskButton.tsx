@@ -25,16 +25,8 @@ const fadeIn = keyframes`
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--color-blue);
-  margin: 0 0 0.5em;
-  padding: 0.6em;
+  margin-left: 10px;
   cursor: pointer;
-  text-transform: uppercase;
-  font-size: 1rem;
-  font-weight: 700;
-  animation: ${fadeIn} 300ms ease-out forwards;
 `;
 
 const Form = styled.form`
@@ -102,8 +94,7 @@ const NewTaskButton: FunctionComponent<IProps> = ({ goalId }) => {
 
   return (
     <>
-      <ButtonContainer onClick={toggleForm}>
-        Add Task &nbsp;
+      <ButtonContainer onClick={toggleForm} title="Add a Task">
         <FaRegPlusSquare size={20} />
       </ButtonContainer>
       <Modal isOpen={showModal} onClose={toggleForm} title="Add Task">

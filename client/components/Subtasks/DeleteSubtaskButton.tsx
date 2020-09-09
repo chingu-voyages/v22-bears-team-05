@@ -66,7 +66,7 @@ const DeleteSubtaskButton: FunctionComponent<IProps> = ({
 
   return (
     <>
-      <ButtonContainer onClick={toggleForm}>
+      <ButtonContainer onClick={toggleForm} title="Delete Subtask">
         <FaTrashAlt size={20} />
       </ButtonContainer>
       <Modal isOpen={showModal} onClose={toggleForm} title="Delete Subtask">

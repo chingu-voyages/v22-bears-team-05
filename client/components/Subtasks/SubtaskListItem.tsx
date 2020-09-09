@@ -16,7 +16,7 @@ const Container = styled.div`
 
 const ListItem = styled.div<{ started?: number }>`
   background-color: ${({ started }) =>
-    started ? 'var(--color-yellow)' : '#fff'};
+    started ? 'var(--color-yellow)' : '#eee'};
   width: 95%;
   border-bottom: 1px solid #ccc;
   text-transform: capitalize;
@@ -39,9 +39,8 @@ const ItemName = styled.span`
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding: 0.5em 0;
   width: 100%;
-  font-weight: 500;
+  font-weight: 400;
 `;
 
 const TaskIndicator = styled.span`
