@@ -32,7 +32,6 @@ const Time = styled.div<{ paddingSmall: boolean }>`
 const TimeSpent: FunctionComponent<IProps> = ({
   totalTimeInSeconds,
   paddingSmall = false,
-  displaySeconds = false,
 }) => {
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
@@ -59,9 +58,9 @@ const TimeSpent: FunctionComponent<IProps> = ({
       &nbsp;
       {days || hours ? <>{`${hours}h`}</> : null}
       &nbsp;
-      {`${minutes}m`}
+      {days || hours || minutes ? <>{`${minutes}m`}</> : null}
       &nbsp;
-      {displaySeconds ? `${seconds}s` : null}
+      {`${seconds}s`}
     </Time>
   );
 };

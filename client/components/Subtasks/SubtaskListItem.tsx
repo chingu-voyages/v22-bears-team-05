@@ -117,7 +117,7 @@ const SubtaskListItem: FunctionComponent<IProps> = ({
           <DeleteSubtaskButton subtaskId={subtaskId} subtaskName={name} />
         </TaskIndicator>
       </MainInfo>
-      <TimeSpent totalTimeInSeconds={timePassed} paddingSmall displaySeconds />
+      <TimeSpent totalTimeInSeconds={timePassed} paddingSmall />
       {showDetails
         ? //display subtask description here
           null
