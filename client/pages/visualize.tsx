@@ -1,8 +1,11 @@
 // import styled from 'styled-components';
 import App from '../components/App';
 import Head from 'next/head';
-import React, { useRef, FunctionComponent } from 'react';
+import React, { useRef, FunctionComponent, useEffect } from 'react';
 import { withApollo } from '../utils/withApollo';
+import { select, scaleBand, scaleLinear, max } from 'd3';
+import stringToColor from './../utils/stringToColor';
+import { string } from 'prop-types';
 
 interface barData {
   tagName: string;
@@ -19,9 +22,33 @@ const data: barData[] = [
   { tagName: 'Jest', time: 11 },
   { tagName: 'Cypress', time: 0.06 },
 ];
+data.sort((a: barData, b: barData) => b.time - a.time);
+
+const height: number = 300;
+const width: number = 300;
 
 const VisualizationPage: FunctionComponent = () => {
-  const d3Container = useRef(null);
+  const svgRef = useRef();
+  useEffect(() => {
+    const svg = select(svgRef.current);
+
+    const yScale = scaleBand()
+      .paddingInner(0.1)
+      .domain(data.map((_, index) => index))
+      .range([0, height]);
+    const xScale = scaleLinear()
+      .domain([0, max(data, (element: barData) => element.time)])
+      .range([0, width]);
+    svg
+      .selectAll('.bar')
+      .data(data, (element: barData) => element.tagName)
+      .join((enter) =>
+        enter.append('rect').attr('y', (_, index) => yScale(index)),
+      )
+      .attr('fill', (element: barData): string =>
+        stringToColor(element.tagName),
+      );
+  }, []);
   // useEffect(() => {
 
   // })
