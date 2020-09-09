@@ -51,7 +51,10 @@ const NewGoalButton: FunctionComponent = () => {
 
   const handleInputChange = (e: React.ChangeEvent<any>) => {
     e.persist();
-    if (e.target.value.length <= maxNameLength) {
+    if (e.target.value.trim().length === 0) {
+      setNewGoalName(e.target.value);
+      setErrorMessage('The name field is required.');
+    } else if (e.target.value.length <= maxNameLength) {
       setNewGoalName(e.target.value);
       setErrorMessage('');
     } else setErrorMessage(maxCharLengthError);
@@ -78,6 +81,9 @@ const NewGoalButton: FunctionComponent = () => {
       toggleForm();
     } catch (err) {
       setError(err);
+      if (newGoalName.length === 0) {
+        setErrorMessage('The name field is required.');
+      } else setErrorMessage(err.message);
     } finally {
       setIsLoading(false);
     }
@@ -106,7 +112,13 @@ const NewGoalButton: FunctionComponent = () => {
             </label>
           </div>
           <p className="error">{errorMessage}</p>
-          {isLoading ? <Spinner /> : <button type="submit">Add</button>}
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <button type="submit" disabled={!!errorMessage}>
+              Add
+            </button>
+          )}
         </Form>
       </Modal>
     </>

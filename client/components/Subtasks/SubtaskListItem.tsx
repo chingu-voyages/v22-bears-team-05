@@ -96,9 +96,9 @@ const SubtaskListItem: FunctionComponent<IProps> = ({
   }, [timeStarted]);
 
   return (
-    <ListItem onClick={toggleShowSubtasks} started={timeStarted}>
+    <ListItem started={timeStarted}>
       <MainInfo>
-        <ItemName>
+        <ItemName onClick={toggleShowSubtasks}>
           {name}
           {showDetails ? <FaCaretDown size={20} /> : <FaCaretRight size={20} />}
         </ItemName>

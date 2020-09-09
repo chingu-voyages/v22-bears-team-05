@@ -43,7 +43,10 @@ const UpdateTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
 
   const handleInputChange = (e: React.ChangeEvent<any>) => {
     e.persist();
-    if (e.target.value.length <= maxNameLength) {
+    if (e.target.value.trim().length === 0) {
+      setNewTaskName(e.target.value);
+      setErrorMessage('The name field is required.');
+    } else if (e.target.value.length <= maxNameLength) {
       setNewTaskName(e.target.value);
       setErrorMessage('');
     } else setErrorMessage(maxCharLengthError);
@@ -59,6 +62,9 @@ const UpdateTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
       toggleForm();
     } catch (err) {
       setError(err);
+      if (newTaskName.length === 0) {
+        setErrorMessage('The name field is required.');
+      } else setErrorMessage(err.message);
     } finally {
       setIsLoading(false);
     }
@@ -86,7 +92,13 @@ const UpdateTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
             </label>
           </div>
           <p className="error">{errorMessage}</p>
-          {isLoading ? <Spinner /> : <button type="submit">Update</button>}
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <button type="submit" disabled={!!errorMessage}>
+              Update
+            </button>
+          )}
         </Form>
       </Modal>
     </>

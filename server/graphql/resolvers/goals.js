@@ -108,6 +108,8 @@ module.exports = {
             currentGoal.isCompleted = isCompleted;
           }
         }
+        if (!newGoalName.trim() && isCompleted === undefined)
+          throw new Error("The name field is required");
         currentGoal.save();
         return currentGoal;
       } catch (err) {

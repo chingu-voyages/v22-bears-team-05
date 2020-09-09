@@ -95,9 +95,9 @@ const TaskListItem: FunctionComponent<IProps> = ({
 
   return (
     <Container>
-      <ListItem onClick={toggleShowSubtasks} showSubtasks={showSubtasks}>
+      <ListItem showSubtasks={showSubtasks}>
         <MainInfo>
-          <ItemName>
+          <ItemName onClick={toggleShowSubtasks}>
             {name}
             {showSubtasks ? (
               <FaCaretDown size={20} />
