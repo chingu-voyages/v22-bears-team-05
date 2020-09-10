@@ -5,7 +5,6 @@ import React, { useRef, FunctionComponent, useEffect } from 'react';
 import { withApollo } from '../utils/withApollo';
 import { select, scaleBand, scaleLinear, max } from 'd3';
 import stringToColor from './../utils/stringToColor';
-import { string } from 'prop-types';
 
 interface barData {
   tagName: string;
@@ -24,8 +23,8 @@ const data: barData[] = [
 ];
 data.sort((a: barData, b: barData) => b.time - a.time);
 
-const height: number = 300;
-const width: number = 300;
+const height: number = 600;
+const width: number = 1500;
 
 const VisualizationPage: FunctionComponent = () => {
   const svgRef = useRef();
@@ -47,7 +46,28 @@ const VisualizationPage: FunctionComponent = () => {
       )
       .attr('fill', (element: barData): string =>
         stringToColor(element.tagName),
-      );
+      )
+      .attr('class', 'bar')
+      .attr('x', 0)
+      .attr('height', yScale.bandwidth())
+      .attr('width', (element: barData) => xScale(element.time))
+      .attr('y', (_, index) => yScale(index));
+
+    svg
+      .selectAll('.label')
+      .data(data, (element: barData) => element.tagName)
+      .join((enter) =>
+        enter
+          .append('text')
+          .attr('y', (_, index) => yScale(index) + yScale.bandwidth() / 2 + 5),
+      )
+      .text(
+        (element: barData) => `${element.tagName}
+      ${element.time}h`,
+      )
+      .attr('class', 'label')
+      .attr('x', 10)
+      .attr('y', (_, index) => yScale(index) + yScale.bandwidth() / 2 + 5);
   }, []);
   // useEffect(() => {
 
@@ -58,7 +78,7 @@ const VisualizationPage: FunctionComponent = () => {
         <title>visualization</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <pre>{JSON.stringify(data)}</pre>
+      <svg height="1500" width="1500" ref={svgRef}></svg>
     </App>
   );
 };
