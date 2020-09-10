@@ -5,6 +5,7 @@ import PauseSubtaskButton from './PauseSubtaskButton';
 import StartSubtaskButton from './StartSubtaskButton';
 import SubtaskList from './SubtaskList';
 import SubtaskListItem from './SubtaskListItem';
+import UpdateSubtaskButton from './UpdateSubtaskButton';
 
 export {
   SubtaskList,
@@ -14,4 +15,5 @@ export {
   StartSubtaskButton,
   PauseSubtaskButton,
   CompleteSubtaskButton,
+  UpdateSubtaskButton,
 };

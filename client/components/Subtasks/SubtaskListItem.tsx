@@ -6,6 +6,7 @@ import {
   DeleteSubtaskButton,
   PauseSubtaskButton,
   StartSubtaskButton,
+  UpdateSubtaskButton,
 } from '.';
 import { TimeSpent } from '../Goals';
 
@@ -118,6 +119,11 @@ const SubtaskListItem: FunctionComponent<IProps> = ({
               handleSetTimePassed={handleSetTimePassed}
             />
           )}
+          <UpdateSubtaskButton
+            subtaskId={subtaskId}
+            oldSubtaskName={name}
+            oldSubtaskDescription={description}
+          />
           <DeleteSubtaskButton subtaskId={subtaskId} subtaskName={name} />
         </TaskIndicator>
       </MainInfo>

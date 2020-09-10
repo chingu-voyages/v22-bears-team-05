@@ -79,6 +79,11 @@ module.exports = gql`
       subtaskDescription: String
       taskId: String!
     ): Task!
+    updateSubtask(
+      subtaskName: String!
+      subtaskDescription: String
+      subtaskId: String!
+    ): Subtask!
     deleteSubtask(subtaskId: String!): Task!
     startSubtask(subtaskId: String!): Subtask!
     pauseSubtask(subtaskId: String!): Subtask!
