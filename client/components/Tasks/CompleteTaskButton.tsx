@@ -67,7 +67,7 @@ const CompleteTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
 
   return (
     <>
-      <ButtonContainer onClick={toggleForm}>
+      <ButtonContainer onClick={toggleForm} title="Complete Task">
         <FaCheck size={20} />
       </ButtonContainer>
       <Modal isOpen={showModal} onClose={toggleForm} title="Complete Task">

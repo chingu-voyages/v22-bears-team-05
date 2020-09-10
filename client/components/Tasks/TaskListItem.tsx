@@ -11,7 +11,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   flex-flow: column nowrap;
-  background-color: #eee;
+  background-color: #333;
   &:last-child {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -21,7 +21,7 @@ const Container = styled.div`
 `;
 
 const ListItem = styled.div<{ showSubtasks: boolean }>`
-  background-color: #fff;
+  background-color: #ccc;
   width: 95%;
   &:not(:first-child) {
     margin-top: 0.5em;
@@ -42,14 +42,16 @@ const ItemName = styled.span`
   cursor: pointer;
   display: flex;
   align-items: center;
+  align-self: baseline;
   padding: 0.5em 0;
   width: 100%;
   font-weight: 500;
+  font-size: 1.2rem;
 `;
 
 const TaskIndicator = styled.span`
   display: flex;
-  align-self: center;
+  align-self: baseline;
   margin-left: auto;
   font-size: 1.2rem;
 `;
@@ -93,9 +95,9 @@ const TaskListItem: FunctionComponent<IProps> = ({
 
   return (
     <Container>
-      <ListItem onClick={toggleShowSubtasks} showSubtasks={showSubtasks}>
+      <ListItem showSubtasks={showSubtasks}>
         <MainInfo>
-          <ItemName>
+          <ItemName onClick={toggleShowSubtasks}>
             {name}
             {showSubtasks ? (
               <FaCaretDown size={20} />
@@ -104,10 +106,11 @@ const TaskListItem: FunctionComponent<IProps> = ({
             )}
           </ItemName>
           <TaskIndicator>
+            <NewSubtaskButton taskId={taskId} />
             <UpdateTaskButton taskId={taskId} name={name} />
             <DeleteTaskButton taskName={name} taskId={taskId} />
             {subtasks.length > 0 ? (
-              <Notifications>
+              <Notifications title="Subtasks Remaining">
                 {
                   subtasks.filter((subtask) => subtask.isCompleted === false)
                     .length
@@ -119,16 +122,11 @@ const TaskListItem: FunctionComponent<IProps> = ({
             )}
           </TaskIndicator>
         </MainInfo>
-        {showSubtasks ? (
-          <>
-            <TimeSpent totalTimeInSeconds={totalTimeInSeconds} paddingSmall />
-          </>
-        ) : null}
+        <TimeSpent totalTimeInSeconds={totalTimeInSeconds} paddingSmall />
       </ListItem>
 
       {showSubtasks && (
         <>
-          <NewSubtaskButton taskId={taskId} />
           <SubtaskList subtasks={subtasks} />
           {subtasks.length === 0 ? <Spacer /> : null}
         </>

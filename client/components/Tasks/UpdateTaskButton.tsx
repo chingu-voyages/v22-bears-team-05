@@ -31,7 +31,7 @@ const UpdateTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
   const [newTaskName, setNewTaskName] = useState(name);
   const [error, setError] = useState<Error | null>(null);
   const [updateTask] = useMutation(UPDATE_TASK_MUTATION);
-  const maxNameLength = 20;
+  const maxNameLength = 30;
   const maxCharLengthError = `The max length is ${maxNameLength} characters.`;
 
   useCheckIfAuth(error);
@@ -43,7 +43,10 @@ const UpdateTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
 
   const handleInputChange = (e: React.ChangeEvent<any>) => {
     e.persist();
-    if (e.target.value.length <= maxNameLength) {
+    if (e.target.value.trim().length === 0) {
+      setNewTaskName(e.target.value);
+      setErrorMessage('The name field is required.');
+    } else if (e.target.value.length <= maxNameLength) {
       setNewTaskName(e.target.value);
       setErrorMessage('');
     } else setErrorMessage(maxCharLengthError);
@@ -59,6 +62,7 @@ const UpdateTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
       toggleForm();
     } catch (err) {
       setError(err);
+      setErrorMessage(/\s\S*\s(.*)/.exec(err.message)[1]);
     } finally {
       setIsLoading(false);
     }
@@ -66,7 +70,7 @@ const UpdateTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
 
   return (
     <>
-      <ButtonContainer onClick={toggleForm}>
+      <ButtonContainer onClick={toggleForm} title="Edit Task Name">
         <FaEdit size={20} />
       </ButtonContainer>
       <Modal isOpen={showModal} onClose={toggleForm} title="Update Task Name">
@@ -86,7 +90,13 @@ const UpdateTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
             </label>
           </div>
           <p className="error">{errorMessage}</p>
-          {isLoading ? <Spinner /> : <button type="submit">Update</button>}
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <button type="submit" disabled={!!errorMessage}>
+              Update
+            </button>
+          )}
         </Form>
       </Modal>
     </>

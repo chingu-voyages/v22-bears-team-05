@@ -78,11 +78,20 @@ const Modal: FunctionComponent<IProps> = ({
 
   if (!isOpen) return null;
 
+  const preventBubbling = (e: Event) => {
+    e.stopPropagation();
+  };
+
+  const handleOnClose = (e: Event) => {
+    e.stopPropagation();
+    onClose();
+  };
+
   return ReactDom.createPortal(
     <>
-      <Overlay onClick={onClose} />
+      <Overlay onClick={handleOnClose} />
 
-      <Content>
+      <Content onClick={preventBubbling}>
         <Header>
           <Title>{title}</Title>
           <CloseButton type="button" onClick={onClose}>

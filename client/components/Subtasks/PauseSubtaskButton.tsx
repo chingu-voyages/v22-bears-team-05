@@ -39,7 +39,7 @@ const PauseSubtaskButton: FunctionComponent<IProps> = ({ subtaskId }) => {
 
   return (
     <>
-      <ButtonContainer onClick={handleSubmit}>
+      <ButtonContainer onClick={handleSubmit} title="Pause Subtask">
         {isLoading ? <Spinner small /> : <FaPause size={20} />}
       </ButtonContainer>
     </>

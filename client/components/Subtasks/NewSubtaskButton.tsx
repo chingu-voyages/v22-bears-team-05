@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import React, { FunctionComponent, useState } from 'react';
 import { FaRegPlusSquare } from 'react-icons/fa';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { CREATE_SUBTASK_MUTATION } from '../../utils/graphql/mutation';
 import { CREATE_SUBTASK_VARIABLES } from '../../utils/graphql/variables';
 import { useCheckIfAuth } from '../../utils/useCheckIfAuth';
@@ -12,28 +12,15 @@ interface IProps {
   taskId: string;
 }
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  width: 95%;
-  justify-content: center;
-  align-items: center;
-  background-color: #ccc;
-  padding: 0.6em;
+  margin-left: 10px;
   cursor: pointer;
-  text-transform: uppercase;
-  font-size: 1rem;
-  font-weight: 700;
-  animation: ${fadeIn} 300ms ease-out forwards;
 `;
 
 const Form = styled.form`
@@ -45,12 +32,15 @@ const Form = styled.form`
 const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
   const [showModal, setShowModal] = useState(false);
   const [newSubtaskName, setNewSubtaskName] = useState('');
+  const [newSubtaskDescription, setNewSubtaskDescription] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [createSubtask] = useMutation(CREATE_SUBTASK_MUTATION);
-  const maxNameLength = 20;
+  const maxNameLength = 30;
   const maxCharLengthError = `The max length is ${maxNameLength} characters.`;
+  const maxDescriptionLength = 200;
+  const maxDescriptionLengthError = `The max length is ${maxDescriptionLength} characters.`;
 
   useCheckIfAuth(error);
 
@@ -60,12 +50,23 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
     setErrorMessage('');
   };
 
-  const handleInputChange = (e: React.ChangeEvent<any>) => {
+  const handleNameChange = (e: React.ChangeEvent<any>) => {
     e.persist();
-    if (e.target.value.length <= maxNameLength) {
+    if (e.target.value.trim().length === 0) {
+      setNewSubtaskName(e.target.value);
+      setErrorMessage('The name field is required.');
+    } else if (e.target.value.length <= maxNameLength) {
       setNewSubtaskName(e.target.value);
       setErrorMessage('');
     } else setErrorMessage(maxCharLengthError);
+  };
+
+  const handleDescriptionChange = (e: React.ChangeEvent<any>) => {
+    e.persist();
+    if (e.target.value.length <= maxDescriptionLength) {
+      setNewSubtaskDescription(e.target.value);
+      setErrorMessage('');
+    } else setErrorMessage(maxDescriptionLengthError);
   };
 
   const handleSubmit = async (e: React.ChangeEvent<any>) => {
@@ -76,11 +77,13 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
         variables: CREATE_SUBTASK_VARIABLES({
           taskId,
           subtaskName: newSubtaskName,
+          subtaskDescription: newSubtaskDescription,
         }),
       });
       toggleForm();
     } catch (err) {
       setError(err);
+      setErrorMessage(/\s\S*\s(.*)/.exec(err.message)[1]);
     } finally {
       setIsLoading(false);
     }
@@ -88,28 +91,44 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
 
   return (
     <>
-      <ButtonContainer onClick={toggleForm}>
-        Add Subtask &nbsp;
+      <ButtonContainer onClick={toggleForm} title="Add a Subtask">
         <FaRegPlusSquare size={20} />
       </ButtonContainer>
       <Modal isOpen={showModal} onClose={toggleForm} title="Add Subtask">
         <Form onSubmit={handleSubmit}>
-          <div>
+          <Container>
             <label htmlFor="name">
               Name
               <input
                 type="text"
                 id="name"
                 name="name"
-                onChange={handleInputChange}
+                onChange={handleNameChange}
                 value={newSubtaskName}
                 autoFocus
                 disabled={isLoading}
               />
             </label>
-          </div>
+            <label htmlFor="description">
+              Description
+              <textarea
+                rows={4}
+                id="description"
+                name="description"
+                onChange={handleDescriptionChange}
+                value={newSubtaskDescription}
+                disabled={isLoading}
+              />
+            </label>
+          </Container>
           <p className="error">{errorMessage}</p>
-          {isLoading ? <Spinner /> : <button type="submit">Add</button>}
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <button type="submit" disabled={!!errorMessage}>
+              Add
+            </button>
+          )}
         </Form>
       </Modal>
     </>

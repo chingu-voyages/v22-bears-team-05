@@ -74,7 +74,11 @@ module.exports = gql`
       newTaskName: String
       isCompleted: Boolean
     ): Goal!
-    createSubtask(subtaskName: String!, taskId: String!): Task!
+    createSubtask(
+      subtaskName: String!
+      subtaskDescription: String
+      taskId: String!
+    ): Task!
     deleteSubtask(subtaskId: String!): Task!
     startSubtask(subtaskId: String!): Subtask!
     pauseSubtask(subtaskId: String!): Subtask!

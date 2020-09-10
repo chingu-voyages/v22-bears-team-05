@@ -32,7 +32,6 @@ const Time = styled.div<{ paddingSmall: boolean }>`
 const TimeSpent: FunctionComponent<IProps> = ({
   totalTimeInSeconds,
   paddingSmall = false,
-  displaySeconds = false,
 }) => {
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
@@ -52,16 +51,16 @@ const TimeSpent: FunctionComponent<IProps> = ({
     setSeconds(timeLeft);
   }, [totalTimeInSeconds, secondsInDay, secondsInHour, secondsInMinute]);
   return (
-    <Time paddingSmall={paddingSmall}>
+    <Time paddingSmall={paddingSmall} title="Time Spent">
       <FaRegClock size={20} />
       &nbsp;
       {days ? <>{`${days}d`}</> : null}
       &nbsp;
       {days || hours ? <>{`${hours}h`}</> : null}
       &nbsp;
-      {`${minutes}m`}
+      {days || hours || minutes ? <>{`${minutes}m`}</> : null}
       &nbsp;
-      {displaySeconds ? `${seconds}s` : null}
+      {`${seconds}s`}
     </Time>
   );
 };

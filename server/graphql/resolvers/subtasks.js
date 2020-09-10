@@ -3,7 +3,11 @@ const Task = require("../../models/Task");
 const Subtask = require("../../models/Subtask");
 module.exports = {
   Mutation: {
-    async createSubtask(_, { subtaskName, taskId }, context) {
+    async createSubtask(
+      _,
+      { subtaskName, subtaskDescription, taskId },
+      context,
+    ) {
       if (!context.req.session.userId) throw new Error("not authenticated");
 
       try {
@@ -28,6 +32,7 @@ module.exports = {
         const newSubtask = await Subtask.create({
           parent: parentTask._id,
           name: subtaskName,
+          description: subtaskDescription,
         });
         parentTask.subtasks.push(newSubtask._id);
         await parentTask.save();

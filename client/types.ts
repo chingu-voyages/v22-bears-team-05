@@ -17,6 +17,7 @@ export type Task = {
 export type Subtask = {
   _id: string;
   name: string;
+  description: string;
   totalTimeInSeconds: number;
   isCompleted: boolean;
   timeStarted?: number;

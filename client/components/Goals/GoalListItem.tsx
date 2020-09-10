@@ -23,7 +23,8 @@ const ListItem = styled.div`
   font-size: 1.2rem;
   display: flex;
   text-transform: capitalize;
-  background-color: #eee;
+  background-color: #333;
+  color: #eee;
 `;
 
 const MainInfo = styled.div`
@@ -37,7 +38,8 @@ const ItemName = styled.span`
   align-items: center;
   padding: 1em;
   width: 100%;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1.3rem;
 `;
 
 const TaskIndicator = styled.span`
@@ -96,10 +98,11 @@ const GoalListItem: FunctionComponent<IProps> = ({
               )}
             </ItemName>
             <TaskIndicator>
+              <NewTaskButton goalId={goalId} />
               <UpdateGoalButton goalId={goalId} name={name} />
               <DeleteGoalButton goalId={goalId} name={name} />
               {tasks.length > 0 ? (
-                <Notifications>
+                <Notifications title="Tasks Remaining">
                   {tasks.filter((task) => task.isCompleted === false).length}
                   <NotificationDot />
                 </Notifications>
@@ -108,12 +111,7 @@ const GoalListItem: FunctionComponent<IProps> = ({
               )}
             </TaskIndicator>
           </MainInfo>
-          {showTasks ? (
-            <>
-              <TimeSpent totalTimeInSeconds={totalTimeInSeconds} />
-              <NewTaskButton goalId={goalId} />
-            </>
-          ) : null}
+          <TimeSpent totalTimeInSeconds={totalTimeInSeconds} />
         </Container>
       </ListItem>
       {showTasks && <TaskList tasks={tasks} />}
