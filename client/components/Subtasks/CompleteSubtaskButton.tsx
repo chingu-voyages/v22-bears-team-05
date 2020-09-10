@@ -39,7 +39,7 @@ const CompleteSubtaskButton: FunctionComponent<IProps> = ({ subtaskId }) => {
 
   return (
     <>
-      <ButtonContainer onClick={handleSubmit} title="Complete Subtask">
+      <ButtonContainer onClick={handleSubmit} title="Complete Action Item">
         {isLoading ? <Spinner small /> : <FaCheck size={20} />}
       </ButtonContainer>
     </>

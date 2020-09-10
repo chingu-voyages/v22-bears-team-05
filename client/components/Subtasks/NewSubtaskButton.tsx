@@ -91,10 +91,10 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
 
   return (
     <>
-      <ButtonContainer onClick={toggleForm} title="Add a Subtask">
+      <ButtonContainer onClick={toggleForm} title="Add an Action Item">
         <FaRegPlusSquare size={20} />
       </ButtonContainer>
-      <Modal isOpen={showModal} onClose={toggleForm} title="Add Subtask">
+      <Modal isOpen={showModal} onClose={toggleForm} title="Add Action Item">
         <Form onSubmit={handleSubmit}>
           <Container>
             <label htmlFor="name">

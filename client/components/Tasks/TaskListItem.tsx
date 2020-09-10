@@ -110,7 +110,7 @@ const TaskListItem: FunctionComponent<IProps> = ({
             <UpdateTaskButton taskId={taskId} name={name} />
             <DeleteTaskButton taskName={name} taskId={taskId} />
             {subtasks.length > 0 ? (
-              <Notifications title="Subtasks Remaining">
+              <Notifications title="Action Items Remaining">
                 {
                   subtasks.filter((subtask) => subtask.isCompleted === false)
                     .length
