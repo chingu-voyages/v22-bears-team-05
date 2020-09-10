@@ -4,7 +4,7 @@ import Head from 'next/head';
 import React, { useRef, FunctionComponent, useEffect } from 'react';
 import { withApollo } from '../utils/withApollo';
 import { select, scaleBand, scaleLinear, max } from 'd3';
-import stringToColor from './../utils/stringToColor';
+import { stringToLightColor } from './../utils/stringToColor';
 
 interface barData {
   tagName: string;
@@ -19,7 +19,7 @@ const data: barData[] = [
   { tagName: 'd3.js', time: 6 },
   { tagName: 'Node.js', time: 14 },
   { tagName: 'Jest', time: 11 },
-  { tagName: 'Cypress', time: 0.06 },
+  { tagName: 'Hello this is a user', time: 6 },
 ];
 data.sort((a: barData, b: barData) => b.time - a.time);
 
@@ -45,7 +45,7 @@ const VisualizationPage: FunctionComponent = () => {
         enter.append('rect').attr('y', (_, index) => yScale(index)),
       )
       .attr('fill', (element: barData): string =>
-        stringToColor(element.tagName),
+        stringToLightColor(element.tagName),
       )
       .attr('class', 'bar')
       .attr('x', 0)
