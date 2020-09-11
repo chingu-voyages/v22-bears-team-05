@@ -5,6 +5,9 @@ module.exports = gql`
     id: ID!
     email: String!
     createdDate: String!
+    smallRewards: [String!]
+    mediumRewards: [String!]
+    largeRewards: [String!]
   }
   type UserView {
     email: String
@@ -79,6 +82,11 @@ module.exports = gql`
       subtaskDescription: String
       taskId: String!
     ): Task!
+    updateSubtask(
+      subtaskName: String!
+      subtaskDescription: String
+      subtaskId: String!
+    ): Subtask!
     deleteSubtask(subtaskId: String!): Task!
     startSubtask(subtaskId: String!): Subtask!
     pauseSubtask(subtaskId: String!): Subtask!

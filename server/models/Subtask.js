@@ -3,7 +3,7 @@ const { model, Schema } = require("mongoose");
 const subtaskSchema = new Schema({
   name: {
     type: String,
-    required: [true, "A subtask must have a name."],
+    required: [true, "An action item must have a name."],
     trim: true,
     minlength: 1,
     maxlength: 30,

@@ -9,6 +9,7 @@ import {
 } from '.';
 import { Task } from '../../types';
 import { NewTaskButton, TaskList } from '../Tasks';
+import { rewardSize } from './GoalList';
 
 const Container = styled.div`
   display: flex;
@@ -51,13 +52,14 @@ const TaskIndicator = styled.span`
 `;
 
 const Notifications = styled.div`
+  position: relative;
   margin: 0 10px;
   font-weight: 700;
 `;
 
 const NotificationDot = styled.div`
-  position: relative;
-  top: -1.5rem;
+  position: absolute;
+  top: -0.2rem;
   right: -0.75rem;
   background-color: #ee6055;
   border-radius: 10rem;
@@ -70,6 +72,9 @@ interface IProps {
   name: string;
   totalTimeInSeconds: number;
   tasks?: Task[];
+  displayReward: (
+    size: rewardSize.small | rewardSize.medium | rewardSize.large,
+  ) => void;
 }
 
 const GoalListItem: FunctionComponent<IProps> = ({
@@ -77,6 +82,7 @@ const GoalListItem: FunctionComponent<IProps> = ({
   goalId,
   totalTimeInSeconds,
   tasks = [],
+  displayReward,
 }) => {
   const [showTasks, setShowTasks] = useState(false);
 
@@ -107,14 +113,18 @@ const GoalListItem: FunctionComponent<IProps> = ({
                   <NotificationDot />
                 </Notifications>
               ) : (
-                <CompleteGoalButton goalId={goalId} name={name} />
+                <CompleteGoalButton
+                  goalId={goalId}
+                  name={name}
+                  displayReward={displayReward}
+                />
               )}
             </TaskIndicator>
           </MainInfo>
           <TimeSpent totalTimeInSeconds={totalTimeInSeconds} />
         </Container>
       </ListItem>
-      {showTasks && <TaskList tasks={tasks} />}
+      {showTasks && <TaskList tasks={tasks} displayReward={displayReward} />}
     </Container>
   );
 };

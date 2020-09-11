@@ -1,15 +1,17 @@
 import { useMutation } from '@apollo/client';
 import React, { FunctionComponent, useState } from 'react';
-import { FaRegPlusSquare } from 'react-icons/fa';
+import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
-import { CREATE_SUBTASK_MUTATION } from '../../utils/graphql/mutation';
-import { CREATE_SUBTASK_VARIABLES } from '../../utils/graphql/variables';
+import { UPDATE_SUBTASK_MUTATION } from '../../utils/graphql/mutation';
+import { UPDATE_SUBTASK_VARIABLES } from '../../utils/graphql/variables';
 import { useCheckIfAuth } from '../../utils/useCheckIfAuth';
 import Spinner from '../Spinner';
 import Modal from '../Utilities/Modal';
 
 interface IProps {
-  taskId: string;
+  subtaskId: string;
+  oldSubtaskName: string;
+  oldSubtaskDescription: string;
 }
 
 const Container = styled.div`
@@ -29,14 +31,20 @@ const Form = styled.form`
   margin: 0 auto;
 `;
 
-const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
+const UpdateSubtaskButton: FunctionComponent<IProps> = ({
+  subtaskId,
+  oldSubtaskName,
+  oldSubtaskDescription,
+}) => {
   const [showModal, setShowModal] = useState(false);
-  const [newSubtaskName, setNewSubtaskName] = useState('');
-  const [newSubtaskDescription, setNewSubtaskDescription] = useState('');
+  const [subtaskName, setSubtaskName] = useState(oldSubtaskName);
+  const [subtaskDescription, setSubtaskDescription] = useState(
+    oldSubtaskDescription || '',
+  );
   const [errorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [createSubtask] = useMutation(CREATE_SUBTASK_MUTATION);
+  const [updateSubtask] = useMutation(UPDATE_SUBTASK_MUTATION);
   const maxNameLength = 30;
   const maxCharLengthError = `The max length is ${maxNameLength} characters.`;
   const maxDescriptionLength = 200;
@@ -46,17 +54,16 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
 
   const toggleForm = () => {
     setShowModal(!showModal);
-    setNewSubtaskName('');
     setErrorMessage('');
   };
 
   const handleNameChange = (e: React.ChangeEvent<any>) => {
     e.persist();
     if (e.target.value.trim().length === 0) {
-      setNewSubtaskName(e.target.value);
+      setSubtaskName(e.target.value);
       setErrorMessage('The name field is required.');
     } else if (e.target.value.length <= maxNameLength) {
-      setNewSubtaskName(e.target.value);
+      setSubtaskName(e.target.value);
       setErrorMessage('');
     } else setErrorMessage(maxCharLengthError);
   };
@@ -64,7 +71,7 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
   const handleDescriptionChange = (e: React.ChangeEvent<any>) => {
     e.persist();
     if (e.target.value.length <= maxDescriptionLength) {
-      setNewSubtaskDescription(e.target.value);
+      setSubtaskDescription(e.target.value);
       setErrorMessage('');
     } else setErrorMessage(maxDescriptionLengthError);
   };
@@ -73,11 +80,11 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await createSubtask({
-        variables: CREATE_SUBTASK_VARIABLES({
-          taskId,
-          subtaskName: newSubtaskName,
-          subtaskDescription: newSubtaskDescription,
+      await updateSubtask({
+        variables: UPDATE_SUBTASK_VARIABLES({
+          subtaskId,
+          subtaskName,
+          subtaskDescription,
         }),
       });
       toggleForm();
@@ -91,10 +98,10 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
 
   return (
     <>
-      <ButtonContainer onClick={toggleForm} title="Add an Action Item">
-        <FaRegPlusSquare size={20} />
+      <ButtonContainer onClick={toggleForm} title="Update Action Item">
+        <FaEdit size={20} />
       </ButtonContainer>
-      <Modal isOpen={showModal} onClose={toggleForm} title="Add Action Item">
+      <Modal isOpen={showModal} onClose={toggleForm} title="Update Action Item">
         <Form onSubmit={handleSubmit}>
           <Container>
             <label htmlFor="name">
@@ -104,7 +111,7 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
                 id="name"
                 name="name"
                 onChange={handleNameChange}
-                value={newSubtaskName}
+                value={subtaskName}
                 autoFocus
                 disabled={isLoading}
               />
@@ -116,7 +123,7 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
                 id="description"
                 name="description"
                 onChange={handleDescriptionChange}
-                value={newSubtaskDescription}
+                value={subtaskDescription}
                 disabled={isLoading}
               />
             </label>
@@ -126,7 +133,7 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
             <Spinner />
           ) : (
             <button type="submit" disabled={!!errorMessage}>
-              Add
+              Update
             </button>
           )}
         </Form>
@@ -135,4 +142,4 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
   );
 };
 
-export default NewSubtaskButton;
+export default UpdateSubtaskButton;

@@ -66,13 +66,13 @@ const DeleteSubtaskButton: FunctionComponent<IProps> = ({
 
   return (
     <>
-      <ButtonContainer onClick={toggleForm} title="Delete Subtask">
+      <ButtonContainer onClick={toggleForm} title="Delete Action Item">
         <FaTrashAlt size={20} />
       </ButtonContainer>
-      <Modal isOpen={showModal} onClose={toggleForm} title="Delete Subtask">
+      <Modal isOpen={showModal} onClose={toggleForm} title="Delete Action Item">
         <Form onSubmit={handleSubmit}>
           <ConfirmMessage>
-            Are you sure you want to delete the following subtask?
+            Are you sure you want to delete the following action item?
           </ConfirmMessage>
           <TaskName>{subtaskName}</TaskName>
           <p className="error">{errorMessage}</p>

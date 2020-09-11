@@ -17,7 +17,7 @@ module.exports = {
         });
 
         if (!parentTask) {
-          throw new Error("Cannot find a Task with that ID");
+          throw new Error("Cannot find the related task.");
         }
 
         const userOwnsRelatedGoal = parentTask.parent.user.equals(
@@ -25,7 +25,7 @@ module.exports = {
         );
         if (!userOwnsRelatedGoal) {
           throw new Error(
-            "You do not have authorization to create a subtask on that task",
+            "You do not have authorization to create an action item on that task.",
           );
         }
 
@@ -46,6 +46,45 @@ module.exports = {
         throw new Error(err);
       }
     },
+    async updateSubtask(
+      _,
+      { subtaskName, subtaskDescription, subtaskId },
+      context,
+    ) {
+      if (!context.req.session.userId) throw new Error("not authenticated");
+
+      try {
+        const subtask = await Subtask.findById(subtaskId).populate({
+          path: "parent",
+        });
+
+        const parentTask = await Task.findById(subtask.parent._id).populate({
+          path: "subtasks",
+          path: "parent",
+        });
+
+        if (!parentTask) {
+          throw new Error("Cannot find the related task.");
+        }
+
+        const userOwnsRelatedGoal = parentTask.parent.user.equals(
+          context.req.session.userId,
+        );
+        if (!userOwnsRelatedGoal) {
+          throw new Error(
+            "You do not have authorization to create an action item on that task.",
+          );
+        }
+
+        subtask.name = subtaskName;
+        subtask.description = subtaskDescription;
+        await subtask.save();
+
+        return subtask;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
     async deleteSubtask(_, { subtaskId }, context) {
       if (!context.req.session.userId) throw new Error("not authenticated");
 
@@ -54,7 +93,7 @@ module.exports = {
           path: "parent",
         });
         if (!currentSubtask)
-          throw new Error("Cannot find subtask with that ID");
+          throw new Error("Cannot find an action item with that ID.");
 
         const parentTask = await Task.findById(currentSubtask.parent).populate({
           path: "subtasks",
@@ -66,7 +105,7 @@ module.exports = {
         );
         if (!userOwnsRelatedGoal) {
           throw new Error(
-            "You do not have authorization to delete that subtask",
+            "You do not have authorization to delete that action item.",
           );
         }
 
@@ -92,7 +131,7 @@ module.exports = {
           path: "parent",
         });
         if (!currentSubtask)
-          throw new Error("Cannot find subtask with that ID");
+          throw new Error("Cannot find an action item with that ID.");
 
         const parentTask = await Task.findById(currentSubtask.parent).populate({
           path: "parent",
@@ -103,7 +142,7 @@ module.exports = {
         );
         if (!userOwnsRelatedGoal) {
           throw new Error(
-            "You do not have authorization to start that subtask",
+            "You do not have authorization to start that action item.",
           );
         }
 
@@ -124,7 +163,7 @@ module.exports = {
           path: "parent",
         });
         if (!currentSubtask)
-          throw new Error("Cannot find subtask with that ID");
+          throw new Error("Cannot find an action item with that ID.");
 
         const parentTask = await Task.findById(currentSubtask.parent).populate({
           path: "parent",
@@ -135,12 +174,14 @@ module.exports = {
         );
         if (!userOwnsRelatedGoal) {
           throw new Error(
-            "You do not have authorization to pause that subtask",
+            "You do not have authorization to pause that action item.",
           );
         }
 
         if (!currentSubtask.timeStarted)
-          throw new Error("You cannot pause a subtask that is not started");
+          throw new Error(
+            "You cannot pause an action item that is not started.",
+          );
 
         const millisecondsInSecond = 1000;
         currentSubtask.totalTimeInSeconds += Math.floor(
@@ -163,7 +204,7 @@ module.exports = {
           path: "parent",
         });
         if (!currentSubtask)
-          throw new Error("Cannot find subtask with that ID");
+          throw new Error("Cannot find an action item with that ID.");
 
         const parentTask = await Task.findById(currentSubtask.parent).populate({
           path: "parent",
@@ -174,12 +215,14 @@ module.exports = {
         );
         if (!userOwnsRelatedGoal) {
           throw new Error(
-            "You do not have authorization to complete that subtask",
+            "You do not have authorization to complete that action item.",
           );
         }
 
         if (!currentSubtask.timeStarted)
-          throw new Error("You cannot complete a subtask that is not started");
+          throw new Error(
+            "You cannot complete an action item that is not started.",
+          );
 
         const millisecondsInSecond = 1000;
         currentSubtask.totalTimeInSeconds += Math.floor(
