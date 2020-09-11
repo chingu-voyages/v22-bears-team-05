@@ -10,12 +10,18 @@ interface barData {
   time: number;
 }
 const data: barData[] = [
-  { tagName: 'Javascript', time: 120 },
+  { tagName: 'Javascript', time: 101 },
   { tagName: 'React', time: 90 },
   { tagName: 'MongoDB', time: 75 },
   { tagName: 'Typescript', time: 25 },
   { tagName: 'Python', time: 0.5 },
   { tagName: 'd3.js', time: 6 },
+  { tagName: 'Java', time: 45 },
+  { tagName: 'Angular', time: 70 },
+  { tagName: 'Postgres', time: 68 },
+  { tagName: 'Flow', time: 62 },
+  { tagName: 'Rust', time: 0.02 },
+  { tagName: 'tailwind', time: 4 },
   { tagName: 'Node.js', time: 14 },
   { tagName: 'Jest', time: 11 },
   { tagName: 'longerTag', time: 7 },

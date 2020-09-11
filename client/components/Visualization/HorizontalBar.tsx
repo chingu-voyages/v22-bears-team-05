@@ -6,11 +6,11 @@ import styled from 'styled-components';
 import measureText from '../../utils/measureText';
 const FONT_TEXT_SIZE = 16;
 const lineSize = FONT_TEXT_SIZE * 1.2;
+const BAR_HEIGHT = 75; //height of bar in px
 const VariableSvg = styled.svg`
   overflow: visible;
   display: block;
   width: 90%;
-  height: 100vh;
 `;
 interface barData {
   tagName: string;
@@ -35,12 +35,14 @@ export default function HorizontalBar({ data }: propType) {
   // will be called initially and on every data change
   useEffect(() => {
     const svg = select(svgRef.current);
+
     if (!dimensions) return;
     svg.selectAll('text').remove();
+    svg.attr('height', BAR_HEIGHT * data.length);
     const yScale = scaleBand()
       .paddingInner(0.1)
       .domain(data.map((_, index) => index))
-      .range([0, dimensions.height]);
+      .range([0, BAR_HEIGHT * data.length]);
     const xScale = scaleLinear()
       .domain([0, max(data, (element: barData) => element.time)])
       .range([0, dimensions.width * 0.9]);
@@ -72,11 +74,13 @@ export default function HorizontalBar({ data }: propType) {
       )
       .text((element: barData) => element.tagName)
       .attr('font-size', `${FONT_TEXT_SIZE}px`)
+      .attr('font-weight', 'bold')
       .attr('x', (element: barData) => {
         return getTextX(element, xScale(element.time));
       })
       .attr('y', (_, index) => yScale(index) + lineSize)
       .append('tspan')
+      .attr('font-weight', 'normal')
       .text((element: barData) => {
         const isHour = element.time > 1;
         const unit = isHour ? 'hr' : 'min';
