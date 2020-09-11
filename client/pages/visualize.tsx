@@ -1,10 +1,9 @@
 // import styled from 'styled-components';
 import App from '../components/App';
 import Head from 'next/head';
-import React, { useRef, FunctionComponent, useEffect } from 'react';
+import React, { /*useRef,*/ FunctionComponent /*,useEffect*/ } from 'react';
 import { withApollo } from '../utils/withApollo';
-import { select, scaleBand, scaleLinear, max } from 'd3';
-import { stringToLightColor } from './../utils/stringToColor';
+import HorizontalBar from '../components/Visualization/HorizontalBar';
 
 interface barData {
   tagName: string;
@@ -19,7 +18,7 @@ const data: barData[] = [
   { tagName: 'd3.js', time: 6 },
   { tagName: 'Node.js', time: 14 },
   { tagName: 'Jest', time: 11 },
-  { tagName: 'Hello this is a user', time: 6 },
+  { tagName: 'longerTag', time: 7 },
 ];
 data.sort((a: barData, b: barData) => b.time - a.time);
 
@@ -27,58 +26,13 @@ const height: number = 600;
 const width: number = 1500;
 
 const VisualizationPage: FunctionComponent = () => {
-  const svgRef = useRef();
-  useEffect(() => {
-    const svg = select(svgRef.current);
-
-    const yScale = scaleBand()
-      .paddingInner(0.1)
-      .domain(data.map((_, index) => index))
-      .range([0, height]);
-    const xScale = scaleLinear()
-      .domain([0, max(data, (element: barData) => element.time)])
-      .range([0, width]);
-    svg
-      .selectAll('.bar')
-      .data(data, (element: barData) => element.tagName)
-      .join((enter) =>
-        enter.append('rect').attr('y', (_, index) => yScale(index)),
-      )
-      .attr('fill', (element: barData): string =>
-        stringToLightColor(element.tagName),
-      )
-      .attr('class', 'bar')
-      .attr('x', 0)
-      .attr('height', yScale.bandwidth())
-      .attr('width', (element: barData) => xScale(element.time))
-      .attr('y', (_, index) => yScale(index));
-
-    svg
-      .selectAll('.label')
-      .data(data, (element: barData) => element.tagName)
-      .join((enter) =>
-        enter
-          .append('text')
-          .attr('y', (_, index) => yScale(index) + yScale.bandwidth() / 2 + 5),
-      )
-      .text(
-        (element: barData) => `${element.tagName}
-      ${element.time}h`,
-      )
-      .attr('class', 'label')
-      .attr('x', 10)
-      .attr('y', (_, index) => yScale(index) + yScale.bandwidth() / 2 + 5);
-  }, []);
-  // useEffect(() => {
-
-  // })
   return (
     <App>
       <Head>
         <title>visualization</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <svg height="1500" width="1500" ref={svgRef}></svg>
+      <HorizontalBar data={data}></HorizontalBar>
     </App>
   );
 };
