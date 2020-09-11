@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { DeleteTaskButton, UpdateTaskButton } from '.';
 import { Subtask } from '../../types';
 import { TimeSpent } from '../Goals';
+import { rewardSize } from '../Goals/GoalList';
 import { NewSubtaskButton, SubtaskList } from '../Subtasks';
 import CompleteTaskButton from './CompleteTaskButton';
 
@@ -80,6 +81,9 @@ interface IProps {
   name: string;
   totalTimeInSeconds: number;
   subtasks?: Subtask[];
+  displayReward: (
+    size: rewardSize.small | rewardSize.medium | rewardSize.large,
+  ) => void;
 }
 
 const TaskListItem: FunctionComponent<IProps> = ({
@@ -87,6 +91,7 @@ const TaskListItem: FunctionComponent<IProps> = ({
   name,
   totalTimeInSeconds,
   subtasks = [],
+  displayReward,
 }) => {
   const [showSubtasks, setShowSubtasks] = useState(false);
   const toggleShowSubtasks = () => {
@@ -118,7 +123,11 @@ const TaskListItem: FunctionComponent<IProps> = ({
                 <NotificationDot />
               </Notifications>
             ) : (
-              <CompleteTaskButton taskId={taskId} name={name} />
+              <CompleteTaskButton
+                taskId={taskId}
+                name={name}
+                displayReward={displayReward}
+              />
             )}
           </TaskIndicator>
         </MainInfo>
@@ -127,7 +136,7 @@ const TaskListItem: FunctionComponent<IProps> = ({
 
       {showSubtasks && (
         <>
-          <SubtaskList subtasks={subtasks} />
+          <SubtaskList subtasks={subtasks} displayReward={displayReward} />
           {subtasks.length === 0 ? <Spacer /> : null}
         </>
       )}

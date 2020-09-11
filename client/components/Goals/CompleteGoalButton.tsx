@@ -7,6 +7,7 @@ import { UPDATE_GOAL_COMPLETED_VARIABLES } from '../../utils/graphql/variables';
 import { useCheckIfAuth } from '../../utils/useCheckIfAuth';
 import Spinner from '../Spinner';
 import Modal from '../Utilities/Modal';
+import { rewardSize } from './GoalList';
 
 const ButtonContainer = styled.div`
   cursor: pointer;
@@ -32,9 +33,16 @@ const GoalName = styled.p`
 interface IProps {
   goalId: string;
   name: string;
+  displayReward: (
+    size: rewardSize.small | rewardSize.medium | rewardSize.large,
+  ) => void;
 }
 
-const CompleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
+const CompleteGoalButton: FunctionComponent<IProps> = ({
+  goalId,
+  name,
+  displayReward,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -58,7 +66,7 @@ const CompleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
           isCompleted: true,
         }),
       });
-      toggleForm();
+      displayReward(rewardSize.large);
     } catch (err) {
       setError(err);
       setIsLoading(false);

@@ -9,6 +9,7 @@ import {
   UpdateSubtaskButton,
 } from '.';
 import { TimeSpent } from '../Goals';
+import { rewardSize } from '../Goals/GoalList';
 
 const Description = styled.div`
   margin-top: 1em;
@@ -59,6 +60,9 @@ interface IProps {
   description: string;
   totalTimeInSeconds: number;
   timeStarted: number;
+  displayReward: (
+    size: rewardSize.small | rewardSize.medium | rewardSize.large,
+  ) => void;
 }
 
 const SubtaskListItem: FunctionComponent<IProps> = ({
@@ -67,6 +71,7 @@ const SubtaskListItem: FunctionComponent<IProps> = ({
   description,
   totalTimeInSeconds,
   timeStarted,
+  displayReward,
 }) => {
   const getStartTime = () => {
     const millisecondsInSecond = 1000;
@@ -111,7 +116,10 @@ const SubtaskListItem: FunctionComponent<IProps> = ({
           {timeStarted ? (
             <>
               <PauseSubtaskButton subtaskId={subtaskId} />
-              <CompleteSubtaskButton subtaskId={subtaskId} />
+              <CompleteSubtaskButton
+                subtaskId={subtaskId}
+                displayReward={displayReward}
+              />
             </>
           ) : (
             <StartSubtaskButton

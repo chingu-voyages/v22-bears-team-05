@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { UPDATE_TASK_MUTATION } from '../../utils/graphql/mutation';
 import { UPDATE_TASK_COMPLETED_VARIABLES } from '../../utils/graphql/variables';
 import { useCheckIfAuth } from '../../utils/useCheckIfAuth';
+import { rewardSize } from '../Goals/GoalList';
 import Spinner from '../Spinner';
 import Modal from '../Utilities/Modal';
 
@@ -32,9 +33,16 @@ const GoalName = styled.p`
 interface IProps {
   taskId: string;
   name: string;
+  displayReward: (
+    size: rewardSize.small | rewardSize.medium | rewardSize.large,
+  ) => void;
 }
 
-const CompleteTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
+const CompleteTaskButton: FunctionComponent<IProps> = ({
+  taskId,
+  name,
+  displayReward,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -58,7 +66,7 @@ const CompleteTaskButton: FunctionComponent<IProps> = ({ taskId, name }) => {
           isCompleted: true,
         }),
       });
-      toggleForm();
+      displayReward(rewardSize.medium);
     } catch (err) {
       setError(err);
       setIsLoading(false);

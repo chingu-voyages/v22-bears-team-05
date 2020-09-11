@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { TaskListItem } from '.';
 import { Task } from '../../types';
+import { rewardSize } from '../Goals/GoalList';
 
 const fadeIn = keyframes`
   from {
@@ -21,9 +22,12 @@ const ListContainer = styled.div`
 
 interface IProps {
   tasks: Task[];
+  displayReward: (
+    size: rewardSize.small | rewardSize.medium | rewardSize.large,
+  ) => void;
 }
 
-const TaskList: FunctionComponent<IProps> = ({ tasks = [] }) => (
+const TaskList: FunctionComponent<IProps> = ({ tasks = [], displayReward }) => (
   <ListContainer>
     {tasks
       .filter((task) => task.isCompleted === false)
@@ -36,6 +40,7 @@ const TaskList: FunctionComponent<IProps> = ({ tasks = [] }) => (
             name={name}
             totalTimeInSeconds={totalTimeInSeconds}
             subtasks={subtasks}
+            displayReward={displayReward}
           />
         );
       })}

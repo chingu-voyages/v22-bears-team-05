@@ -5,6 +5,9 @@ const ME_QUERY = gql`
     me {
       id
       email
+      smallRewards
+      mediumRewards
+      largeRewards
     }
   }
 `;

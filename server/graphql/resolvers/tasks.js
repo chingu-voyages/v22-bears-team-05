@@ -56,7 +56,7 @@ module.exports = {
             task.isCompleted = isCompleted;
           }
         }
-        if (!newTaskName.trim() && isCompleted === undefined)
+        if (!newTaskName && isCompleted === undefined)
           throw new Error("The name field is required");
         await task.save();
 

@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { COMPLETE_SUBTASK_MUTATION } from '../../utils/graphql/mutation';
 import { COMPLETE_SUBTASK_VARIABLES } from '../../utils/graphql/variables';
 import { useCheckIfAuth } from '../../utils/useCheckIfAuth';
+import { rewardSize } from '../Goals/GoalList';
 import Spinner from '../Spinner';
 
 const ButtonContainer = styled.div`
@@ -14,9 +15,15 @@ const ButtonContainer = styled.div`
 
 interface IProps {
   subtaskId: string;
+  displayReward: (
+    size: rewardSize.small | rewardSize.medium | rewardSize.large,
+  ) => void;
 }
 
-const CompleteSubtaskButton: FunctionComponent<IProps> = ({ subtaskId }) => {
+const CompleteSubtaskButton: FunctionComponent<IProps> = ({
+  subtaskId,
+  displayReward,
+}) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -31,6 +38,7 @@ const CompleteSubtaskButton: FunctionComponent<IProps> = ({ subtaskId }) => {
       await completeSubtask({
         variables: COMPLETE_SUBTASK_VARIABLES({ subtaskId }),
       });
+      displayReward(rewardSize.small);
     } catch (err) {
       setError(err);
       setIsLoading(false);

@@ -5,6 +5,9 @@ module.exports = gql`
     id: ID!
     email: String!
     createdDate: String!
+    smallRewards: [String!]
+    mediumRewards: [String!]
+    largeRewards: [String!]
   }
   type UserView {
     email: String
