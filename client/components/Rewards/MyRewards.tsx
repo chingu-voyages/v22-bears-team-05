@@ -78,12 +78,6 @@ const MyRewards: React.FC<IProps> = ({
     return largeRewards;
   };
 
-  // useEffect(() => {
-  //   setSmallRewardsTable(getRewardTable(rewardSize.small));
-  //   setMediumRewardsTable(getRewardTable(rewardSize.medium));
-  //   setLargeRewardsTable(getRewardTable(rewardSize.large));
-  // }, []);
-
   const handleSmallRewardBtn = () => {
     setSmallRewardsTable(getRewardTable(rewardSize.small));
     setCurrentRewardTable('small');
