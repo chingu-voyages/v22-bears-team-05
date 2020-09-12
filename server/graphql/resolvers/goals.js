@@ -103,6 +103,8 @@ module.exports = {
     async updateGoal(_, { goalId, newGoalName, isCompleted }, context) {
       if (!context.req.session.userId) throw new Error("not authenticated");
 
+      console.log("updating goal...", newGoalName);
+
       try {
         const currentGoal = await Goal.findOne({
           _id: goalId,
@@ -125,6 +127,8 @@ module.exports = {
             currentGoal.isCompleted = isCompleted;
           }
         }
+        if (!newGoalName && isCompleted === undefined)
+          throw new Error("The name field is required");
         currentGoal.save();
         return currentGoal;
       } catch (err) {

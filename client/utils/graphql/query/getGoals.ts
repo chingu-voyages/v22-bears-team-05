@@ -15,6 +15,7 @@ export const GET_GOALS_QUERY = gql`
         subtasks {
           _id
           name
+          description
           isCompleted
           timeStarted
           totalTimeInSeconds

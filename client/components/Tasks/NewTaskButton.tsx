@@ -25,16 +25,8 @@ const fadeIn = keyframes`
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--color-blue);
-  margin: 0 0 0.5em;
-  padding: 0.6em;
+  margin-left: 10px;
   cursor: pointer;
-  text-transform: uppercase;
-  font-size: 1rem;
-  font-weight: 700;
-  animation: ${fadeIn} 300ms ease-out forwards;
 `;
 
 const Form = styled.form`
@@ -50,7 +42,7 @@ const NewTaskButton: FunctionComponent<IProps> = ({ goalId }) => {
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [createTask] = useMutation(CREATE_TASK_MUTATION);
-  const maxNameLength = 20;
+  const maxNameLength = 30;
   const maxCharLengthError = `The max length is ${maxNameLength} characters.`;
 
   useCheckIfAuth(error);
@@ -63,7 +55,10 @@ const NewTaskButton: FunctionComponent<IProps> = ({ goalId }) => {
 
   const handleInputChange = (e: React.ChangeEvent<any>) => {
     e.persist();
-    if (e.target.value.length <= maxNameLength) {
+    if (e.target.value.trim().length === 0) {
+      setNewTaskName(e.target.value);
+      setErrorMessage('The name field is required.');
+    } else if (e.target.value.length <= maxNameLength) {
       setNewTaskName(e.target.value);
       setErrorMessage('');
     } else setErrorMessage(maxCharLengthError);
@@ -95,6 +90,7 @@ const NewTaskButton: FunctionComponent<IProps> = ({ goalId }) => {
       toggleForm();
     } catch (err) {
       setError(err);
+      setErrorMessage(/\s\S*\s(.*)/.exec(err.message)[1]);
     } finally {
       setIsLoading(false);
     }
@@ -102,8 +98,7 @@ const NewTaskButton: FunctionComponent<IProps> = ({ goalId }) => {
 
   return (
     <>
-      <ButtonContainer onClick={toggleForm}>
-        Add Task &nbsp;
+      <ButtonContainer onClick={toggleForm} title="Add a Task">
         <FaRegPlusSquare size={20} />
       </ButtonContainer>
       <Modal isOpen={showModal} onClose={toggleForm} title="Add Task">
@@ -123,7 +118,13 @@ const NewTaskButton: FunctionComponent<IProps> = ({ goalId }) => {
             </label>
           </div>
           <p className="error">{errorMessage}</p>
-          {isLoading ? <Spinner /> : <button type="submit">Add</button>}
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <button type="submit" disabled={!!errorMessage}>
+              Add
+            </button>
+          )}
         </Form>
       </Modal>
     </>

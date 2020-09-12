@@ -6,17 +6,21 @@ import {
   DeleteSubtaskButton,
   PauseSubtaskButton,
   StartSubtaskButton,
+  UpdateSubtaskButton,
 } from '.';
 import { TimeSpent } from '../Goals';
+import { rewardSize } from '../Goals/GoalList';
 
-const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
+const Description = styled.div`
+  margin-top: 1em;
+  text-transform: none;
+  font-size: 0.9rem;
+  font-weight: 300;
 `;
 
 const ListItem = styled.div<{ started?: number }>`
   background-color: ${({ started }) =>
-    started ? 'var(--color-yellow)' : '#fff'};
+    started ? 'var(--color-yellow)' : '#eee'};
   width: 95%;
   border-bottom: 1px solid #ccc;
   text-transform: capitalize;
@@ -39,7 +43,6 @@ const ItemName = styled.span`
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding: 0.5em 0;
   width: 100%;
   font-weight: 500;
 `;
@@ -54,15 +57,21 @@ const TaskIndicator = styled.span`
 interface IProps {
   subtaskId: string;
   name: string;
+  description: string;
   totalTimeInSeconds: number;
   timeStarted: number;
+  displayReward: (
+    size: rewardSize.small | rewardSize.medium | rewardSize.large,
+  ) => void;
 }
 
 const SubtaskListItem: FunctionComponent<IProps> = ({
   subtaskId,
   name,
+  description,
   totalTimeInSeconds,
   timeStarted,
+  displayReward,
 }) => {
   const getStartTime = () => {
     const millisecondsInSecond = 1000;
@@ -97,9 +106,9 @@ const SubtaskListItem: FunctionComponent<IProps> = ({
   }, [timeStarted]);
 
   return (
-    <ListItem onClick={toggleShowSubtasks} started={timeStarted}>
+    <ListItem started={timeStarted}>
       <MainInfo>
-        <ItemName>
+        <ItemName onClick={toggleShowSubtasks}>
           {name}
           {showDetails ? <FaCaretDown size={20} /> : <FaCaretRight size={20} />}
         </ItemName>
@@ -107,7 +116,10 @@ const SubtaskListItem: FunctionComponent<IProps> = ({
           {timeStarted ? (
             <>
               <PauseSubtaskButton subtaskId={subtaskId} />
-              <CompleteSubtaskButton subtaskId={subtaskId} />
+              <CompleteSubtaskButton
+                subtaskId={subtaskId}
+                displayReward={displayReward}
+              />
             </>
           ) : (
             <StartSubtaskButton
@@ -115,14 +127,16 @@ const SubtaskListItem: FunctionComponent<IProps> = ({
               handleSetTimePassed={handleSetTimePassed}
             />
           )}
+          <UpdateSubtaskButton
+            subtaskId={subtaskId}
+            oldSubtaskName={name}
+            oldSubtaskDescription={description}
+          />
           <DeleteSubtaskButton subtaskId={subtaskId} subtaskName={name} />
         </TaskIndicator>
       </MainInfo>
-      <TimeSpent totalTimeInSeconds={timePassed} paddingSmall displaySeconds />
-      {showDetails
-        ? //display subtask description here
-          null
-        : null}
+      <TimeSpent totalTimeInSeconds={timePassed} paddingSmall />
+      {showDetails ? <Description>{description}</Description> : null}
     </ListItem>
   );
 };

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { DeleteTaskButton, UpdateTaskButton } from '.';
 import { Subtask } from '../../types';
 import { TimeSpent } from '../Goals';
+import { rewardSize } from '../Goals/GoalList';
 import { NewSubtaskButton, SubtaskList } from '../Subtasks';
 import CompleteTaskButton from './CompleteTaskButton';
 
@@ -11,7 +12,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   flex-flow: column nowrap;
-  background-color: #eee;
+  background-color: #333;
   &:last-child {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -21,7 +22,7 @@ const Container = styled.div`
 `;
 
 const ListItem = styled.div<{ showSubtasks: boolean }>`
-  background-color: #fff;
+  background-color: #ccc;
   width: 95%;
   &:not(:first-child) {
     margin-top: 0.5em;
@@ -42,14 +43,16 @@ const ItemName = styled.span`
   cursor: pointer;
   display: flex;
   align-items: center;
+  align-self: baseline;
   padding: 0.5em 0;
   width: 100%;
   font-weight: 500;
+  font-size: 1.2rem;
 `;
 
 const TaskIndicator = styled.span`
   display: flex;
-  align-self: center;
+  align-self: baseline;
   margin-left: auto;
   font-size: 1.2rem;
 `;
@@ -78,6 +81,9 @@ interface IProps {
   name: string;
   totalTimeInSeconds: number;
   subtasks?: Subtask[];
+  displayReward: (
+    size: rewardSize.small | rewardSize.medium | rewardSize.large,
+  ) => void;
 }
 
 const TaskListItem: FunctionComponent<IProps> = ({
@@ -85,6 +91,7 @@ const TaskListItem: FunctionComponent<IProps> = ({
   name,
   totalTimeInSeconds,
   subtasks = [],
+  displayReward,
 }) => {
   const [showSubtasks, setShowSubtasks] = useState(false);
   const toggleShowSubtasks = () => {
@@ -93,9 +100,9 @@ const TaskListItem: FunctionComponent<IProps> = ({
 
   return (
     <Container>
-      <ListItem onClick={toggleShowSubtasks} showSubtasks={showSubtasks}>
+      <ListItem showSubtasks={showSubtasks}>
         <MainInfo>
-          <ItemName>
+          <ItemName onClick={toggleShowSubtasks}>
             {name}
             {showSubtasks ? (
               <FaCaretDown size={20} />
@@ -104,10 +111,11 @@ const TaskListItem: FunctionComponent<IProps> = ({
             )}
           </ItemName>
           <TaskIndicator>
+            <NewSubtaskButton taskId={taskId} />
             <UpdateTaskButton taskId={taskId} name={name} />
             <DeleteTaskButton taskName={name} taskId={taskId} />
             {subtasks.length > 0 ? (
-              <Notifications>
+              <Notifications title="Action Items Remaining">
                 {
                   subtasks.filter((subtask) => subtask.isCompleted === false)
                     .length
@@ -115,21 +123,20 @@ const TaskListItem: FunctionComponent<IProps> = ({
                 <NotificationDot />
               </Notifications>
             ) : (
-              <CompleteTaskButton taskId={taskId} name={name} />
+              <CompleteTaskButton
+                taskId={taskId}
+                name={name}
+                displayReward={displayReward}
+              />
             )}
           </TaskIndicator>
         </MainInfo>
-        {showSubtasks ? (
-          <>
-            <TimeSpent totalTimeInSeconds={totalTimeInSeconds} paddingSmall />
-          </>
-        ) : null}
+        <TimeSpent totalTimeInSeconds={totalTimeInSeconds} paddingSmall />
       </ListItem>
 
       {showSubtasks && (
         <>
-          <NewSubtaskButton taskId={taskId} />
-          <SubtaskList subtasks={subtasks} />
+          <SubtaskList subtasks={subtasks} displayReward={displayReward} />
           {subtasks.length === 0 ? <Spacer /> : null}
         </>
       )}

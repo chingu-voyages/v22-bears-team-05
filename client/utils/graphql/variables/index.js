@@ -13,6 +13,7 @@ import DELETE_SUBTASK_VARIABLES from './deleteSubtask';
 import START_SUBTASK_VARIABLES from './startSubtask';
 import PAUSE_SUBTASK_VARIABLES from './pauseSubtask';
 import COMPLETE_SUBTASK_VARIABLES from './completeSubtask';
+import UPDATE_SUBTASK_VARIABLES from './updateSubtask';
 
 export {
   LOGIN_VARIABLES,
@@ -30,4 +31,5 @@ export {
   START_SUBTASK_VARIABLES,
   PAUSE_SUBTASK_VARIABLES,
   COMPLETE_SUBTASK_VARIABLES,
+  UPDATE_SUBTASK_VARIABLES,
 };

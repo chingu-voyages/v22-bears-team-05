@@ -1,8 +1,16 @@
 import { gql } from '@apollo/client';
 
 const CREATE_SUBTASK_MUTATION = gql`
-  mutation($subtaskName: String!, $taskId: String!) {
-    createSubtask(subtaskName: $subtaskName, taskId: $taskId) {
+  mutation(
+    $subtaskName: String!
+    $subtaskDescription: String
+    $taskId: String!
+  ) {
+    createSubtask(
+      subtaskName: $subtaskName
+      subtaskDescription: $subtaskDescription
+      taskId: $taskId
+    ) {
       _id
       subtasks {
         _id
@@ -10,8 +18,6 @@ const CREATE_SUBTASK_MUTATION = gql`
         description
         totalTimeInSeconds
         isCompleted
-        timeStarted
-        timeCompleted
       }
     }
   }

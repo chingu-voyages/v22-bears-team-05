@@ -1,17 +1,17 @@
 interface IVars {
-  taskId: string;
+  subtaskId: string;
   subtaskName: string;
   subtaskDescription?: string;
 }
 
-const CREATE_SUBTASK_VARIABLES = ({
-  taskId,
+const UPDATE_SUBTASK_VARIABLES = ({
+  subtaskId,
   subtaskName,
   subtaskDescription,
 }: IVars) => ({
-  taskId,
+  subtaskId,
   subtaskName,
   subtaskDescription,
 });
 
-export default CREATE_SUBTASK_VARIABLES;
+export default UPDATE_SUBTASK_VARIABLES;

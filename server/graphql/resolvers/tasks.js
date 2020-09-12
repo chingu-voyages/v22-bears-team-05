@@ -57,6 +57,8 @@ module.exports = {
             task.isCompleted = isCompleted;
           }
         }
+        if (!newTaskName && isCompleted === undefined)
+          throw new Error("The name field is required");
         await task.save();
 
         const goalToReturn = await Goal.findOne({

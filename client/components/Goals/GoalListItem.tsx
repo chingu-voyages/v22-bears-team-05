@@ -9,6 +9,7 @@ import {
 } from '.';
 import { Task } from '../../types';
 import { NewTaskButton, TaskList } from '../Tasks';
+import { rewardSize } from './GoalList';
 
 const Container = styled.div`
   display: flex;
@@ -23,7 +24,8 @@ const ListItem = styled.div`
   font-size: 1.2rem;
   display: flex;
   text-transform: capitalize;
-  background-color: #eee;
+  background-color: #333;
+  color: #eee;
 `;
 
 const MainInfo = styled.div`
@@ -37,7 +39,8 @@ const ItemName = styled.span`
   align-items: center;
   padding: 1em;
   width: 100%;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1.3rem;
 `;
 
 const TaskIndicator = styled.span`
@@ -49,13 +52,14 @@ const TaskIndicator = styled.span`
 `;
 
 const Notifications = styled.div`
+  position: relative;
   margin: 0 10px;
   font-weight: 700;
 `;
 
 const NotificationDot = styled.div`
-  position: relative;
-  top: -1.5rem;
+  position: absolute;
+  top: -0.2rem;
   right: -0.75rem;
   background-color: #ee6055;
   border-radius: 10rem;
@@ -68,6 +72,9 @@ interface IProps {
   name: string;
   totalTimeInSeconds: number;
   tasks?: Task[];
+  displayReward: (
+    size: rewardSize.small | rewardSize.medium | rewardSize.large,
+  ) => void;
 }
 
 const GoalListItem: FunctionComponent<IProps> = ({
@@ -75,6 +82,7 @@ const GoalListItem: FunctionComponent<IProps> = ({
   goalId,
   totalTimeInSeconds,
   tasks = [],
+  displayReward,
 }) => {
   const [showTasks, setShowTasks] = useState(false);
 
@@ -96,27 +104,27 @@ const GoalListItem: FunctionComponent<IProps> = ({
               )}
             </ItemName>
             <TaskIndicator>
+              <NewTaskButton goalId={goalId} />
               <UpdateGoalButton goalId={goalId} name={name} />
               <DeleteGoalButton goalId={goalId} name={name} />
               {tasks.length > 0 ? (
-                <Notifications>
+                <Notifications title="Tasks Remaining">
                   {tasks.filter((task) => task.isCompleted === false).length}
                   <NotificationDot />
                 </Notifications>
               ) : (
-                <CompleteGoalButton goalId={goalId} name={name} />
+                <CompleteGoalButton
+                  goalId={goalId}
+                  name={name}
+                  displayReward={displayReward}
+                />
               )}
             </TaskIndicator>
           </MainInfo>
-          {showTasks ? (
-            <>
-              <TimeSpent totalTimeInSeconds={totalTimeInSeconds} />
-              <NewTaskButton goalId={goalId} />
-            </>
-          ) : null}
+          <TimeSpent totalTimeInSeconds={totalTimeInSeconds} />
         </Container>
       </ListItem>
-      {showTasks && <TaskList tasks={tasks} />}
+      {showTasks && <TaskList tasks={tasks} displayReward={displayReward} />}
     </Container>
   );
 };

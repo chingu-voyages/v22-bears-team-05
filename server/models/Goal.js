@@ -1,4 +1,4 @@
-const { model, Schema } = require("mongoose")
+const { model, Schema } = require("mongoose");
 
 const goalSchema = new Schema({
   user: {
@@ -11,7 +11,7 @@ const goalSchema = new Schema({
     required: [true, "A goal must have a name."],
     trim: true,
     minlength: 1,
-    maxlength: 20,
+    maxlength: 30,
   },
   tasks: [
     {
@@ -37,6 +37,6 @@ const goalSchema = new Schema({
     type: Boolean,
     default: false,
   },
-})
+});
 
-module.exports = model("Goal", goalSchema)
+module.exports = model("Goal", goalSchema);

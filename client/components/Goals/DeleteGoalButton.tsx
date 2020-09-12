@@ -81,7 +81,7 @@ const DeleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
 
   return (
     <>
-      <ButtonContainer onClick={toggleForm}>
+      <ButtonContainer onClick={toggleForm} title="Delete Goal">
         <FaTrashAlt size={20} />
       </ButtonContainer>
       <Modal isOpen={showModal} onClose={toggleForm} title="Delete Goal">
