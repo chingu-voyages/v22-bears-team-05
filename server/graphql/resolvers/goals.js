@@ -1,6 +1,8 @@
 const Goal = require("../../models/Goal");
 const Task = require("../../models/Task");
 const Subtask = require("../../models/Subtask");
+const getComponent = require("../utils/getComponent");
+
 module.exports = {
   Query: {
     async getAllGoals(_, __, context) {
@@ -32,23 +34,6 @@ module.exports = {
         return newGoal;
       } catch (err) {
         throw new Error(err);
-      }
-    },
-    async addTagToGoal(_, { goalId, newTag }, context) {
-      if (!context.req.session.userId) throw new Error("not authenticated");
-      try {
-        const currentGoal = await Goal.findOne({ _id: goalId, user: context.req.session.userId })
-        if (!currentGoal) {
-          throw new Error("Cannot find a Goal with that ID")
-        }
-        currentGoal.populate({ "path": "tags" })
-        const tags = currentGoal.tags
-        if (tags.includes(newTag)) return currentGoal.populate({ "path": "tags" })
-        tags.push(newTag)
-        await currentGoal.save()
-        return currentGoal.populate({ "path": "tags" })
-      } catch (err) {
-        throw new Error(err)
       }
     },
     async deleteGoal(_, { goalId }, context) {
@@ -134,17 +119,25 @@ module.exports = {
         throw new Error(err);
       }
     },
+    async addTag(_, { componentType, componentId, newTag }, context) {
+      if (!context.req.session.userId) throw new Error("not authenticated");
+      try {
+        const component = getComponent(componentType, componentId, context.req.session.userId)
+        if (!component) throw new Error("Cannot find a component with that name and type combination")
+        const tags = component.tags
+        tagProperties = { tagName: newTag, componentType, componentId }
+        if (tags.includes(newTag)) return tagProperties
+        tags.push(newTag)
+        await component.save()
+        return tagProperties
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
     async modifyTag(_, { componentType, oldTag, newTag, componentId }, context) {
       if (!context.req.session.userId) throw new Error("not authenticated");
       try {
-        let component
-        if (componentType.trim().toLowerCase() === "goal") {
-          component = await Goal.findOne({ _id: componentId, user: context.req.session.userId })
-        } else if (componentType.trim().toLowerCase() === "task") {
-          component = await Task.findOne({ _id: componentId, user: context.req.session.userId })
-        } else if (componentType.trim().toLowerCase() === "subtask") {
-          component = await Subtask.findOne({ _id: componentId, user: context.req.session.userId })
-        }
+        const component = getComponent(componentType, componentId, context.req.session.userId)
         if (!component) throw new Error("Cannot find a component with that name and type combination")
         const tags = component.tags
         if (!tags.includes(oldTag)) throw new Error("old tag does not exist")

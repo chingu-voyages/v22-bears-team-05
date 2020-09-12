@@ -105,7 +105,7 @@ module.exports = gql`
     startSubtask(subtaskId: String!): Subtask!
     pauseSubtask(subtaskId: String!): Subtask!
     completeSubtask(subtaskId: String!): Task!
-    addTagToGoal(goalId: String!, newTag: String!): Goal!
+    addTag(componentType: String!, componentId: String!, newTag: String!): TagProperties!
     modifyTag(componentType: String!, oldTagName: String!, newTagName: String!, componentId: String!): TagProperties!
   }
 `;
