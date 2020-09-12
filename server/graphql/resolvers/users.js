@@ -1,21 +1,23 @@
-const bcrypt = require("bcrypt")
-const { UserInputError } = require("apollo-server")
+const bcrypt = require("bcrypt");
+const { UserInputError } = require("apollo-server");
 
-const User = require("../../models/User")
-const { validateRegisterInput } = require("./../../utils/validateRegisterInput")
-const { COOKIE_NAME } = require("../../constants")
+const User = require("../../models/User");
+const {
+  validateRegisterInput,
+} = require("./../../utils/validateRegisterInput");
+const { COOKIE_NAME } = require("../../constants");
 
 module.exports = {
   Query: {
     async userList() {
       try {
-        const userData = await User.find()
+        const userData = await User.find();
         const userList = userData.map((element) => {
-          return { email: element.email }
-        })
-        return userList
+          return { email: element.email };
+        });
+        return userList;
       } catch (err) {
-        throw new Error(err)
+        throw new Error(err);
       }
     },
     async me(_, __, { req }) {
@@ -24,27 +26,27 @@ module.exports = {
       }
       const user = await User.findById(req.session.userId);
       return user;
-    }
+    },
   },
 
   Mutation: {
     async login(_, { email, password }, context) {
-      const errorMessage = "The username or password is invalid" //security best practice to not give too much information
-      const errors = {}
-      
+      const errorMessage = "The username or password is invalid"; //security best practice to not give too much information
+      const errors = {};
+
       // email should be lowercase
       email = email.toLowerCase();
 
-      const user = await User.findOne({ email })
+      const user = await User.findOne({ email });
       if (!user) {
         //user does not exist
-        errors.general = errorMessage
-        throw new UserInputError(errorMessage, { errors })
+        errors.general = errorMessage;
+        throw new UserInputError(errorMessage, { errors });
       }
-      const match = await bcrypt.compare(password, user.password)
+      const match = await bcrypt.compare(password, user.password);
       if (!match) {
-        errors.general = errorMessage
-        throw new UserInputError(errorMessage, { errors })
+        errors.general = errorMessage;
+        throw new UserInputError(errorMessage, { errors });
       }
       // save userId to session!
       context.req.session.userId = user._id;
@@ -52,47 +54,47 @@ module.exports = {
       return {
         id: user._id,
         email,
-      }
+      };
     },
     async register(_, { email, password, confirmPassword }, context) {
       // Validate user data
       const { valid, errors } = validateRegisterInput(
         email,
         password,
-        confirmPassword
-      )
+        confirmPassword,
+      );
 
       // email should be lowercase
       email = email.toLowerCase();
 
       if (!valid) {
-        throw new UserInputError("Errors", { errors })
+        throw new UserInputError("Errors", { errors });
       }
-      const user = await User.findOne({ email })
+      const user = await User.findOne({ email });
       if (user) {
         throw new UserInputError("Email in use", {
           errors: {
             registration: "Email in use",
           },
-        })
+        });
       }
       // hash password
-      password = await bcrypt.hash(password, 12)
+      password = await bcrypt.hash(password, 12);
 
       const newUser = new User({
         email,
         password,
         createdDate: new Date().toISOString(),
-      })
+      });
 
-      const res = await newUser.save()
+      const res = await newUser.save();
 
       context.req.session.userId = res._id;
 
       return {
         id: res._id,
         email,
-      }
+      };
     },
     async logout(_, __, context) {
       return new Promise((resolve) =>
@@ -105,8 +107,50 @@ module.exports = {
           }
 
           resolve(true);
-        })
+        }),
       );
-    }
+    },
+    async updateSmallRewards(_, { smallRewards }, { req }) {
+      if (!req.session.userId) {
+        return null;
+      }
+      const user = await User.findById(req.session.userId);
+      const updatedRewards = smallRewards.filter(
+        (reward) => reward.trim().length > 0 && reward.length <= 30,
+      );
+      if (updatedRewards.length > 3)
+        throw new Error("The maximum number of rewards in a table is 3.");
+      user.smallRewards = updatedRewards;
+      user.save();
+      return user;
+    },
+    async updateMediumRewards(_, { mediumRewards }, { req }) {
+      if (!req.session.userId) {
+        return null;
+      }
+      const user = await User.findById(req.session.userId);
+      const updatedRewards = mediumRewards.filter(
+        (reward) => reward.trim().length > 0 && reward.length <= 30,
+      );
+      if (updatedRewards.length > 3)
+        throw new Error("The maximum number of rewards in a table is 3.");
+      user.mediumRewards = updatedRewards;
+      user.save();
+      return user;
+    },
+    async updateLargeRewards(_, { largeRewards }, { req }) {
+      if (!req.session.userId) {
+        return null;
+      }
+      const user = await User.findById(req.session.userId);
+      const updatedRewards = largeRewards.filter(
+        (reward) => reward.trim().length > 0 && reward.length <= 30,
+      );
+      if (updatedRewards.length > 3)
+        throw new Error("The maximum number of rewards in a table is 3.");
+      user.largeRewards = updatedRewards;
+      user.save();
+      return user;
+    },
   },
-}
+};

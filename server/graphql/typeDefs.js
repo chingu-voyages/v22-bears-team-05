@@ -91,5 +91,8 @@ module.exports = gql`
     startSubtask(subtaskId: String!): Subtask!
     pauseSubtask(subtaskId: String!): Subtask!
     completeSubtask(subtaskId: String!): Goal!
+    updateSmallRewards(smallRewards: [String]!): User!
+    updateMediumRewards(mediumRewards: [String]!): User!
+    updateLargeRewards(largeRewards: [String]!): User!
   }
 `;

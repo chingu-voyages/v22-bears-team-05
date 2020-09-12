@@ -84,7 +84,7 @@ const GoalListItem: FunctionComponent<IProps> = ({
   tasks = [],
   displayReward,
 }) => {
-  const [showTasks, setShowTasks] = useState(false);
+  const [showTasks, setShowTasks] = useState(true);
 
   const toggleShowTasks = () => {
     setShowTasks(!showTasks);
@@ -107,7 +107,7 @@ const GoalListItem: FunctionComponent<IProps> = ({
               <NewTaskButton goalId={goalId} />
               <UpdateGoalButton goalId={goalId} name={name} />
               <DeleteGoalButton goalId={goalId} name={name} />
-              {tasks.length > 0 ? (
+              {tasks.filter((task) => task.isCompleted === false).length > 0 ? (
                 <Notifications title="Tasks Remaining">
                   {tasks.filter((task) => task.isCompleted === false).length}
                   <NotificationDot />

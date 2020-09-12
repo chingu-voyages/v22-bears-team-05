@@ -13,6 +13,9 @@ import START_SUBTASK_MUTATION from './startSubtask';
 import PAUSE_SUBTASK_MUTATION from './pauseSubtask';
 import COMPLETE_SUBTASK_MUTATION from './completeSubtask';
 import UPDATE_SUBTASK_MUTATION from './updateSubtask';
+import UPDATE_SMALL_REWARDS_MUTATION from './updateSmallRewards.ts';
+import UPDATE_MEDIUM_REWARDS_MUTATION from './updateMediumRewards.ts';
+import UPDATE_LARGE_REWARDS_MUTATION from './updateLargeRewards.ts';
 
 export {
   LOGIN_MUTATION,
@@ -30,4 +33,7 @@ export {
   PAUSE_SUBTASK_MUTATION,
   COMPLETE_SUBTASK_MUTATION,
   UPDATE_SUBTASK_MUTATION,
+  UPDATE_SMALL_REWARDS_MUTATION,
+  UPDATE_MEDIUM_REWARDS_MUTATION,
+  UPDATE_LARGE_REWARDS_MUTATION,
 };

@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import NextLink from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { FaBars } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -69,11 +68,9 @@ const Header: React.FC = () => {
   return (
     <Container>
       <div className="header__main">
-        <NextLink href={logoHref}>
-          <a>
-            <h2>GoalTrack</h2>
-          </a>
-        </NextLink>
+        <a href={logoHref}>
+          <h2>GoalTrack</h2>
+        </a>
         <NavButton onClick={toggleNav}>
           <FaBars size={32} />
         </NavButton>

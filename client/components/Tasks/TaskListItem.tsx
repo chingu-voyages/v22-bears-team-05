@@ -93,7 +93,7 @@ const TaskListItem: FunctionComponent<IProps> = ({
   subtasks = [],
   displayReward,
 }) => {
-  const [showSubtasks, setShowSubtasks] = useState(false);
+  const [showSubtasks, setShowSubtasks] = useState(true);
   const toggleShowSubtasks = () => {
     setShowSubtasks(!showSubtasks);
   };

@@ -24,7 +24,6 @@ const Reward = styled.div`
   text-align: center;
   font-size: 2rem;
   font-weight: 600;
-  margin-top: 1em;
 `;
 
 type GoalProps = {

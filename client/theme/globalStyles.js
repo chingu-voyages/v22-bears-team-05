@@ -70,6 +70,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: Montserrat;
     width: 100%;
     padding: 10px 0 10px 10px;
+    margin-top: 0.3em;
     font-size: 1.1em;
     outline: none;
     display: inline-block;

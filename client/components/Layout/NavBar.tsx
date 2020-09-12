@@ -1,10 +1,9 @@
-import React, { FunctionComponent } from 'react';
 import { useApolloClient, useMutation } from '@apollo/client';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
+import React, { FunctionComponent } from 'react';
 import { FaSignOutAlt as SignOutIcon } from 'react-icons/fa';
-
+import styled, { keyframes } from 'styled-components';
 import { LOGOUT_MUTATION } from '../../utils/graphql/mutation';
 
 /* eslint jsx-a11y/no-static-element-interactions: 0 */
@@ -12,6 +11,16 @@ import { LOGOUT_MUTATION } from '../../utils/graphql/mutation';
 interface NavProp {
   show: boolean;
 }
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
 
 const Nav = styled.div<NavProp>`
   display: flex;
@@ -25,11 +34,13 @@ const Nav = styled.div<NavProp>`
   }
 
   @media only screen and (max-width: 500px) {
+    flex-direction: column;
+    align-items: center;
     opacity: 0;
-    height: 0;
-    transition: all 300ms ease-out;
-    ${(props) => props.show && 'opacity: 1;'}
-    ${(props) => props.show && 'height: 25px;'}
+    display: none;
+    ${(props) => props.show && 'margin-top: 1em;'}
+    ${(props) => props.show && 'display: block;'}
+    animation: ${fadeIn} 300ms ease-out forwards;
   }
 `;
 
@@ -39,6 +50,24 @@ const NavItem = styled.div`
   display: flex;
   align-items: center;
   color: #333;
+
+  @media only screen and (min-width: 500px) {
+    padding: 1rem 1rem;
+  }
+`;
+
+const NavLink = styled.a`
+  padding: 0.25rem 0.5rem;
+
+  display: flex;
+  align-items: center;
+  color: #333;
+  font-weight: 400 !important;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 
   @media only screen and (min-width: 500px) {
     padding: 1rem 1rem;
@@ -91,6 +120,7 @@ const NavBar: FunctionComponent<NavProps> = ({ isLoggedIn, email, show }) => {
   } else {
     body = (
       <Nav show={show}>
+        <NavLink href="/rewards">My Rewards</NavLink>
         <NavItem>{`Signed in as ${email}`}</NavItem>
         <Logout
           onClick={async (e) => {
@@ -99,8 +129,10 @@ const NavBar: FunctionComponent<NavProps> = ({ isLoggedIn, email, show }) => {
             await apolloClient.clearStore();
             router.push('/login');
           }}
+          title="Logout"
         >
           <NavItem>
+            Logout &nbsp;
             <SignOutIcon size={22} />
           </NavItem>
         </Logout>
