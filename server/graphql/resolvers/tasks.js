@@ -1,5 +1,7 @@
 const Task = require("../../models/Task");
 const Goal = require("../../models/Goal");
+const User = require("../../models/User")
+
 module.exports = {
   Mutation: {
     async createTask(_, { taskName, goalId }, context) {

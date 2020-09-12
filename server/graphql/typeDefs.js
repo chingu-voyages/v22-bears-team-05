@@ -5,6 +5,10 @@ const { gql } = require("apollo-server");
     // addTagToSubtask(goalId: String!): TagList!
 */
 module.exports = gql`
+  type Tag {
+    tagName: String!
+    time: Int!
+  }
   type User {
     id: ID!
     email: String!
@@ -12,6 +16,8 @@ module.exports = gql`
     smallRewards: [String!]
     mediumRewards: [String!]
     largeRewards: [String!]
+    tags: [Tag!]
+
   }
   type UserView {
     email: String
@@ -33,6 +39,7 @@ module.exports = gql`
     tagName: String!
     componentId: String!
     componentType: String!
+    status: String!
   }
   type Task {
     _id: ID
@@ -106,6 +113,7 @@ module.exports = gql`
     pauseSubtask(subtaskId: String!): Subtask!
     completeSubtask(subtaskId: String!): Task!
     addTag(componentType: String!, componentId: String!, newTag: String!): TagProperties!
-    modifyTag(componentType: String!, oldTagName: String!, newTagName: String!, componentId: String!): TagProperties!
+    modifyTag(componentType: String!, oldTag: String!, newTag: String!, componentId: String!): TagProperties!
+    deleteTag(componentType: String!, componentId: String!, tag: String!): TagProperties!
   }
 `;
