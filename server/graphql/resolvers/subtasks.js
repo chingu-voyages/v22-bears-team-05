@@ -28,6 +28,7 @@ module.exports = {
         const newSubtask = await Subtask.create({
           parent: parentTask._id,
           name: subtaskName,
+          tags: [...parentTask.tags]
         });
         parentTask.subtasks.push(newSubtask._id);
         await parentTask.save();

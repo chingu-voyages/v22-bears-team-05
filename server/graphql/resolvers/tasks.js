@@ -21,6 +21,7 @@ module.exports = {
         const newTask = await Task.create({
           parent: goalId,
           name: taskName.trim(),
+          tags: [...parentGoal.tags]
         });
         parentGoal.tasks.push(newTask._id);
         await parentGoal.save();

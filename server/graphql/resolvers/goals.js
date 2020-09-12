@@ -35,6 +35,23 @@ module.exports = {
         throw new Error(err);
       }
     },
+    async addTagToGoal(_, { goalId, newTag }, context) {
+      if (!context.req.session.userId) throw new Error("not authenticated");
+      try {
+        const currentGoal = await Goal.findOne({ _id: goalId, user: context.req.session.userId })
+        if (!currentGoal) {
+          throw new Error("Cannot find a Goal with that ID")
+        }
+        currentGoal.populate({ "path": "tags" })
+        const tags = currentGoal.tags
+        if (tags.includes(newTag)) return currentGoal.populate({ "path": "tags" })
+        tags.push(newTag)
+        await currentGoal.save()
+        return currentGoal.populate({ "path": "tags" })
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
     async deleteGoal(_, { goalId }, context) {
       if (!context.req.session.userId) throw new Error("not authenticated");
 
