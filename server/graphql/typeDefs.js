@@ -29,6 +29,11 @@ module.exports = gql`
     totalCompletedSubtasks: Int
     tags: [String!]
   }
+  type TagProperties{
+    tagName: String!
+    componentId: String!
+    componentType: String!
+  }
   type Task {
     _id: ID
     name: String!
@@ -101,5 +106,6 @@ module.exports = gql`
     pauseSubtask(subtaskId: String!): Subtask!
     completeSubtask(subtaskId: String!): Task!
     addTagToGoal(goalId: String!, newTag: String!): Goal!
+    modifyTag(componentType: String!, oldTagName: String!, newTagName: String!, componentId: String!): TagProperties!
   }
 `;

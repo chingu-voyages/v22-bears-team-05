@@ -1,7 +1,6 @@
 const Goal = require("../../models/Goal");
 const Task = require("../../models/Task");
 const Subtask = require("../../models/Subtask");
-
 module.exports = {
   Query: {
     async getAllGoals(_, __, context) {
@@ -135,5 +134,33 @@ module.exports = {
         throw new Error(err);
       }
     },
+    async modifyTag(_, { componentType, oldTag, newTag, componentId }, context) {
+      if (!context.req.session.userId) throw new Error("not authenticated");
+      try {
+        let component
+        if (componentType.trim().toLowerCase() === "goal") {
+          component = await Goal.findOne({ _id: componentId, user: context.req.session.userId })
+        } else if (componentType.trim().toLowerCase() === "task") {
+          component = await Task.findOne({ _id: componentId, user: context.req.session.userId })
+        } else if (componentType.trim().toLowerCase() === "subtask") {
+          component = await Subtask.findOne({ _id: componentId, user: context.req.session.userId })
+        }
+        if (!component) throw new Error("Cannot find a component with that name and type combination")
+        const tags = component.tags
+        if (!tags.includes(oldTag)) throw new Error("old tag does not exist")
+        if (tags.includes(newTag)) throw new Error("new tag already exists")
+        for (let i = 0; i < tags.length; i++) {
+          if (tags[i] === oldTag) {
+            tags[i] = newTag
+            break
+          }
+        }
+        await component.save()
+        return { tagName: newTag, componentId, componentType }
+      }
+      catch (err) {
+        throw new Error(err)
+      }
+    }
   },
 };
