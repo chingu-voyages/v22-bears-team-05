@@ -122,8 +122,9 @@ module.exports = {
     async addTag(_, { componentType, componentId, newTag }, context) {
       if (!context.req.session.userId) throw new Error("not authenticated");
       try {
-        const component = getComponent(componentType, componentId, context.req.session.userId)
+        const component = await getComponent(componentType, componentId, context.req.session.userId)
         if (!component) throw new Error("Cannot find a component with that name and type combination")
+        console.log(component)
         const tags = component.tags
         tagProperties = { tagName: newTag, componentType, componentId }
         if (tags.includes(newTag)) return tagProperties
@@ -137,7 +138,7 @@ module.exports = {
     async modifyTag(_, { componentType, oldTag, newTag, componentId }, context) {
       if (!context.req.session.userId) throw new Error("not authenticated");
       try {
-        const component = getComponent(componentType, componentId, context.req.session.userId)
+        const component = await getComponent(componentType, componentId, context.req.session.userId)
         if (!component) throw new Error("Cannot find a component with that name and type combination")
         const tags = component.tags
         if (!tags.includes(oldTag)) throw new Error("old tag does not exist")
