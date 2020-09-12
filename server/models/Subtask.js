@@ -17,6 +17,12 @@ const subtaskSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  tags: [{
+    type: String,
+    minlength: 1,
+    maxlength: 35,
+    trim: true,
+  }],
   timeStarted: Number,
   timeCompleted: Number,
   totalTimeInSeconds: {

@@ -22,6 +22,7 @@
     "@apollo/client": "3.1.1",
     "@types/styled-components": "^5.1.2",
     "apollo-cache-persist": "^0.1.1",
+    "d3": "^6.1.1",
     "graphql": "^15.3.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
@@ -31,6 +32,7 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-icons": "^3.10.0",
+    "resize-observer-polyfill": "^1.5.1",
     "styled-components": "^5.1.1",
     "typeface-montserrat": "0.0.75"
   },

@@ -1,6 +1,7 @@
 const Goal = require("../../models/Goal");
 const Task = require("../../models/Task");
 const Subtask = require("../../models/Subtask");
+const User = require("../../models/User")
 module.exports = {
   Mutation: {
     async createSubtask(
@@ -32,6 +33,7 @@ module.exports = {
         const newSubtask = await Subtask.create({
           parent: parentTask._id,
           name: subtaskName,
+          tags: [...parentTask.tags],
           description: subtaskDescription,
         });
         parentTask.subtasks.push(newSubtask._id);
@@ -230,6 +232,17 @@ module.exports = {
         );
 
         const totalTimeInSeconds = currentSubtask.totalTimeInSeconds;
+        const user = await User.findById(context.req.session.userId)
+        if (!user) throw new Error("Could not find user of Subtask")
+        const tags = currentSubtask.tags
+        if (totalTimeInSeconds > 0) {
+          for (let tag of tags) {
+            const index = user.tags.findIndex((userInstance) => userInstance.tagName === tag)
+            if (index === - 1) user.tags.push({ tagName: tag, time: totalTimeInSeconds })
+            else user.tags[index].time += totalTimeInSeconds
+          }
+          await user.save()
+        }
 
         await currentSubtask.delete();
 
