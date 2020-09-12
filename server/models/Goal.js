@@ -19,6 +19,12 @@ const goalSchema = new Schema({
       ref: "Task",
     },
   ],
+  tags: [{
+    type: String,
+    minlength: 1,
+    maxlength: 35,
+    trim: true,
+  }],
   totalTimeInSeconds: {
     type: Number,
     default: 0,
