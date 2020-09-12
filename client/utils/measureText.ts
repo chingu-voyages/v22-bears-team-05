@@ -1,3 +1,9 @@
+/* Code credit: https://bl.ocks.org/tophtucker/62f93a4658387bb61e4510c37e2e97cf
+
+Added a constant factor of (*2) to the return output in order to make the prediction
+ more accurate based on tests; the constant may need to be different if a different 
+ font family than the default is used
+*/
 export default function measureText(
   string: string,
   fontSize: number = 10,
@@ -140,6 +146,6 @@ export default function measureText(
       )
       .reduce((cur, acc) => acc + cur) *
     fontSize *
-    2.5
+    2
   );
 }
