@@ -1,6 +1,14 @@
 const { gql } = require("apollo-server");
-
+/*
+    addTagToGoal(goalId: String!): TagList!
+    // addTagToTask(goalId: String!): TagList!
+    // addTagToSubtask(goalId: String!): TagList!
+*/
 module.exports = gql`
+  type Tag {
+    tagName: String!
+    time: Int!
+  }
   type User {
     id: ID!
     email: String!
@@ -8,9 +16,13 @@ module.exports = gql`
     smallRewards: [String!]
     mediumRewards: [String!]
     largeRewards: [String!]
+    tags: [Tag!]
   }
   type UserView {
     email: String
+  }
+  type TagList {
+    tags: [String!]
   }
   type Goal {
     _id: ID!
@@ -20,6 +32,13 @@ module.exports = gql`
     totalTimeInSeconds: Int
     isCompleted: Boolean
     totalCompletedSubtasks: Int
+    tags: [String!]
+  }
+  type TagProperties {
+    tagName: String!
+    componentId: String!
+    componentType: String!
+    status: String!
   }
   type Task {
     _id: ID
@@ -29,6 +48,7 @@ module.exports = gql`
     totalTimeInSeconds: Int
     isCompleted: Boolean
     totalCompletedSubtasks: Int
+    tags: [String!]
   }
   type Subtask {
     _id: ID!
@@ -39,6 +59,7 @@ module.exports = gql`
     isCompleted: Boolean
     timeStarted: String
     timeCompleted: String
+    tags: [String!]
   }
   type DeletedData {
     deletedGoals: Int
@@ -48,7 +69,6 @@ module.exports = gql`
   type AuthData {
     id: ID!
     email: String!
-    token: String!
   }
   type Query {
     userList: [UserView]
@@ -90,9 +110,25 @@ module.exports = gql`
     deleteSubtask(subtaskId: String!): Task!
     startSubtask(subtaskId: String!): Subtask!
     pauseSubtask(subtaskId: String!): Subtask!
-    completeSubtask(subtaskId: String!): Goal!
     updateSmallRewards(smallRewards: [String]!): User!
     updateMediumRewards(mediumRewards: [String]!): User!
     updateLargeRewards(largeRewards: [String]!): User!
+    completeSubtask(subtaskId: String!): Goal!
+    addTag(
+      componentType: String!
+      componentId: String!
+      newTag: String!
+    ): TagProperties!
+    modifyTag(
+      componentType: String!
+      oldTag: String!
+      newTag: String!
+      componentId: String!
+    ): TagProperties!
+    deleteTag(
+      componentType: String!
+      componentId: String!
+      tag: String!
+    ): TagProperties!
   }
 `;

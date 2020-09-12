@@ -25,6 +25,9 @@ const userSchema = new Schema({
     type: [String],
     default: ["Take a day off!"],
   },
+  tags: {
+    type: [{ tagName: String, time: Number }],
+  },
 });
 
 module.exports = model("User", userSchema);

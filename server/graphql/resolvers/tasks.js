@@ -1,5 +1,7 @@
 const Task = require("../../models/Task");
 const Goal = require("../../models/Goal");
+const User = require("../../models/User")
+
 module.exports = {
   Mutation: {
     async createTask(_, { taskName, goalId }, context) {
@@ -21,6 +23,7 @@ module.exports = {
         const newTask = await Task.create({
           parent: goalId,
           name: taskName.trim(),
+          tags: [...parentGoal.tags]
         });
         parentGoal.tasks.push(newTask._id);
         await parentGoal.save();
