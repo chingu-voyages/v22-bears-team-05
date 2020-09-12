@@ -146,7 +146,7 @@ const Register: FunctionComponent = () => {
       });
 
       setSuccess(true);
-      window.location.pathname = '/home';
+      window.location.pathname = '/app';
       return true;
     } catch (err) {
       setSelectable(true);

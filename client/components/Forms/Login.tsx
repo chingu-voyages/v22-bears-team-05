@@ -91,7 +91,7 @@ const Login: FunctionComponent = () => {
       });
 
       setSuccess(true);
-      window.location.pathname = '/home';
+      window.location.pathname = '/app';
       return true;
     } catch {
       setSelectable(true);

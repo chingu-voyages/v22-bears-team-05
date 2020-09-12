@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { useApolloClient, useMutation } from '@apollo/client';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { FaSignOutAlt as SignOutIcon } from 'react-icons/fa';
 
 import { LOGOUT_MUTATION } from '../../utils/graphql/mutation';
@@ -17,6 +17,7 @@ const Nav = styled.div<NavProp>`
   display: flex;
   justify-content: center;
   flex-flow: row nowrap;
+  & > * { margin: 0 auto; }
 
   a {
     text-decoration: none;
@@ -24,24 +25,27 @@ const Nav = styled.div<NavProp>`
     font-weight: 600;
   }
 
-  @media only screen and (max-width: 500px) {
+  @media only screen and (max-width: 600px) {
     opacity: 0;
     height: 0;
     transition: all 300ms ease-out;
     ${(props) => props.show && 'opacity: 1;'}
-    ${(props) => props.show && 'height: 25px;'}
+    ${(props) => props.show && 'height: 100px;'}
+    ${(props) => props.show && 'z-index: 100;'}
+    ${(props) => !props.show && 'z-index: -10;'}
+    flex-flow: column nowrap;
   }
 `;
 
 const NavItem = styled.div`
-  padding: 0.25rem 0.5rem;
-
+  padding: 1rem 0.5rem;
   display: flex;
   align-items: center;
   color: #333;
 
-  @media only screen and (min-width: 500px) {
+  @media only screen and (min-width: 600px) {
     padding: 1rem 1rem;
+    white-space: nowrap;
   }
 `;
 
@@ -91,19 +95,26 @@ const NavBar: FunctionComponent<NavProps> = ({ isLoggedIn, email, show }) => {
   } else {
     body = (
       <Nav show={show}>
-        <NavItem>{`Signed in as ${email}`}</NavItem>
-        <Logout
-          onClick={async (e) => {
-            e.preventDefault();
-            await logout();
-            await apolloClient.clearStore();
-            router.push('/login');
-          }}
-        >
-          <NavItem>
+        <NextLink href="/app">
+          <a>
+            <NavItem>App Home</NavItem>
+          </a>
+        </NextLink>
+        <NavItem>
+          <span
+            style={{ paddingRight: '1rem' }}
+          >{`Signed in as ${email}`}</span>
+          <Logout
+            onClick={async (e) => {
+              e.preventDefault();
+              await logout();
+              await apolloClient.clearStore();
+              router.push('/login');
+            }}
+          >
             <SignOutIcon size={22} />
-          </NavItem>
-        </Logout>
+          </Logout>
+        </NavItem>
       </Nav>
     );
   }
