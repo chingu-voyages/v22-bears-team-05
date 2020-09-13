@@ -25,6 +25,7 @@ const TabButton = styled.button`
   background-color: #eee;
   border: 1px solid #aaa;
   font-weight: 600;
+  color: black;
 
   &:hover {
     border: 1px solid #666;
