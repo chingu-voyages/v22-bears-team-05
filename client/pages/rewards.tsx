@@ -34,9 +34,9 @@ const Rewards = () => {
 
       <Container>
         <MyRewards
-          originalSmallRewards={data?.me?.smallRewards || []}
-          originalMediumRewards={data?.me?.mediumRewards || []}
-          originalLargeRewards={data?.me?.largeRewards || []}
+          originalSmallRewards={data?.getMyData?.smallRewards || []}
+          originalMediumRewards={data?.getMyData?.mediumRewards || []}
+          originalLargeRewards={data?.getMyData?.largeRewards || []}
         />
       </Container>
     </App>

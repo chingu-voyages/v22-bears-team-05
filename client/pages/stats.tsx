@@ -49,7 +49,7 @@ const Stats: FunctionComponent = () => {
     return null;
   }
 
-  if (data === null || data?.me?.tags.length === 0) {
+  if (data === null || data?.getMyData?.tags.length === 0) {
     return (
       <App>
         <Head>
