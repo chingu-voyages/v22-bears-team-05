@@ -55,7 +55,8 @@ async function startApp() {
           httpOnly: true,
           sameSite: __prod__ ? "lax" : "lax", // csrf
           secure: __prod__, // cookie only works in https
-          domain: __prod__ ? "goaltrack.vercel.app" : undefined,
+          domain: __prod__ ? ".herokuapp.com" : undefined,
+          path: '/graphql',
         },
         saveUninitialized: false,
         secret: process.env.SESSION_SECRET,
