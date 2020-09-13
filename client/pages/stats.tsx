@@ -39,7 +39,7 @@ const Stats: FunctionComponent = () => {
   useCheckIfAuth(error);
 
   useEffect(() => {
-    if (!data.getMyData.tags) return;
+    if (!data?.getMyData?.tags) return;
     const newData: barData[] = [...data.getMyData.tags];
     setUserData(newData.sort((a: barData, b: barData) => b.time - a.time));
   }, [data]);
@@ -62,7 +62,9 @@ const Stats: FunctionComponent = () => {
 
         <main className="stat-container">
           <h1>My Stats</h1>
-          <p>Add tags and work on your goals to see your stats.</p>
+          <p style={{ textAlign: 'center' }}>
+            Add tags and work on your goals to see your stats.
+          </p>
         </main>
       </App>
     );
