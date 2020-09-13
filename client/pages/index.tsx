@@ -2,7 +2,7 @@ import React, { FunctionComponent, useRef } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { FaTasks, FaPoll, FaAward, FaCaretRight } from 'react-icons/fa';
+import { FaTasks, FaPoll, FaAward } from 'react-icons/fa';
 
 import App from '../components/App';
 import { withApollo } from '../utils/withApollo';

@@ -91,7 +91,7 @@ const DropDownItem: React.FC<IProps> = ({ title, index, children }) => {
       <Container open={open} onClick={toggleOpen}>
         <div>{`${index + 1}.`}</div>
         <div>{title}</div>
-        <FaCaretRight className="icon" size={32} />
+        <FaCaretRight size={24} />
       </Container>
       <TextBlock open={open}>
         <p>{children}</p>
