@@ -34,6 +34,7 @@ async function startApp() {
 
     //middleware
     app.use(bodyParser.json());
+    app.set("trust proxy", 1);
     
     app.use(
       cors({
@@ -41,8 +42,7 @@ async function startApp() {
         credentials: true,
       }),
     );
-    
-    app.set("trust proxy", 1);
+
     app.use(
       session({
         name: COOKIE_NAME,
@@ -53,9 +53,9 @@ async function startApp() {
         cookie: {
           maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
           httpOnly: true,
-          sameSite: __prod__ ? "none" : "lax", // csrf
+          sameSite: __prod__ ? "strict" : "lax", // csrf
           secure: __prod__, // cookie only works in https
-          domain: undefined,
+          domain: __prod__ ? ".vercel.app" : undefined,
         },
         saveUninitialized: false,
         secret: process.env.SESSION_SECRET,
