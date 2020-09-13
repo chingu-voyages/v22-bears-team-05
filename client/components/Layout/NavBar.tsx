@@ -16,8 +16,11 @@ interface NavProp {
 const Nav = styled.div<NavProp>`
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-flow: row nowrap;
-  & > * { margin: 0 auto; }
+  & > * {
+    margin: 0 auto;
+  }
 
   a {
     text-decoration: none;
@@ -29,10 +32,14 @@ const Nav = styled.div<NavProp>`
     opacity: 0;
     height: 0;
     transition: all 300ms ease-out;
-    ${(props) => props.show && 'opacity: 1;'}
-    ${(props) => props.show && 'height: 100px;'}
-    ${(props) => props.show && 'z-index: 100;'}
-    ${(props) => !props.show && 'z-index: -10;'}
+    visibility: hidden;
+    ${({ show }) =>
+      show &&
+      css`
+        opacity: 1;
+        height: 100px;
+        visibility: visible;
+      `}
     flex-flow: column nowrap;
   }
 `;

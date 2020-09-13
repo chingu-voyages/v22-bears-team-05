@@ -12,11 +12,10 @@ const Container = styled.header`
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  padding: 0;
   margin: 0 auto;
   background-color: white;
 
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem 0;
   z-index: 10;
 
   .header__main {
