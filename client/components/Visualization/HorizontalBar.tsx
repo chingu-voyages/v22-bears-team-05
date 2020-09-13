@@ -1,13 +1,13 @@
 import { max, scaleBand, scaleLinear, select } from 'd3';
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import measureText from '../../utils/measureText';
-import { stringToLightColor } from '../../utils/stringToColor';
+import { stringToAnyColor } from '../../utils/stringToColor';
 import useResizeObserver from '../Utilities/useResizeObserver';
 
 const FONT_TEXT_SIZE = 16;
 const lineSize = FONT_TEXT_SIZE * 1.2; //lineSize is usually 1.2 times the font size
 const BAR_HEIGHT = 75; //px height of bar; should be large enough for the text to fit
+const X_OFFSET = 10;
 
 const VariableSvg = styled.svg`
   overflow: visible;
@@ -20,13 +20,6 @@ interface barData {
 }
 interface propType {
   data: barData[];
-}
-
-function getTextX(element: barData, width: number) {
-  const pixelLength = measureText(element.tagName);
-  const rightPadding = 50;
-  if (pixelLength + rightPadding > width) return width + 10;
-  else return width - pixelLength - rightPadding;
 }
 
 export default function HorizontalBar({ data }: propType) {
@@ -56,7 +49,7 @@ export default function HorizontalBar({ data }: propType) {
         enter.append('rect').attr('y', (_, index) => yScale(index)),
       )
       .attr('fill', (element: barData): string =>
-        stringToLightColor(element.tagName),
+        stringToAnyColor(element.tagName),
       )
       .attr('class', 'bar')
       .attr('x', 0)
@@ -77,7 +70,7 @@ export default function HorizontalBar({ data }: propType) {
       .attr('font-size', `${FONT_TEXT_SIZE}px`)
       .attr('font-weight', 'bold')
       .attr('x', (element: barData) => {
-        return getTextX(element, xScale(element.time));
+        return xScale(element.time) + X_OFFSET;
       })
       .attr('y', (_, index) => yScale(index) + lineSize)
       .append('tspan')
@@ -93,7 +86,7 @@ export default function HorizontalBar({ data }: propType) {
       })
       .attr('font-size', () => `${FONT_TEXT_SIZE}px`)
       .attr('x', (element: barData) => {
-        return getTextX(element, xScale(element.time));
+        return xScale(element.time) + X_OFFSET;
       })
       .attr('y', (_, index) => yScale(index) + lineSize * 2);
   }, [data, dimensions]);
