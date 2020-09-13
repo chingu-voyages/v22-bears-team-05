@@ -52,10 +52,10 @@ async function startApp() {
         }),
         cookie: {
           maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
-          httpOnly: !__prod__,
+          httpOnly: true,
           sameSite: __prod__ ? "lax" : "lax", // csrf
           secure: __prod__, // cookie only works in https
-          domain: __prod__ ? ".herokuapp.com" : undefined,
+          domain: __prod__ ? "goaltrack.vercel.app" : undefined,
         },
         saveUninitialized: false,
         secret: process.env.SESSION_SECRET,
