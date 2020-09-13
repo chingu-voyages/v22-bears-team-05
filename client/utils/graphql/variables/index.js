@@ -17,6 +17,7 @@ import UPDATE_SUBTASK_VARIABLES from './updateSubtask';
 import UPDATE_SMALL_REWARDS_VARIABLES from './updateSmallRewards';
 import UPDATE_MEDIUM_REWARDS_VARIABLES from './updateMediumRewards';
 import UPDATE_LARGE_REWARDS_VARIABLES from './updateLargeRewards';
+import ADD_TAG_VARIABLES from './addTag';
 
 export {
   LOGIN_VARIABLES,
@@ -38,4 +39,5 @@ export {
   UPDATE_SMALL_REWARDS_VARIABLES,
   UPDATE_MEDIUM_REWARDS_VARIABLES,
   UPDATE_LARGE_REWARDS_VARIABLES,
+  ADD_TAG_VARIABLES,
 };

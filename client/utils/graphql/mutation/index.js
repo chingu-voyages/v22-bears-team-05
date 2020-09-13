@@ -16,6 +16,7 @@ import UPDATE_SUBTASK_MUTATION from './updateSubtask';
 import UPDATE_SMALL_REWARDS_MUTATION from './updateSmallRewards.ts';
 import UPDATE_MEDIUM_REWARDS_MUTATION from './updateMediumRewards.ts';
 import UPDATE_LARGE_REWARDS_MUTATION from './updateLargeRewards.ts';
+import ADD_TAG_MUTATION from './addTag';
 
 export {
   LOGIN_MUTATION,
@@ -36,4 +37,5 @@ export {
   UPDATE_SMALL_REWARDS_MUTATION,
   UPDATE_MEDIUM_REWARDS_MUTATION,
   UPDATE_LARGE_REWARDS_MUTATION,
+  ADD_TAG_MUTATION,
 };

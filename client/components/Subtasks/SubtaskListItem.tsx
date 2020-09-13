@@ -8,7 +8,7 @@ import {
   StartSubtaskButton,
   UpdateSubtaskButton,
 } from '.';
-import { TimeSpent } from '../Goals';
+import { TagDisplay, TimeSpent } from '../Goals';
 import { rewardSize } from '../Goals/GoalList';
 
 const Description = styled.div`
@@ -60,6 +60,7 @@ interface IProps {
   description: string;
   totalTimeInSeconds: number;
   timeStarted: number;
+  tags: string[];
   displayReward: (
     size: rewardSize.small | rewardSize.medium | rewardSize.large,
   ) => void;
@@ -71,6 +72,7 @@ const SubtaskListItem: FunctionComponent<IProps> = ({
   description,
   totalTimeInSeconds,
   timeStarted,
+  tags,
   displayReward,
 }) => {
   const getStartTime = () => {
@@ -136,6 +138,7 @@ const SubtaskListItem: FunctionComponent<IProps> = ({
         </TaskIndicator>
       </MainInfo>
       <TimeSpent totalTimeInSeconds={timePassed} paddingSmall />
+      <TagDisplay tags={tags} componentType="subtask" componentId={subtaskId} />
       {showDetails ? <Description>{description}</Description> : null}
     </ListItem>
   );

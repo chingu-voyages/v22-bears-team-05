@@ -7,11 +7,13 @@ export const GET_GOALS_QUERY = gql`
       name
       isCompleted
       totalTimeInSeconds
+      tags
       tasks {
         _id
         name
         isCompleted
         totalTimeInSeconds
+        tags
         subtasks {
           _id
           name
@@ -19,6 +21,7 @@ export const GET_GOALS_QUERY = gql`
           isCompleted
           timeStarted
           totalTimeInSeconds
+          tags
         }
       }
     }

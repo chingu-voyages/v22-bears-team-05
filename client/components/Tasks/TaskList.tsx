@@ -32,7 +32,7 @@ const TaskList: FunctionComponent<IProps> = ({ tasks = [], displayReward }) => (
     {tasks
       .filter((task) => task.isCompleted === false)
       .map((task) => {
-        const { _id, name, totalTimeInSeconds, isCompleted, subtasks } = task;
+        const { _id, name, totalTimeInSeconds, tags, subtasks } = task;
         return (
           <TaskListItem
             key={_id}
@@ -41,6 +41,7 @@ const TaskList: FunctionComponent<IProps> = ({ tasks = [], displayReward }) => (
             totalTimeInSeconds={totalTimeInSeconds}
             subtasks={subtasks}
             displayReward={displayReward}
+            tags={tags}
           />
         );
       })}
