@@ -91,10 +91,10 @@ const DeleteGoalButton: FunctionComponent<IProps> = ({ goalId, name }) => {
           </ConfirmMessage>
           <GoalName>{name}</GoalName>
           <Note>
-            Note: All of its Tasks and Subtasks will be deleted as well.
+            Note: All of its Tasks and Action Items will be deleted as well.
           </Note>
           <p className="error">{errorMessage}</p>
-          {isLoading ? <Spinner /> : <button type="submit">Delete Goal</button>}
+          {isLoading ? <Spinner /> : <button type="submit">Delete</button>}
         </Form>
       </Modal>
     </>
