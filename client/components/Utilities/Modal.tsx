@@ -81,11 +81,11 @@ const Modal: FunctionComponent<IProps> = ({
 
   if (!isOpen) return null;
 
-  const preventBubbling = (e: Event) => {
+  const preventBubbling = (e) => {
     e.stopPropagation();
   };
 
-  const handleOnClose = (e: Event) => {
+  const handleOnClose = (e) => {
     e.stopPropagation();
     onClose();
   };
