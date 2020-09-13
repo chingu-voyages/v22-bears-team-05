@@ -41,7 +41,7 @@ const Title = styled.h2`
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: #4ea5d9;
+  background-color: var(--color-blue);
   padding: 0 1em 0 1em;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;

@@ -8,6 +8,7 @@ import Modal from '../Utilities/Modal';
 const ListContainer = styled.div<{ tooFewGoals: boolean }>`
   background-color: white;
   max-width: 100%;
+  min-height: 70vh;
   user-select: none;
   display: grid;
   grid-gap: 1rem;
