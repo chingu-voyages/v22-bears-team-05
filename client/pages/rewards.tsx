@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import App from '../components/App';
 import { MyRewards } from '../components/Rewards';
 import Spinner from '../components/Spinner';
-import { ME_QUERY } from '../utils/graphql/query';
+import { GET_MY_DATA_QUERY } from '../utils/graphql/query';
 import { useCheckIfAuth } from '../utils/useCheckIfAuth';
 import { withApollo } from '../utils/withApollo';
 
@@ -16,7 +16,7 @@ const Container = styled.div`
 `;
 
 const Rewards = () => {
-  const { data, error, loading } = useQuery(ME_QUERY);
+  const { data, error, loading } = useQuery(GET_MY_DATA_QUERY);
 
   useCheckIfAuth(error);
 

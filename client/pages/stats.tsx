@@ -4,7 +4,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import App from '../components/App';
 import Spinner from '../components/Spinner';
 import HorizontalBar from '../components/Visualization/HorizontalBar';
-import { ME_QUERY } from '../utils/graphql/query';
+import { GET_MY_DATA_QUERY } from '../utils/graphql/query';
 import { useCheckIfAuth } from '../utils/useCheckIfAuth';
 import { withApollo } from '../utils/withApollo';
 
@@ -34,7 +34,7 @@ testData.sort((a: barData, b: barData) => b.time - a.time);
 
 const Stats: FunctionComponent = () => {
   const [userData, setUserData] = useState<barData[]>();
-  const { data, error, loading } = useQuery(ME_QUERY);
+  const { data, error, loading } = useQuery(GET_MY_DATA_QUERY);
 
   useCheckIfAuth(error);
 
@@ -47,6 +47,25 @@ const Stats: FunctionComponent = () => {
   if (loading) return <Spinner />;
   if (data === undefined) {
     return null;
+  }
+
+  if (data === null || data?.me?.tags.length === 0) {
+    return (
+      <App>
+        <Head>
+          <title>Goal Tracker | My Stats</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+        </Head>
+
+        <main className="stat-container">
+          <h1>My Stats</h1>
+          <p>Add tags and work on your goals to see your stats.</p>
+        </main>
+      </App>
+    );
   }
 
   return (

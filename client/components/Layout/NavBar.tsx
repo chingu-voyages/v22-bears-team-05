@@ -122,8 +122,12 @@ const NavBar: FunctionComponent<NavProps> = ({ isLoggedIn, email, show }) => {
   } else {
     body = (
       <Nav show={show}>
-        <NavLink href="/rewards">My Rewards</NavLink>
-        <NavLink href="/stats">My Stats</NavLink>
+        <NextLink href="/rewards">
+          <NavLink>My Rewards</NavLink>
+        </NextLink>
+        <NextLink href="/stats">
+          <NavLink>My Stats</NavLink>
+        </NextLink>
         <NavItem>{`Signed in as ${email}`}</NavItem>
         <Logout
           onClick={async (e) => {
