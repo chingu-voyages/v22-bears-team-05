@@ -53,7 +53,7 @@ async function startApp() {
         cookie: {
           maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
           httpOnly: true,
-          sameSite: __prod__ ? "lax" : "lax", // csrf
+          sameSite: __prod__ ? "none" : "lax", // csrf
           secure: __prod__, // cookie only works in https
           domain: undefined,
         },
