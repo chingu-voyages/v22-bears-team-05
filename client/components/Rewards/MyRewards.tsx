@@ -63,11 +63,11 @@ const MyRewards: React.FC<IProps> = ({
     size: rewardSize.small | rewardSize.medium | rewardSize.large,
   ): string[] => {
     const {
-      me: { smallRewards, mediumRewards, largeRewards },
+      getMyData: { smallRewards, mediumRewards, largeRewards },
     } = client.readQuery({
       query: gql`
         query {
-          me {
+          getMyData {
             smallRewards
             mediumRewards
             largeRewards
