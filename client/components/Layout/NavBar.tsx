@@ -3,8 +3,7 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import React, { FunctionComponent } from 'react';
 import { FaSignOutAlt as SignOutIcon } from 'react-icons/fa';
-import styled, { keyframes, css } from 'styled-components';
-
+import styled, { css } from 'styled-components';
 import { LOGOUT_MUTATION } from '../../utils/graphql/mutation';
 
 /* eslint jsx-a11y/no-static-element-interactions: 0 */
@@ -123,29 +122,23 @@ const NavBar: FunctionComponent<NavProps> = ({ isLoggedIn, email, show }) => {
   } else {
     body = (
       <Nav show={show}>
-        <a href="/app">
-          <NavItem>App Home</NavItem>
-        </a>
-        <NavLink href="/rewards">
-          <a>
-            <NavItem>My Rewards</NavItem>
-          </a>
-        </NavLink>
-        <NavItem>
-          <span style={{ paddingRight: '1rem' }}>
-            {`Signed in as ${email}`}
-          </span>
-          <Logout
-            onClick={async (e) => {
-              e.preventDefault();
-              await logout();
-              await apolloClient.clearStore();
-              router.push('/login');
-            }}
-          >
+        <NavLink href="/rewards">My Rewards</NavLink>
+        <NavLink href="/stats">My Stats</NavLink>
+        <NavItem>{`Signed in as ${email}`}</NavItem>
+        <Logout
+          onClick={async (e) => {
+            e.preventDefault();
+            await logout();
+            await apolloClient.clearStore();
+            router.push('/login');
+          }}
+          title="Logout"
+        >
+          <NavItem>
+            Logout &nbsp;
             <SignOutIcon size={22} />
-          </Logout>
-        </NavItem>
+          </NavItem>
+        </Logout>
       </Nav>
     );
   }

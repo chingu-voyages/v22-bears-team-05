@@ -21,7 +21,7 @@ const ButtonContainer = styled.div`
   text-transform: uppercase;
   font-size: 1.3rem;
   font-weight: 700;
-  margin: 1.5em auto;
+  margin: 0 auto 1.5em;
   max-width: 300px;
 `;
 

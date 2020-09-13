@@ -8,6 +8,10 @@ const ME_QUERY = gql`
       smallRewards
       mediumRewards
       largeRewards
+      tags {
+        tagName
+        time
+      }
     }
   }
 `;

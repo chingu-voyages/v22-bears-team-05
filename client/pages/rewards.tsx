@@ -12,7 +12,7 @@ import { withApollo } from '../utils/withApollo';
 const Container = styled.div`
   font-family: Montserrat;
   max-width: 500px;
-  margin: 3em auto;
+  margin: 2em auto;
 `;
 
 const Rewards = () => {
@@ -24,8 +24,6 @@ const Rewards = () => {
   if (data === undefined) {
     return null;
   }
-
-  console.log({ data });
 
   return (
     <App>
