@@ -6,7 +6,7 @@ const GlobalStyle = createGlobalStyle`
   *,
   *::before,
   *::after {
-    --color-green: #9BC995;
+    --color-green: hsl(113, 32%, 45%);
     --color-dark-purple: #3F3047;
     --color-blue: hsl(202,65%,40%);
     --color-yellow: #EEF36A;
@@ -92,6 +92,7 @@ const GlobalStyle = createGlobalStyle`
     border-radius: 40px;
     height: 50px;
     background-color: var(--color-green);
+    color: white;
     max-width: 400px;
     font-size: 1.1em;
     font-weight: 700;

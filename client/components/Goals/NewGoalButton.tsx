@@ -13,7 +13,8 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #9bc995;
+  background-color: hsl(113, 32%, 45%);
+  color: white;
   margin: 0 0 0.5em;
   padding: 0.6em;
   border-radius: 100px;
