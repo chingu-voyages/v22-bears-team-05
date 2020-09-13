@@ -20,7 +20,7 @@ const Description = styled.div`
 
 const ListItem = styled.div<{ started?: number }>`
   background-color: ${({ started }) =>
-    started ? 'var(--color-yellow)' : '#eee'};
+    started ? 'var(--color-yellow)' : '#ebf8ff'};
   width: 95%;
   border-bottom: 1px solid #ccc;
   text-transform: capitalize;

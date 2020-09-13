@@ -2,8 +2,14 @@ import { useMutation } from '@apollo/client';
 import React, { FunctionComponent, useState } from 'react';
 import { FaPlusCircle } from 'react-icons/fa';
 import styled, { keyframes } from 'styled-components';
-import { ADD_TAG_MUTATION } from '../../utils/graphql/mutation';
-import { ADD_TAG_VARIABLES } from '../../utils/graphql/variables';
+import {
+  ADD_TAG_MUTATION,
+  DELETE_TAG_MUTATION,
+} from '../../utils/graphql/mutation';
+import {
+  ADD_TAG_VARIABLES,
+  DELETE_TAG_VARIABLES,
+} from '../../utils/graphql/variables';
 import { useCheckIfAuth } from '../../utils/useCheckIfAuth';
 import Spinner from '../Spinner';
 import Modal from '../Utilities/Modal';
@@ -37,10 +43,11 @@ const Container = styled.div<{ isGoal: boolean }>`
 `;
 
 const Tag = styled.button`
-  background-color: var(--color-blue);
+  background-color: hsl(202, 65%, 40%);
+  color: white;
   width: unset;
   height: unset;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 0.85rem;
   margin: 0.25em 0;
   padding: 0.3em 1em;
@@ -71,7 +78,9 @@ const TagDisplay: FunctionComponent<IProps> = ({
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [tagList, setTagList] = useState(tags);
+  const [showDeleteError, setShowDeleteError] = useState(false);
   const [createTag] = useMutation(ADD_TAG_MUTATION);
+  const [deleteTag] = useMutation(DELETE_TAG_MUTATION);
   const maxNameLength = 35;
   const maxCharLengthError = `The max length is ${maxNameLength} characters.`;
 
@@ -105,7 +114,7 @@ const TagDisplay: FunctionComponent<IProps> = ({
           newTag: newTagName,
         }),
       });
-      setTagList([...tags, newTagName]);
+      setTagList([...tagList, newTagName]);
       toggleForm();
     } catch (err) {
       setError(err);
@@ -115,10 +124,27 @@ const TagDisplay: FunctionComponent<IProps> = ({
     }
   };
 
+  const removeTag = async (tagToRemove: string) => {
+    try {
+      await deleteTag({
+        variables: DELETE_TAG_VARIABLES({
+          componentType,
+          componentId,
+          tag: tagToRemove,
+        }),
+      });
+      setTagList([...tagList.filter((tag) => tag !== tagToRemove)]);
+    } catch (err) {
+      setShowDeleteError(true);
+    }
+  };
+
   return (
     <Container isGoal={componentType === 'goal'}>
       {tagList.map((tag) => (
-        <Tag key={tag}>{tag}</Tag>
+        <Tag key={tag} title="Click to Remove" onClick={() => removeTag(tag)}>
+          {tag}
+        </Tag>
       ))}
       <ButtonContainer onClick={toggleForm} title="Add a Tag">
         <FaPlusCircle size={20} />
@@ -148,6 +174,13 @@ const TagDisplay: FunctionComponent<IProps> = ({
             </button>
           )}
         </Form>
+      </Modal>
+      <Modal
+        title="Something went wrong..."
+        isOpen={showDeleteError}
+        onClose={() => setShowDeleteError(false)}
+      >
+        <p>Sorry, something went wrong...</p>
       </Modal>
     </Container>
   );
