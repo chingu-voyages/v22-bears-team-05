@@ -13,16 +13,6 @@ interface NavProp {
   show: boolean;
 }
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
-
 const Nav = styled.div<NavProp>`
   display: flex;
   justify-content: center;
@@ -32,20 +22,28 @@ const Nav = styled.div<NavProp>`
     margin: 0 auto;
   }
 
-  a {
+  a,
+  a:active,
+  a:visited,
+  a:hover {
     text-decoration: none;
     color: black;
     font-weight: 600;
   }
 
-  @media only screen and (max-width: 500px) {
-    flex-direction: column;
-    align-items: center;
+  @media only screen and (max-width: 600px) {
     opacity: 0;
-    display: none;
-    ${(props) => props.show && 'margin-top: 1em;'}
-    ${(props) => props.show && 'display: block;'}
-    animation: ${fadeIn} 300ms ease-out forwards;
+    height: 0;
+    transition: all 300ms ease-out;
+    visibility: hidden;
+    ${({ show }) =>
+      show &&
+      css`
+        opacity: 1;
+        height: 150px;
+        visibility: visible;
+      `}
+    flex-flow: column nowrap;
   }
 `;
 
@@ -128,7 +126,11 @@ const NavBar: FunctionComponent<NavProps> = ({ isLoggedIn, email, show }) => {
         <a href="/app">
           <NavItem>App Home</NavItem>
         </a>
-        <NavLink href="/rewards">My Rewards</NavLink>
+        <NavLink href="/rewards">
+          <a>
+            <NavItem>My Rewards</NavItem>
+          </a>
+        </NavLink>
         <NavItem>
           <span style={{ paddingRight: '1rem' }}>
             {`Signed in as ${email}`}
