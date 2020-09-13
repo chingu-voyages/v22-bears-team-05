@@ -3,7 +3,8 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import React, { FunctionComponent } from 'react';
 import { FaSignOutAlt as SignOutIcon } from 'react-icons/fa';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
+
 import { LOGOUT_MUTATION } from '../../utils/graphql/mutation';
 
 /* eslint jsx-a11y/no-static-element-interactions: 0 */
@@ -25,7 +26,11 @@ const fadeIn = keyframes`
 const Nav = styled.div<NavProp>`
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-flow: row nowrap;
+  & > * {
+    margin: 0 auto;
+  }
 
   a {
     text-decoration: none;
@@ -45,14 +50,14 @@ const Nav = styled.div<NavProp>`
 `;
 
 const NavItem = styled.div`
-  padding: 0.25rem 0.5rem;
-
+  padding: 1rem 0.5rem;
   display: flex;
   align-items: center;
   color: #333;
 
-  @media only screen and (min-width: 500px) {
+  @media only screen and (min-width: 600px) {
     padding: 1rem 1rem;
+    white-space: nowrap;
   }
 `;
 
@@ -120,22 +125,25 @@ const NavBar: FunctionComponent<NavProps> = ({ isLoggedIn, email, show }) => {
   } else {
     body = (
       <Nav show={show}>
+        <a href="/app">
+          <NavItem>App Home</NavItem>
+        </a>
         <NavLink href="/rewards">My Rewards</NavLink>
-        <NavItem>{`Signed in as ${email}`}</NavItem>
-        <Logout
-          onClick={async (e) => {
-            e.preventDefault();
-            await logout();
-            await apolloClient.clearStore();
-            router.push('/login');
-          }}
-          title="Logout"
-        >
-          <NavItem>
-            Logout &nbsp;
+        <NavItem>
+          <span style={{ paddingRight: '1rem' }}>
+            {`Signed in as ${email}`}
+          </span>
+          <Logout
+            onClick={async (e) => {
+              e.preventDefault();
+              await logout();
+              await apolloClient.clearStore();
+              router.push('/login');
+            }}
+          >
             <SignOutIcon size={22} />
-          </NavItem>
-        </Logout>
+          </Logout>
+        </NavItem>
       </Nav>
     );
   }

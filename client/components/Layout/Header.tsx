@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
 import { ME_QUERY } from '../../utils/graphql/query';
 import NavBar from './NavBar';
@@ -11,11 +11,10 @@ const Container = styled.header`
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  padding: 0;
   margin: 0 auto;
   background-color: white;
 
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem 0;
   z-index: 10;
 
   .header__main {
@@ -26,7 +25,7 @@ const Container = styled.header`
     width: 100%;
   }
 
-  @media only screen and (min-width: 500px) {
+  @media only screen and (min-width: 600px) {
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
@@ -39,7 +38,7 @@ const Container = styled.header`
 const NavButton = styled.div`
   display: flex;
   align-items: center;
-  @media only screen and (min-width: 500px) {
+  @media only screen and (min-width: 600px) {
     display: none;
   }
 `;
@@ -57,7 +56,7 @@ const Header: React.FC = () => {
     if (data?.me) {
       setLoginEmail(data.me.email);
       setIsLoggedIn(true);
-      setLogoHref('/home');
+      setLogoHref('/app');
     }
   }, [loginEmail, isLoggedIn, logoHref, data]);
 
@@ -72,7 +71,8 @@ const Header: React.FC = () => {
           <h2>GoalTrack</h2>
         </a>
         <NavButton onClick={toggleNav}>
-          <FaBars size={32} />
+          {!showNav && <FaBars size={32} />}
+          {showNav && <FaTimes size={32} />}
         </NavButton>
       </div>
       <NavBar isLoggedIn={isLoggedIn} email={loginEmail} show={showNav} />
