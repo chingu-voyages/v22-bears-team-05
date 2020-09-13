@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import React, { FunctionComponent, useState } from 'react';
-import { FaRegPlusSquare } from 'react-icons/fa';
+import { FaPlusCircle } from 'react-icons/fa';
 import styled, { keyframes } from 'styled-components';
 import { ADD_TAG_MUTATION } from '../../utils/graphql/mutation';
 import { ADD_TAG_VARIABLES } from '../../utils/graphql/variables';
@@ -121,7 +121,7 @@ const TagDisplay: FunctionComponent<IProps> = ({
         <Tag key={tag}>{tag}</Tag>
       ))}
       <ButtonContainer onClick={toggleForm} title="Add a Tag">
-        <FaRegPlusSquare size={20} />
+        <FaPlusCircle size={20} />
       </ButtonContainer>
       <Modal isOpen={showModal} onClose={toggleForm} title="Add Tag">
         <Form onSubmit={handleSubmit}>
