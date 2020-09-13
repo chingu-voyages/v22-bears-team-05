@@ -39,8 +39,8 @@ const Stats: FunctionComponent = () => {
   useCheckIfAuth(error);
 
   useEffect(() => {
-    if (!data.me.tags) return;
-    const newData: barData[] = [...data.me.tags];
+    if (!data.getMyData.tags) return;
+    const newData: barData[] = [...data.getMyData.tags];
     setUserData(newData.sort((a: barData, b: barData) => b.time - a.time));
   }, [data]);
 
