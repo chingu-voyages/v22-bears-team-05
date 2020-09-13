@@ -1,12 +1,11 @@
-import React, { FunctionComponent, useRef } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import React, { FunctionComponent, useRef } from 'react';
+import { FaAward, FaPoll, FaTasks } from 'react-icons/fa';
 import styled from 'styled-components';
-import { FaTasks, FaPoll, FaAward } from 'react-icons/fa';
-
 import App from '../components/App';
-import { withApollo } from '../utils/withApollo';
 import DropDownList from '../components/Landing/DropDownList';
+import { withApollo } from '../utils/withApollo';
 
 const TopSection = styled.div`
   width: 100%;
@@ -263,7 +262,7 @@ const DROP_DOWN_DATA = [
     ),
   },
   {
-    title: 'Break Tasks into managable chunks known as Action Items',
+    title: 'Break Tasks into managable chunks called Action Items',
     body: (
       <>
         <b>Make your tasks actionable!</b>

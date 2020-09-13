@@ -13,6 +13,7 @@ interface IProps {
 const TabContainer = styled.div`
   display: flex;
   margin: 0.5em auto 1.75em;
+  max-width: 90%;
 `;
 
 const TabButton = styled.button`

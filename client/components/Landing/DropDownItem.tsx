@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
 import { FaCaretRight } from 'react-icons/fa';
+import styled, { css } from 'styled-components';
 
 const Container = styled.div<{ open: boolean }>`
   width: 100%;
@@ -17,6 +17,8 @@ const Container = styled.div<{ open: boolean }>`
 
   font-weight: bold;
   font-size: 0.85rem;
+
+  cursor: pointer;
 
   > :first-child {
     justify-self: start;

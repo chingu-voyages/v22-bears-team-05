@@ -38,6 +38,11 @@ const Form = styled.form`
   margin: 0 auto;
 `;
 
+const Description = styled.p`
+  max-width: 90%;
+  margin: 0 auto;
+`;
+
 const SetRewards: React.FC<IProps> = ({ rewards, tableSize, description }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -123,7 +128,7 @@ const SetRewards: React.FC<IProps> = ({ rewards, tableSize, description }) => {
     <>
       <Container>
         <h2>{`${tableSize} Reward Table`}</h2>
-        <p>{description}</p>
+        <Description>{description}</Description>
         <Form onSubmit={handleSubmit}>
           <Container>
             <label htmlFor="rewardOne">

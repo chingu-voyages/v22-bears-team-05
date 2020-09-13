@@ -1,10 +1,9 @@
-import React, { useRef, useEffect } from 'react';
-import { select, scaleBand, scaleLinear, max } from 'd3';
-import useResizeObserver from '../Utilities/useResizeObserver';
-import { stringToLightColor } from '../../utils/stringToColor';
+import { max, scaleBand, scaleLinear, select } from 'd3';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-
 import measureText from '../../utils/measureText';
+import { stringToLightColor } from '../../utils/stringToColor';
+import useResizeObserver from '../Utilities/useResizeObserver';
 
 const FONT_TEXT_SIZE = 16;
 const lineSize = FONT_TEXT_SIZE * 1.2; //lineSize is usually 1.2 times the font size
@@ -62,7 +61,6 @@ export default function HorizontalBar({ data }: propType) {
       .attr('class', 'bar')
       .attr('x', 0)
       .attr('height', () => {
-        console.log(yScale.bandwidth());
         return yScale.bandwidth();
       })
       .attr('width', (element: barData) => xScale(element.time))

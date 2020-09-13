@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
   *::after {
     --color-green: #9BC995;
     --color-dark-purple: #3F3047;
-    --color-blue: #4EA5D9;
+    --color-blue: hsl(202,65%,40%);
     --color-yellow: #EEF36A;
     --color-red: #EE6055;
     box-sizing: border-box;
@@ -115,6 +115,16 @@ const GlobalStyle = createGlobalStyle`
 
   .margin-left-1{
     margin-left: 10px;
+  }
+
+  .stat-container {
+    width: 500px;
+    max-width: 90%;
+    margin: 0 auto;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 `;
 
