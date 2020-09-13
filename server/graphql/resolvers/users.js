@@ -27,6 +27,11 @@ module.exports = {
       const user = await User.findById(req.session.userId);
       return user;
     },
+    async getMyData(_, __, { req }) {
+      if (!req.session.userId) throw new Error("not authenticated");
+      const user = await User.findById(req.session.userId);
+      return user;
+    },
   },
 
   Mutation: {

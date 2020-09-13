@@ -74,6 +74,7 @@ module.exports = gql`
     userList: [UserView]
     getAllGoals: [Goal]!
     me: User
+    getMyData: User
   }
   type Mutation {
     login(email: String!, password: String!): AuthData!
