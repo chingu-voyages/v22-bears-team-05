@@ -34,7 +34,6 @@ async function startApp() {
 
     //middleware
     app.use(bodyParser.json());
-    app.set("trust proxy", 1);
     
     app.use(
       cors({
@@ -42,7 +41,8 @@ async function startApp() {
         credentials: true,
       }),
     );
-
+    
+    app.set("trust proxy", 1);
     app.use(
       session({
         name: COOKIE_NAME,
@@ -59,6 +59,7 @@ async function startApp() {
         },
         saveUninitialized: false,
         secret: process.env.SESSION_SECRET,
+        resave: false,
       }),
     );
 
