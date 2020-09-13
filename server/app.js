@@ -53,9 +53,9 @@ async function startApp() {
         cookie: {
           maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
           httpOnly: true,
-          sameSite: __prod__ ? "none" : "lax", // csrf
+          sameSite: __prod__ ? "lax" : "lax", // csrf
           secure: __prod__, // cookie only works in https
-          domain: __prod__ ? ".vercel.app" : undefined,
+          domain: __prod__ ? ".herokuapp.com" : undefined,
         },
         saveUninitialized: false,
         secret: process.env.SESSION_SECRET,
