@@ -55,7 +55,7 @@ async function startApp() {
           httpOnly: true,
           sameSite: __prod__ ? "none" : "lax", // csrf
           secure: __prod__, // cookie only works in https
-          domain: undefined,
+          domain: __prod__ ? ".vercel.app" : undefined,
         },
         saveUninitialized: false,
         secret: process.env.SESSION_SECRET,
