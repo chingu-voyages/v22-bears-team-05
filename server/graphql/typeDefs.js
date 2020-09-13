@@ -17,7 +17,6 @@ module.exports = gql`
     mediumRewards: [String!]
     largeRewards: [String!]
     tags: [Tag!]
-
   }
   type UserView {
     email: String
@@ -35,7 +34,7 @@ module.exports = gql`
     totalCompletedSubtasks: Int
     tags: [String!]
   }
-  type TagProperties{
+  type TagProperties {
     tagName: String!
     componentId: String!
     componentType: String!
@@ -111,9 +110,25 @@ module.exports = gql`
     deleteSubtask(subtaskId: String!): Task!
     startSubtask(subtaskId: String!): Subtask!
     pauseSubtask(subtaskId: String!): Subtask!
-    completeSubtask(subtaskId: String!): Task!
-    addTag(componentType: String!, componentId: String!, newTag: String!): TagProperties!
-    modifyTag(componentType: String!, oldTag: String!, newTag: String!, componentId: String!): TagProperties!
-    deleteTag(componentType: String!, componentId: String!, tag: String!): TagProperties!
+    updateSmallRewards(smallRewards: [String]!): User!
+    updateMediumRewards(mediumRewards: [String]!): User!
+    updateLargeRewards(largeRewards: [String]!): User!
+    completeSubtask(subtaskId: String!): Goal!
+    addTag(
+      componentType: String!
+      componentId: String!
+      newTag: String!
+    ): TagProperties!
+    modifyTag(
+      componentType: String!
+      oldTag: String!
+      newTag: String!
+      componentId: String!
+    ): TagProperties!
+    deleteTag(
+      componentType: String!
+      componentId: String!
+      tag: String!
+    ): TagProperties!
   }
 `;

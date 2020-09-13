@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import {
   CompleteGoalButton,
   DeleteGoalButton,
+  TagDisplay,
   TimeSpent,
   UpdateGoalButton,
 } from '.';
@@ -30,17 +31,25 @@ const ListItem = styled.div`
 
 const MainInfo = styled.div`
   display: flex;
-  width: 100%;
+  width: 95%;
+  margin: 0 auto;
+
+  @media only screen and (max-width: 600px) {
+    width: 90%;
+  }
 `;
 
 const ItemName = styled.span`
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding: 1em;
-  width: 100%;
+  padding: 1em 0;
   font-weight: 600;
-  font-size: 1.3rem;
+  font-size: 2rem;
+
+  @media only screen and (max-width: 600px) {
+    font-size: 1.3rem;
+  }
 `;
 
 const TaskIndicator = styled.span`
@@ -48,7 +57,7 @@ const TaskIndicator = styled.span`
   align-self: center;
   margin-left: auto;
   font-size: 1.2rem;
-  padding: 1em;
+  padding: 1em 0 1em 1em;
 `;
 
 const Notifications = styled.div`
@@ -71,6 +80,7 @@ interface IProps {
   goalId: string;
   name: string;
   totalTimeInSeconds: number;
+  tags: string[];
   tasks?: Task[];
   displayReward: (
     size: rewardSize.small | rewardSize.medium | rewardSize.large,
@@ -81,11 +91,11 @@ const GoalListItem: FunctionComponent<IProps> = ({
   name,
   goalId,
   totalTimeInSeconds,
+  tags,
   tasks = [],
   displayReward,
 }) => {
-  const [showTasks, setShowTasks] = useState(false);
-
+  const [showTasks, setShowTasks] = useState(true);
   const toggleShowTasks = () => {
     setShowTasks(!showTasks);
   };
@@ -107,7 +117,7 @@ const GoalListItem: FunctionComponent<IProps> = ({
               <NewTaskButton goalId={goalId} />
               <UpdateGoalButton goalId={goalId} name={name} />
               <DeleteGoalButton goalId={goalId} name={name} />
-              {tasks.length > 0 ? (
+              {tasks.filter((task) => task.isCompleted === false).length > 0 ? (
                 <Notifications title="Tasks Remaining">
                   {tasks.filter((task) => task.isCompleted === false).length}
                   <NotificationDot />
@@ -122,6 +132,7 @@ const GoalListItem: FunctionComponent<IProps> = ({
             </TaskIndicator>
           </MainInfo>
           <TimeSpent totalTimeInSeconds={totalTimeInSeconds} />
+          <TagDisplay tags={tags} componentType="goal" componentId={goalId} />
         </Container>
       </ListItem>
       {showTasks && <TaskList tasks={tasks} displayReward={displayReward} />}

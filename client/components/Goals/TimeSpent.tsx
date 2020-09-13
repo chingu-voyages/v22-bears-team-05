@@ -21,12 +21,17 @@ const fadeIn = keyframes`
 const Time = styled.div<{ paddingSmall: boolean }>`
   display: flex;
   align-items: center;
-  width: 100%;
+  width: ${({ paddingSmall }) => (paddingSmall ? '100%' : '95%')};
   font-size: 0.8rem;
   text-transform: uppercase;
   animation: ${fadeIn} 300ms ease-out forwards;
   padding: ${({ paddingSmall }) =>
-    paddingSmall ? '0.5em 0 0 0' : '0.5em 1.4em 1.4em'};
+    paddingSmall ? '0.5em 0 0 0' : '0.5em 0 1.4em'};
+  margin: 0 auto;
+
+  @media only screen and (max-width: 600px) {
+    width: ${({ paddingSmall }) => (paddingSmall ? '100%' : '90%')};
+  }
 `;
 
 const TimeSpent: FunctionComponent<IProps> = ({

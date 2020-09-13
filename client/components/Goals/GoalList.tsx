@@ -24,7 +24,6 @@ const Reward = styled.div`
   text-align: center;
   font-size: 2rem;
   font-weight: 600;
-  margin-top: 1em;
 `;
 
 type GoalProps = {
@@ -87,7 +86,7 @@ const GoalList: FunctionComponent<GoalProps> = ({ goals }) => {
       <NewGoalButton />
       <ListContainer tooFewGoals={goals.length < 2}>
         {goals.map((goal) => {
-          const { name, tasks, _id, totalTimeInSeconds } = goal;
+          const { name, tasks, _id, totalTimeInSeconds, tags } = goal;
           return (
             <GoalListItem
               key={_id}
@@ -96,6 +95,7 @@ const GoalList: FunctionComponent<GoalProps> = ({ goals }) => {
               goalId={_id}
               totalTimeInSeconds={totalTimeInSeconds}
               displayReward={displayReward}
+              tags={tags}
             />
           );
         })}

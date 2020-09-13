@@ -47,6 +47,7 @@ const NewSubtaskButton: FunctionComponent<IProps> = ({ taskId }) => {
   const toggleForm = () => {
     setShowModal(!showModal);
     setNewSubtaskName('');
+    setNewSubtaskDescription('');
     setErrorMessage('');
   };
 

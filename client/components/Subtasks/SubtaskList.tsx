@@ -41,7 +41,7 @@ const SubtaskList: FunctionComponent<IProps> = ({
           name,
           description,
           totalTimeInSeconds,
-          isCompleted,
+          tags,
           timeStarted,
         } = subtask;
         return (
@@ -52,6 +52,7 @@ const SubtaskList: FunctionComponent<IProps> = ({
             description={description}
             totalTimeInSeconds={totalTimeInSeconds}
             timeStarted={timeStarted}
+            tags={tags}
             displayReward={displayReward}
           />
         );

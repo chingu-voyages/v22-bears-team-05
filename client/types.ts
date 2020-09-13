@@ -3,6 +3,7 @@ export type Goal = {
   name: string;
   totalTimeInSeconds: number;
   isCompleted: boolean;
+  tags: string[];
   tasks: Task[];
 };
 
@@ -11,6 +12,7 @@ export type Task = {
   name: string;
   totalTimeInSeconds: number;
   isCompleted: boolean;
+  tags: string[];
   subtasks: Subtask[];
 };
 
@@ -21,4 +23,5 @@ export type Subtask = {
   totalTimeInSeconds: number;
   isCompleted: boolean;
   timeStarted?: number;
+  tags: string[];
 };

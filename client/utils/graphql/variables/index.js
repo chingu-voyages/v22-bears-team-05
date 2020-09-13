@@ -14,6 +14,11 @@ import START_SUBTASK_VARIABLES from './startSubtask';
 import PAUSE_SUBTASK_VARIABLES from './pauseSubtask';
 import COMPLETE_SUBTASK_VARIABLES from './completeSubtask';
 import UPDATE_SUBTASK_VARIABLES from './updateSubtask';
+import UPDATE_SMALL_REWARDS_VARIABLES from './updateSmallRewards';
+import UPDATE_MEDIUM_REWARDS_VARIABLES from './updateMediumRewards';
+import UPDATE_LARGE_REWARDS_VARIABLES from './updateLargeRewards';
+import ADD_TAG_VARIABLES from './addTag';
+import DELETE_TAG_VARIABLES from './deleteTag';
 
 export {
   LOGIN_VARIABLES,
@@ -32,4 +37,9 @@ export {
   PAUSE_SUBTASK_VARIABLES,
   COMPLETE_SUBTASK_VARIABLES,
   UPDATE_SUBTASK_VARIABLES,
+  UPDATE_SMALL_REWARDS_VARIABLES,
+  UPDATE_MEDIUM_REWARDS_VARIABLES,
+  UPDATE_LARGE_REWARDS_VARIABLES,
+  ADD_TAG_VARIABLES,
+  DELETE_TAG_VARIABLES,
 };

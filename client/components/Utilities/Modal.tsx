@@ -27,6 +27,9 @@ const Content = styled.div`
 
 const ChildrenContainer = styled.div`
   padding: 50px;
+  @media only screen and (max-width: 500px) {
+    padding: 25px;
+  }
 `;
 
 const Title = styled.h2`

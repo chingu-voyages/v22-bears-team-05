@@ -3,7 +3,7 @@ import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
 import { DeleteTaskButton, UpdateTaskButton } from '.';
 import { Subtask } from '../../types';
-import { TimeSpent } from '../Goals';
+import { TagDisplay, TimeSpent } from '../Goals';
 import { rewardSize } from '../Goals/GoalList';
 import { NewSubtaskButton, SubtaskList } from '../Subtasks';
 import CompleteTaskButton from './CompleteTaskButton';
@@ -80,6 +80,7 @@ interface IProps {
   taskId: string;
   name: string;
   totalTimeInSeconds: number;
+  tags: string[];
   subtasks?: Subtask[];
   displayReward: (
     size: rewardSize.small | rewardSize.medium | rewardSize.large,
@@ -90,10 +91,11 @@ const TaskListItem: FunctionComponent<IProps> = ({
   taskId,
   name,
   totalTimeInSeconds,
+  tags,
   subtasks = [],
   displayReward,
 }) => {
-  const [showSubtasks, setShowSubtasks] = useState(false);
+  const [showSubtasks, setShowSubtasks] = useState(true);
   const toggleShowSubtasks = () => {
     setShowSubtasks(!showSubtasks);
   };
@@ -132,6 +134,7 @@ const TaskListItem: FunctionComponent<IProps> = ({
           </TaskIndicator>
         </MainInfo>
         <TimeSpent totalTimeInSeconds={totalTimeInSeconds} paddingSmall />
+        <TagDisplay tags={tags} componentType="task" componentId={taskId} />
       </ListItem>
 
       {showSubtasks && (

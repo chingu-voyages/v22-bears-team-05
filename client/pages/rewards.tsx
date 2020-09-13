@@ -3,18 +3,20 @@ import Head from 'next/head';
 import React from 'react';
 import styled from 'styled-components';
 import App from '../components/App';
-import { GoalList } from '../components/Goals';
+import { MyRewards } from '../components/Rewards';
 import Spinner from '../components/Spinner';
-import { GET_GOALS_QUERY } from '../utils/graphql/query';
+import { ME_QUERY } from '../utils/graphql/query';
 import { useCheckIfAuth } from '../utils/useCheckIfAuth';
 import { withApollo } from '../utils/withApollo';
 
 const Container = styled.div`
   font-family: Montserrat;
+  max-width: 500px;
+  margin: 3em auto;
 `;
 
-const HomePage = () => {
-  const { data, error, loading } = useQuery(GET_GOALS_QUERY);
+const Rewards = () => {
+  const { data, error, loading } = useQuery(ME_QUERY);
 
   useCheckIfAuth(error);
 
@@ -23,20 +25,24 @@ const HomePage = () => {
     return null;
   }
 
+  console.log({ data });
+
   return (
     <App>
       <Head>
-        <title>Goal Tracker | Home</title>
+        <title>Goal Tracker | My Rewards</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
       <Container>
-        <GoalList
-          goals={data.getAllGoals.filter((goal) => goal.isCompleted === false)}
+        <MyRewards
+          originalSmallRewards={data.me.smallRewards}
+          originalMediumRewards={data.me.mediumRewards}
+          originalLargeRewards={data.me.largeRewards}
         />
       </Container>
     </App>
   );
 };
 
-export default withApollo({ ssr: true })(HomePage);
+export default withApollo({ ssr: true })(Rewards);

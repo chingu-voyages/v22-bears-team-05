@@ -4,6 +4,7 @@ import GoalList from './GoalList';
 import GoalListItem from './GoalListItem';
 import NewGoalButton from './NewGoalButton';
 import PartySvg from './PartySvg';
+import TagDisplay from './TagDisplay';
 import TimeSpent from './TimeSpent';
 import UpdateGoalButton from './UpdateGoalButton';
 
@@ -16,4 +17,5 @@ export {
   DeleteGoalButton,
   TimeSpent,
   PartySvg,
+  TagDisplay,
 };
