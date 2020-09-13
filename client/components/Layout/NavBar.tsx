@@ -30,7 +30,7 @@ const Nav = styled.div<NavProp>`
     font-weight: 600;
   }
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 799px) {
     opacity: 0;
     height: 0;
     transition: all 300ms ease-out;
@@ -39,7 +39,7 @@ const Nav = styled.div<NavProp>`
       show &&
       css`
         opacity: 1;
-        height: 150px;
+        height: 200px;
         visibility: visible;
       `}
     flex-flow: column nowrap;
@@ -47,19 +47,19 @@ const Nav = styled.div<NavProp>`
 `;
 
 const NavItem = styled.div`
-  padding: 1rem 0.5rem;
+  padding: 1rem;
   display: flex;
   align-items: center;
   color: #333;
 
-  @media only screen and (min-width: 600px) {
-    padding: 1rem 1rem;
+  @media only screen and (min-width: 799px) {
+    padding: 1rem 0.5rem;
     white-space: nowrap;
   }
 `;
 
 const NavLink = styled.a`
-  padding: 0.25rem 0.5rem;
+  padding: 1rem 1rem;
 
   display: flex;
   align-items: center;
@@ -71,8 +71,8 @@ const NavLink = styled.a`
     cursor: pointer;
   }
 
-  @media only screen and (min-width: 500px) {
-    padding: 1rem 1rem;
+  @media only screen and (min-width: 800px) {
+    padding: 1rem 0.5rem;
   }
 `;
 
@@ -122,8 +122,11 @@ const NavBar: FunctionComponent<NavProps> = ({ isLoggedIn, email, show }) => {
   } else {
     body = (
       <Nav show={show}>
+        <NextLink href="/app">
+          <NavLink>App Home</NavLink>
+        </NextLink>
         <NextLink href="/rewards">
-          <NavLink>My Rewards</NavLink>
+          <NavLink>Rewards</NavLink>
         </NextLink>
         <NextLink href="/stats">
           <NavLink>My Stats</NavLink>

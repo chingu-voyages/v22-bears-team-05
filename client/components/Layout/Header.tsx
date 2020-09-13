@@ -25,7 +25,7 @@ const Container = styled.header`
     width: 100%;
   }
 
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 800px) {
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
@@ -38,7 +38,7 @@ const Container = styled.header`
 const NavButton = styled.div`
   display: flex;
   align-items: center;
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 800px) {
     display: none;
   }
 `;
