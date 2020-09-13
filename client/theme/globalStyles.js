@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   main {
-    margin: 1rem 1rem;
+    margin: 1rem 0;
   }
 
   body {
@@ -99,6 +99,17 @@ const GlobalStyle = createGlobalStyle`
     user-select: none;
     outline: none;
     cursor: pointer;
+
+    &.primary {
+      background-color: var(--color-blue);
+      color: white;
+    }
+
+    &.secondary {
+      border: 2px solid var(--color-blue);
+      color: var(--color-blue);
+      background-color: #fff;
+    }
   }
 
   .margin-left-1{
