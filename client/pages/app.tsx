@@ -18,7 +18,12 @@ const HomePage = () => {
 
   useCheckIfAuth(error);
 
-  if (loading) return <Spinner />;
+  if (loading)
+    return (
+      <App>
+        <Spinner />
+      </App>
+    );
   if (data === undefined) {
     return null;
   }
