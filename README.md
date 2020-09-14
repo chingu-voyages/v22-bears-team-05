@@ -104,6 +104,17 @@ Before starting the server in your local dev. environment,the following environm
 | REDIS_URL | Set to 127.0.0.1:6379 (default local Redis url) |
 | PORT | Server Port (5000 by default for local deploy). In production Heroku will provide its own port. |
 
+This is accomplished by including the following in the .env file located in the root of the `/server` directory. This .env file must never be pushed to GitHub since it contains application sensitive information such as the database username and password.
+
+The /server/.env file must contain the following:
+
+```
+MONGO_CONNECTION_STRING="mongodb+srv://..."
+SESSION_SECRET="random character string"
+REDIS_URL="127.0.0.1:6379"
+PORT=5000
+```
+
 ## Runtime
 
 ### Vercel Deployment
