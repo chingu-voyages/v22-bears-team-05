@@ -12,6 +12,21 @@ GoalTrack is a responsive web app aimed at helping users reach their goals throu
 
 https://goaltrack.vercel.app/
 
+## Table of Contents  
+- [Features](#features)
+- [Development](#development)
+  - [Technologies](#technologies)
+  - [Development Style and Git Branches](#development-style-and-git-branches)
+  - [Useage](#usage)
+  - [Configuration](#configuration)
+- [Development Environment](#development-environment)
+- [Runtime](#runtime)
+  - [Vercel Deployment](#vercel-deployment)
+    - [Vercel Deployment Steps](#vercel-deployment-steps)
+  - [Heroku Deployment](#heroku-deployment)
+    - [Heroku Deployment Steps](#heroku-deployment-steps)
+- [Features](#features)
+
 ## Features
 
 - Account Login/ Register via email+password authentication
@@ -119,15 +134,14 @@ PORT=5000
 
 ### Vercel Deployment
 
-To deploy the client to Vercel, we use the Vercel command line from the `/client` directory. Normally we would import the Github repo straight into Vercel's dashboard, but being part of the Chingu Organization means we cannot since only the organization's owner can do this.
+#### Vercel Deployment Steps
 
-#### Deployment Steps
-
-
-1. After downloading the repo, navigate to the `/client` directory in your command line:
+1. After downloading the repository, navigate to the `/client` directory in your command line and install dependencies:
 
 ```
 cd local-repo-root-directory/client
+
+npm install
 ```
 
 2. install the Vercel command-line interface using npm:
@@ -152,14 +166,88 @@ vercel
 vercel --prod
 ```
 
+Your client is now deployed on Vercel!
+
 ### Heroku Deployment
 
 Due to having both the server and client in a single Github Repo, the server must be deployed to Heroku using a git command to push a subtree from the root of the repository directory.
 
-#### Deployment Steps
+#### Heroku Deployment Steps
 
-- TODO: Heroku Deploy Steps
+Before deploying to Heroku, make sure you have created an account with a new project on https://heroku.com and ensure you have run `npm install` in the `/server` directory.
 
+***Disclaimer**: In order to deploy with Heroku with Redis, you must have a verified Heroku account which means adding a credit card to your account.*
+
+1. After downloading the repository, from the command line, go to `/server` directory and install dependencies.
+
+```
+cd local-repo-root-directory/server
+
+npm install
+```
+
+2. Download the Heroku command line interface.
+
+MacOS
+
+```
+brew tap heroku/brew && brew install heroku
+```
+
+Ubuntu 16+
+
+```
+sudo snap install --classic heroku
+```
+
+For Windows, find the download for 64-bit or 32-bit [here](https://devcenter.heroku.com/articles/heroku-cli).
+
+3. Login with Heroku from the command line
+
+```
+heroku login
+```
+
+4. Check to see if your project already has a redis instance
+
+```
+heroku addons | grep heroku-redis
+```
+
+5. If you don't have a redis instance, add one now using the free hobby-dev tier. Make sure to replace 'your-app-name' with your project name in Heroku.
+
+This will automatically add the REDIS_URL env variable to your Heroku project settings. 
+
+```
+heroku addons:create heroku-redis:hobby-dev -a your-app-name
+```
+
+6. the Heroku command line uses git commits to figure out what to push to Heroku. If you have not pushed your project to your own remote branch on Github or if you have previously made changes in the code, make sure you run the following:
+
+```
+git add .
+git commit -m "my commit message"
+```
+
+7. Since we want to push the `/server` directory to Heroku only, we must use a subtree. This is how we do it:
+
+Before we do that, we need to go back one level in the directory since the last place we left off was inside the `/server` directory. 
+
+```
+cd ../
+```
+
+```
+git subtree push --prefix server heroku master
+```
+
+Although this method works, if there is ever a time where the commits made to your remote repository do not match the commits made in Heroku, there will be a conflict and the above command will not let you commit. If a problem ever comes up, the below command is the alternative method of pushing to Heroku.
+
+```
+git push heroku $(git subtree split --prefix=server $(git symbolic-ref --short -q HEAD)):master --force
+```
+
+That's it! You're now deployed on Heroku using the Redis add-on.
 
 ## Future Updates
 
