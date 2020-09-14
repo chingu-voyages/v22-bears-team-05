@@ -25,7 +25,9 @@ https://goaltrack.vercel.app/
     - [Vercel Deployment Steps](#vercel-deployment-steps)
   - [Heroku Deployment](#heroku-deployment)
     - [Heroku Deployment Steps](#heroku-deployment-steps)
-- [Features](#features)
+- [Future Updates](#future-updates)
+  - [Known Bugs + Planned Fixes](#known-bugs-+-planned-fixes)
+- [Authors](#authors)
 
 ## Features
 
@@ -174,7 +176,7 @@ Due to having both the server and client in a single Github Repo, the server mus
 
 #### Heroku Deployment Steps
 
-Before deploying to Heroku, make sure you have created an account with a new project on https://heroku.com and ensure you have run `npm install` in the `/server` directory.
+Before deploying to Heroku, make sure you have created an account with a new project on https://heroku.com
 
 ***Disclaimer**: In order to deploy with Heroku with Redis, you must have a verified Heroku account which means adding a credit card to your account.*
 
@@ -268,5 +270,3 @@ Session Cookies
 - Babak Chehraz ([Portfolio](https://www.babakchehraz.com/)) [LinkedIn](https://bit.ly/3kfXjrO) (Email: babak.chehraz@gmail.com)
 - Thomas DePasquale (Email: t.depasquale@hotmail.com)
 - Animesh KC ([Blog](https://blog.animeshkc.me/))
-
-## License
