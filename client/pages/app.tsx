@@ -18,12 +18,8 @@ const HomePage = () => {
 
   useCheckIfAuth(error);
 
-  if (loading)
-    return (
-      <App>
-        <Spinner />
-      </App>
-    );
+  if (loading) return <Spinner />;
+
   if (data === undefined) {
     return null;
   }
@@ -31,7 +27,7 @@ const HomePage = () => {
   return (
     <App isApp>
       <Head>
-        <title>Goal Tracker | Home</title>
+        <title>GoalTrack | Home</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
