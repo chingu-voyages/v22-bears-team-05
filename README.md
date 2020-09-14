@@ -267,6 +267,6 @@ Session Cookies
 
 ## Authors
 
-- Babak Chehraz ([Portfolio](https://www.babakchehraz.com/)) [LinkedIn](https://bit.ly/3kfXjrO) (Email: babak.chehraz@gmail.com)
-- Thomas DePasquale (Email: t.depasquale@hotmail.com)
-- Animesh KC ([Blog](https://blog.animeshkc.me/))
+- Babak Chehraz [[Portfolio](https://www.babakchehraz.com/)] [[LinkedIn](https://bit.ly/3kfXjrO)] [Email: babak.chehraz@gmail.com]
+- Thomas DePasquale [Email: t.depasquale@hotmail.com]
+- Animesh KC [[Blog](https://blog.animeshkc.me/)]
