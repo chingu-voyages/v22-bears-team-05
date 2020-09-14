@@ -123,7 +123,34 @@ To deploy the client to Vercel, we use the Vercel command line from the `/client
 
 #### Deployment Steps
 
-- TODO: Vercel Deploy Steps
+
+1. After downloading the repo, navigate to the `/client` directory in your command line:
+
+```
+cd local-repo-root-directory/client
+```
+
+2. install the Vercel command-line interface using npm:
+
+```
+npm i -g vercel
+```
+
+3. Initialize Vercel by running this command and following the prompts from your command line:
+
+```
+vercel init
+```
+
+4. Deploy. By default the deploy command deploys to a preview URL and requires the `--prod` flag to deploy to production
+
+```
+vercel 
+
+-- or --
+
+vercel --prod
+```
 
 ### Heroku Deployment
 
@@ -132,6 +159,7 @@ Due to having both the server and client in a single Github Repo, the server mus
 #### Deployment Steps
 
 - TODO: Heroku Deploy Steps
+
 
 ## Future Updates
 
