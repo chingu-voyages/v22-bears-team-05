@@ -115,7 +115,10 @@ Due to having both the server and client in a single Github Repo,
 
 ## Future Updates
 
-"My Stats" Page
+User Data:
+- Goals and tasks should delete themselves upon completion
+
+"My Stats" Page:
 1. Number of Goals, tasks, and action items completed for the user to see lifetime achievements.
 2. Total time spent accomplishing Action Items
 
