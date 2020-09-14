@@ -6,7 +6,7 @@ Chingu Voyage-22 (bears-team-05) (https://chingu.io/)
 
 ## Overview:
 
-GoalTrack is a web app which helps users reach their goals through a method of reducing the complexity of goals via tasks and action items.
+GoalTrack is a responsive web app aimed at helping users reach their goals through a method of breaking goals into manageable steps via tasks and action items. 
 
 ## Demo:
 
@@ -134,7 +134,7 @@ User Data:
 ### Known Bugs + Planned Fixes
 
 Session Cookies
-- Currently the server is unable to set cookies for the client's browser on iOS devices (except in the Google App on iOS) due to recent updates to cookie security requirements on these devices. To fix this, we either need to make a GET request to fetch the cookie to meet `sameSite: lax` requirements or we need to host both the server and client on the same domain.
+- Currently the server is unable to set cookies for the client's browser on iOS devices (except in the Google App on iOS) due to recent updates to cookie security requirements on these devices. To fix this, we either need to make a GET request from the client to fetch the cookie to meet `sameSite: lax` security requirements or we need to host both the server and client on the same domain.
 
 ## Authors
 
