@@ -31,7 +31,7 @@ https://goaltrack.vercel.app/
 
 ## Features
 
-- Account Login/ Register via email+password authentication
+- Account Login and Register via email+password authentication
 
 Once authenticated, users are able to...
 
@@ -123,7 +123,7 @@ Before starting the server in your local dev. environment,the following environm
 
 This is accomplished by including the following in the .env file located in the root of the `/server` directory. This .env file must never be pushed to GitHub since it contains application sensitive information such as the database username and password.
 
-The /server/.env file must contain the following:
+The `/server/.env` file must contain the following:
 
 ```
 MONGO_CONNECTION_STRING="mongodb+srv://..."
