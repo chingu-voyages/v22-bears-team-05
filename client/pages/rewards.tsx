@@ -28,7 +28,7 @@ const Rewards = () => {
   return (
     <App>
       <Head>
-        <title>Goal Tracker | My Rewards</title>
+        <title>GoalTrack | My Rewards</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 

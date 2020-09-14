@@ -9,7 +9,7 @@ import Login from '../components/Forms/Login';
 const LoginPage = () => (
   <App>
     <Head>
-      <title>Goal Tracker | Login</title>
+      <title>GoalTrack | Login</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
 

@@ -318,7 +318,7 @@ const IndexPage: FunctionComponent = () => {
   return (
     <App>
       <Head>
-        <title>Goal Tracker</title>
+        <title>GoalTrack Official</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 

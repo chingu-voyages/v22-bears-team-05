@@ -9,7 +9,7 @@ import Register from '../components/Forms/Register';
 const RegisterPage = () => (
   <App>
     <Head>
-      <title>Goal Tracker | Register</title>
+      <title>GoalTrack | Register</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
 

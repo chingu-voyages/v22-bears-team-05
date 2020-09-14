@@ -53,7 +53,7 @@ const Stats: FunctionComponent = () => {
     return (
       <App>
         <Head>
-          <title>Goal Tracker | My Stats</title>
+          <title>GoalTrack | My Stats</title>
           <meta
             name="viewport"
             content="initial-scale=1.0, width=device-width"
@@ -73,7 +73,7 @@ const Stats: FunctionComponent = () => {
   return (
     <App>
       <Head>
-        <title>Goal Tracker | My Stats</title>
+        <title>GoalTrack | My Stats</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
