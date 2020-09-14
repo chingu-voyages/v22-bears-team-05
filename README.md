@@ -93,25 +93,34 @@ In addition, we would create short-lived Git branches, unique to each developer,
 | `../tests`                         | Backend Tests   |
 | `../utils`                         | Backend Helper Methods   |
 
+## Development Environment
+
+Before starting the server in your local dev. environment,the following environment variables should be defined:
+
+| Variable Name               | Description                     |
+|:-----------------------------------|:----------------------------|
+| MONGO_CONNECTION_STRING | MongoDB Atlas connection string (e.g. `mongodb+srv://MONGO_USER:MONGO_PASSWORD@cluster...`) |
+| SESSION_SECRET | Random character string used to encode session cookies |
+| REDIS_URL | Set to 127.0.0.1:6379 (default local Redis url) |
+| PORT | Server Port (5000 by default for local deploy). In production Heroku will provide its own port. |
+
 ## Runtime
 
-- TODO: graphic of architecture as seen in sample README on trello
-
 ### Vercel Deployment
-
-- TODO: something about having to be in client directory in order to deploy project to vercel from command line
 
 To deploy the client to Vercel, we use the Vercel command line from the `/client` directory. Normally we would import the Github repo straight into Vercel's dashboard, but being part of the Chingu Organization means we cannot since only the organization's owner can do this.
 
 #### Deployment Steps
 
+- TODO: Vercel Deploy Steps
+
 ### Heroku Deployment
 
-- TODO: Something along the lines of... Since server and client are in the same repo, need a subtree command. Similar to what is said under Heroku Deployment in the ideanebulae sample readme
-
-Due to having both the server and client in a single Github Repo, 
+Due to having both the server and client in a single Github Repo, the server must be deployed to Heroku using a git command to push a subtree from the root of the repository directory.
 
 #### Deployment Steps
+
+- TODO: Heroku Deploy Steps
 
 ## Future Updates
 
@@ -125,11 +134,11 @@ User Data:
 ### Known Bugs + Planned Fixes
 
 Session Cookies
-- Currently the server is unable to set cookies for the client's browser on iOS devices due to recent updates to cookie security requirements on these devices. To fix this, we either need to make a GET request to fetch the cookie to meet `sameSite: lax` requirements or we need to host both the server and client on the same domain. Due to time constraints we are unable to fix this upon  submission to Chingu.
+- Currently the server is unable to set cookies for the client's browser on iOS devices (except in the Google App on iOS) due to recent updates to cookie security requirements on these devices. To fix this, we either need to make a GET request to fetch the cookie to meet `sameSite: lax` requirements or we need to host both the server and client on the same domain.
 
 ## Authors
 
-- Babak Chehraz ([Portfolio](https://www.babakchehraz.com/)) (Email: babak.chehraz@gmail.com)
+- Babak Chehraz ([Portfolio](https://www.babakchehraz.com/)) [LinkedIn](https://www.linkedin.com/in/babakchehraz/) (Email: babak.chehraz@gmail.com)
 - Thomas DePasquale (Email: t.depasquale@hotmail.com)
 - Animesh KC ([Blog](https://blog.animeshkc.me/))
 
