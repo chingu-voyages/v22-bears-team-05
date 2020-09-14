@@ -224,14 +224,22 @@ This will automatically add the REDIS_URL env variable to your Heroku project se
 heroku addons:create heroku-redis:hobby-dev -a your-app-name
 ```
 
-6. the Heroku command line uses git commits to figure out what to push to Heroku. If you have not pushed your project to your own remote branch on Github or if you have previously made changes in the code, make sure you run the following:
+6. Add Config Variables to Heroku (environment variables). Read more about these needed variables [here](#development-environment). Fill out the variables according to your variables set in `/server/.env`
+
+```
+heroku config:set MONGO_CONNECTION_STRING="mongodb+srv://..." --app your-app-name
+heroku config:set ORIGIN="your_vercel_deployment_url" --app your-app-name
+heroku config:set SESSION_SECRET="your session secret from .env folder goes here" --app your-app-name
+```
+
+7. the Heroku command line uses git commits to figure out what to push to Heroku. If you have not pushed your project to your own remote branch on Github or if you have previously made changes in the code, make sure you run the following:
 
 ```
 git add .
 git commit -m "my commit message"
 ```
 
-7. Since we want to push the `/server` directory to Heroku only, we must use a subtree. This is how we do it:
+8. Since we want to push the `/server` directory to Heroku only, we must use a subtree. This is how we do it:
 
 Before we do that, we need to go back one level in the directory since the last place we left off was inside the `/server` directory. 
 
