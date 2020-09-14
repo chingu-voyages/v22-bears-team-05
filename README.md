@@ -16,7 +16,7 @@ https://goaltrack.vercel.app/
 
 - Account Login/ Register via email+password authentication
 
-Authenticated Users are able to...
+Once authenticated, users are able to...
 
 - Add Goals
 - Add Tasks to Goals
@@ -51,28 +51,47 @@ The primary libraries and dependencies used in the development of GoalTrack are 
 | [Express](https://expressjs.com/)       | Backend Server Framework | Server |
 | [Redis](https://redis.io/)       | In memory data structure for session cookies storage | Server |
 
-Frontend
-d3
-
 ### Development Style and Git Branches
 
-- TODO: something about trunk based development and mention code reviews on our own branches using PRs
+We developed the project using a source-control branching model called [Trunk Based Development](https://trunkbaseddevelopment.com/) which is used at tech companies like Google and Facebook. The model involves developers collobrating on a single branch known as the trunk, or more commonly known as the Master branch on Github.
+
+In addition, we would create short-lived Git branches, unique to each developer, where we would push small commits and conduct code reviews using pull requests.
 
 ### Usage
 
-| Command                            | Purpose                 |
-|:-----------------------------------|:------------------------|
-| `npm run dev`                      | Run Frontend Locally   |
+| (1) Commands (`/client`)           | Purpose                           |
+|:-----------------------------------|:----------------------------------|
+| `npm run start`                    | Run Frontend Production Server    |
+| `npm run dev`                      | Run Frontend Dev. Server locally  |
+| `npm run build`                    | Build Frontend for Production     |
+| `npm run cy:open`                  | Run Cypress Tests                 |
+| `npm run dev`                      | Run Frontend Locally              |
 
 
+| (2) Commands (`/server`)         | Purpose                            |
+|:---------------------------------|:-----------------------------------|
+| `npm start`                      | Run Backend Server                 |
+| `npm run devStart`               | Run Backend locally using Nodemon  |
+| `npm run test`                   | Run Backend Tests                  |
 
 ### Configuration
 
 | Location                           | Purpose                     |
 |:-----------------------------------|:----------------------------|
 | `/client`                          | Frontend source directory   |
-
-
+| `../components`                    | App Components (React)      |
+| `../pages`                         | Nextjs Pages directory      |
+| `../public`                        | Static Assets               |
+| `../theme`                         | Global Styles directory     |
+| `../utils`                         | Frontend Helper Methods     |
+| `../../graphql`                    | GraphQL Server Queries, Mutations, Variables used in Apollo Client  |
+| `/server`                          | Backend source directory   |
+| `../graphql`                       | GraphQL Resolvers, Type Definitions, and Schema   |
+| `../../utils`                      | GraphQL Helper Methods   |
+| `../../resolvers`                  | GraphQL Resolvers   |
+| `../models`                        | MongoDB/Mongoose Data Models and Schemas   |
+| `../tests`                         | Backend Tests   |
+| `../utils`                         | Backend Helper Methods   |
 
 ## Runtime
 
@@ -82,13 +101,28 @@ d3
 
 - TODO: something about having to be in client directory in order to deploy project to vercel from command line
 
+To deploy the client to Vercel, we use the Vercel command line from the `/client` directory. Normally we would import the Github repo straight into Vercel's dashboard, but being part of the Chingu Organization means we cannot since only the organization's owner can do this.
+
 #### Deployment Steps
 
-### Heroky Deployment
+### Heroku Deployment
 
 - TODO: Something along the lines of... Since server and client are in the same repo, need a subtree command. Similar to what is said under Heroku Deployment in the ideanebulae sample readme
 
+Due to having both the server and client in a single Github Repo, 
+
 #### Deployment Steps
+
+## Future Updates
+
+"My Stats" Page
+- Number of Goals, tasks, and action items completed for the user to see lifetime achievements.
+- Total time spent accomplishing Action Items
+
+### Known Bugs + Planned Fixes
+- 
+
+Currently the session cookies that the backend server sets for the client browser to allow for user authenticated requests to the server is unable to set cookies for iOS devices due to recent updates to cookie security requirements on these devices.
 
 ## Authors
 
