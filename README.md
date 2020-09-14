@@ -6,7 +6,11 @@ Chingu Voyage-22 (bears-team-05) (https://chingu.io/)
 
 ## Overview:
 
-GoalTrack is a web app created in NextJS which helps users reach their goals through a method of reducing the complexity of goals via tasks and action items.
+GoalTrack is a web app which helps users reach their goals through a method of reducing the complexity of goals via tasks and action items.
+
+## Demo:
+
+https://goaltrack.vercel.app/
 
 ## Features
 
