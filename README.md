@@ -116,13 +116,13 @@ Due to having both the server and client in a single Github Repo,
 ## Future Updates
 
 "My Stats" Page
-- Number of Goals, tasks, and action items completed for the user to see lifetime achievements.
-- Total time spent accomplishing Action Items
+1. Number of Goals, tasks, and action items completed for the user to see lifetime achievements.
+2. Total time spent accomplishing Action Items
 
 ### Known Bugs + Planned Fixes
-- 
 
-Currently the session cookies that the backend server sets for the client browser to allow for user authenticated requests to the server is unable to set cookies for iOS devices due to recent updates to cookie security requirements on these devices.
+Session Cookies
+- Currently the server is unable to set cookies for the client's browser on iOS devices due to recent updates to cookie security requirements on these devices. To fix this, we either need to make a GET request to fetch the cookie to meet `sameSite: lax` requirements or we need to host both the server and client on the same domain. Due to time constraints we are unable to fix this upon  submission to Chingu.
 
 ## Authors
 
