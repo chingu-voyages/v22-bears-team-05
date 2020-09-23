@@ -1,6 +1,6 @@
 # GoalTrack
 
-A simple web app to help break your goals into manageable steps
+A web app that teaches users how to break down their goals into manageable steps, tracks the time they spend pursuing them, graphs their progress, and rewards them along the way.
 
 Chingu Voyage-22 (bears-team-05) (https://chingu.io/)
 
