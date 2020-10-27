@@ -15,6 +15,7 @@ https://goaltrack.vercel.app/
 ## Table of Contents  
 - [Features](#features)
 - [Development](#development)
+  - [Architecture](#architecture)
   - [Technologies](#technologies)
   - [Development Style and Git Branches](#development-style-and-git-branches)
   - [Useage](#usage)
@@ -46,6 +47,11 @@ Once authenticated, users are able to...
 - View personal account stats based on tags after completing items that contain tags, in a bar graph format
 
 ## Development
+
+### Architecture
+
+![GoalTrack Tech Architecture](diagram.jpg)
+
 
 ### Technologies
 
